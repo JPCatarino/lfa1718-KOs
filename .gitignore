@@ -1,0 +1,7 @@
+# Ficheiros do IntelliJ
+*.iws
+*.iml
+.idea/
+
+# Ficheiros class compilados
+*.class
