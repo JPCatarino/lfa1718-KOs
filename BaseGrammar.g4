@@ -1,5 +1,5 @@
 grammar BaseGrammar;
-import Unidades.g4;
+import Unidades;
 
 // Expressions must end with ';'
 // Expressions may or may not be separated by '\n' character
@@ -8,15 +8,11 @@ main: (e';'('\n')?)* EOF;
 // General expression
 e:
  // Print/Read variable
- command var
+ command VAR
  // Value atribution to variable
  // (This also accepts values that are not the result of an operation)
- | var '=' operation
+ | VAR '=' operation
  ;
-
-// Variable
-// (Must start with a letter and may have digits)
-var: [a-zA-Z]+([0-9]*[a-zA-Z]*)*;
 
 // Commands
 command: 'Print'
@@ -41,6 +37,10 @@ REAL: INT ('.' INT)?;
 
 // Integer Value (int)
 INT: [0-9]+;
+
+// Variable
+// (Must start with a letter and may have digits)
+VAR: [a-zA-Z_] [a-zA-Z_0-9]*;
 
 // Ignore WhiteSpaces
 WS: [ \t\r\n]+ -> skip;
