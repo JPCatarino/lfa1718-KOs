@@ -1,9 +1,9 @@
 grammar Unidades;
 
 unit:
-    UNIT
-    |UNIT '^' INT
-    |UNIT '/' UNIT
+    UNIT+ '/' UNIT+
+    |UNIT+ '^' INT
+    |UNIT+
     ;
 
 
@@ -11,4 +11,3 @@ unit:
 INT: [0-9]+;
 UNIT: 'm'|'kg'|'s'|'a'|'k'|'mol'|'cd';
 WS:  [ \t]+ -> skip;
-
