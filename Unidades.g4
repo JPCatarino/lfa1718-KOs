@@ -10,4 +10,4 @@ unit:
 
 INT: [0-9]+;
 UNIT: 'm'|'kg'|'s'|'a'|'k'|'mol'|'cd';
-WS:  [ \t]+ -> skip;
+WS: [ \t\r\n]+ -> skip;

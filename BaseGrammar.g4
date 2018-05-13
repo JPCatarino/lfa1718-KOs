@@ -3,7 +3,8 @@ import Unidades;
 
 // Expressions must end with ';'
 // Expressions may or may not be separated by '\n' character
-main: (e';'('\n')?)* EOF;
+// Accepts empty lines
+main: (e';'('\n')*)* EOF;
 
 // General expression
 e:
