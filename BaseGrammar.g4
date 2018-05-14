@@ -30,8 +30,11 @@ operation:
     ;
 
 // Value
-value: REAL (pow?) unit;
+value: INT (pow?) unit
+     | REAL (pow?) unit
+     ;
 
 signal: '-';
 
-pow: 'e' (signal?) REAL;
+pow: 'e' (signal?) (INT|REAL);
+
