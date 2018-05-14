@@ -32,4 +32,6 @@ operation:
 // Value
 value: REAL (pow?) unit;
 
-pow: 'e' REAL;
+signal: '-';
+
+pow: 'e' (signal?) REAL;
