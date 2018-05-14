@@ -2,6 +2,7 @@
 *.iws
 *.iml
 .idea/
+gen/
 
 # Ficheiros class compilados
 *.class
