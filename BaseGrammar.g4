@@ -1,8 +1,9 @@
 grammar BaseGrammar;
 import Unidades;
+import BaseLexerRules;
 
-// expressions must end with ';'
-// expressions may or may not be separated by '\n' character
+// Expressions must end with ';'
+// Expressions may or may not be separated by '\n' character
 // Accepts empty lines
 main: (e';'('\n')*)* EOF;
 
@@ -29,16 +30,3 @@ operation:
 
 // Value
 value: REAL UNIT;
-
-// REAL Value (real/float)
-REAL: INT ('.' INT)?;
-
-// Integer Value (int)
-INT: [0-9]+;
-
-// Variable
-// (Must start with a letter and may have digits)
-VAR: [a-zA-Z_] [a-zA-Z_0-9]*;
-
-// Ignore WhiteSpaces
-WS: [ \t\r\n]+ -> skip;
