@@ -3,11 +3,11 @@ grammar BaseLexerRules;
 // Units used for dimensional analysis
 UNIT: ('m'|'kg'|'s'|'a'|'k'|'mol'|'cd')+;
 
-// REAL Value (real/float)
-REAL: INT ('.' INT)?;
-
 // Integer Value (int)
 INT: [0-9]+;
+
+// REAL Value (real/float)
+REAL: INT ('.' INT)?;
 
 // Variable
 // (Must start with a letter and may have digits)
