@@ -1,6 +1,5 @@
 grammar BaseGrammar;
-import Unidades;
-import BaseLexerRules;
+import BaseLexerRules, Unidades;
 
 // Expressions must end with ';'
 // Expressions may or may not be separated by '\n' character
@@ -29,4 +28,4 @@ operation:
     ;
 
 // Value
-value: REAL UNIT;
+value: REAL unit;

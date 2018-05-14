@@ -13,3 +13,6 @@ unit returns[String res]:
     |unit '^' INT            {$res = $unit.res + "^" + $INT.text;}
     |UNIT                    {$res = $UNIT.text;}
     ;
+
+
+NEWLINE: '\r'? '\n';
