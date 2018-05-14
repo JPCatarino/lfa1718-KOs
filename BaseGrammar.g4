@@ -24,8 +24,6 @@ operation:
     '(' n=operation ')'
     |left=operation op=('*'|'/') right=operation
     |left=operation op=('+'|'-') right=operation
-    |den = operation op = '/' num = operation
-    |'reduce' frac=operation
     |value
     ;
 
