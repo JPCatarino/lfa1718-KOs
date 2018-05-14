@@ -15,6 +15,8 @@ e:
  | VAR '=' operation
  ;
 
+
+
 // Commands
 command: 'Print'
        | 'Read'
@@ -28,4 +30,6 @@ operation:
     ;
 
 // Value
-value: REAL unit;
+value: REAL (pow?) unit;
+
+pow: 'e' REAL;

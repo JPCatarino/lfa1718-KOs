@@ -1,7 +1,7 @@
 grammar BaseLexerRules;
 
 // Units used for dimensional analysis
-UNIT: ('m'|'kg'|'s'|'a'|'k'|'mol'|'cd')+;
+UNIT: ('m'|'g'|'s'|'A'|'K'|'mol'|'cd')+;
 
 // Integer Value (int)
 INT: [0-9]+;
