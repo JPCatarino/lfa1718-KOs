@@ -30,6 +30,8 @@ operation:
     ;
 
 // Value
-value: REAL (pow?) unit;
+value: INT (pow?) unit
+     | REAL (pow?) unit
+     ;
 
-pow: 'e' REAL;
+pow: 'e' (INT|REAL);
