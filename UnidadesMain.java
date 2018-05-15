@@ -19,6 +19,14 @@ public class UnidadesMain {
       if (parser.getNumberOfSyntaxErrors() == 0) {
          // print LISP-style tree:
          // System.out.println(tree.toStringTree(parser));
+         //Creating walker and listener
+         ParseTreeWalker walker = new ParseTreeWalker();
+         unitConverter units = new unitConverter();
+         walker.walk(units,tree);
+         //print dos resultados da conversão, mais tarde isto vai ser substituido par enviar os resultados para um ficheiro
+         while(!units.isEmpty()) {
+            System.out.print(units.getResult() + "\n");
+         }
       }
    }
 }
