@@ -45,13 +45,13 @@ public class UnidadesMain {
              String a = units.getResult();
              stack.push(a);
          }
-        toText(stack);
+        toText(stack,args[0]);
       }
 }
-   public static void toText (Stack<String> amont)throws IOException
+   public static void toText (Stack<String> amont,String name)throws IOException
 	{	
 		BufferedWriter outputWriter = null;
-		outputWriter = new BufferedWriter(new FileWriter("test.txt"));
+		outputWriter = new BufferedWriter(new FileWriter((name + ".kos")));
 		while(!amont.isEmpty())
 		{	
 		   System.out.printf("%s\n",amont.peek());
