@@ -38,6 +38,7 @@ public class UnidadesMain {
          walker.walk(units,tree);
          //print dos resultados da conversão, mais tarde isto vai ser substituido par enviar os resultados para um ficheiro
 	String [] aux = new String[2];
+
 	Queue<String> fila = new LinkedList<String>();
          while(!units.isEmpty()) {
            // System.out.print(units.getResult() + "\n");
@@ -57,6 +58,7 @@ public class UnidadesMain {
 		   System.out.printf("%s\n",fila.element());
 		   outputWriter.write(fila.element()+"\n");
 		   fila.remove();
+
 		}
 	   outputWriter.flush();  
  	   outputWriter.close();  	

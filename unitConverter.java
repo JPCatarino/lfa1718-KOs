@@ -85,15 +85,6 @@ public class unitConverter extends UnidadesBaseListener{
         else if (ctx.den.getText().equals("m") && ctx.num.getText().equals("H") ) SimpUnit = "m/H";
         else if (ctx.den.getText().equals("W") && ctx.num.getText().equals("sr") ) SimpUnit = "W/sr";
         else if (ctx.den.getText().equals("W") && ctx.num.getText().equals("m") ) SimpUnit = "W/m";
-
-
-
-
-    }
-
-<<<<<<< HEAD
+	}
 }
-=======
 
-}
->>>>>>> d15937c0b3010a6961ce9de3c71fb194af59be60
