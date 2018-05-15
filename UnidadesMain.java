@@ -1,10 +1,21 @@
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
+import static java.lang.System.*;
+import java.util.Scanner;
+import java.io.*;
 
 public class UnidadesMain {
    public static void main(String[] args) throws Exception {
+      InputStream in_str = null;
+      try{
+         in_str = new FileInputStream(new File(args[0]));
+      }
+      catch(FileNotFoundException e){
+         err.println("error reading file");
+         System.exit(1);
+      }
       // create a CharStream that reads from standard input:
-      CharStream input = CharStreams.fromStream(System.in);
+      CharStream input = CharStreams.fromStream(in_str);
       // create a lexer that feeds off of input CharStream:
       UnidadesLexer lexer = new UnidadesLexer(input);
       // create a buffer of tokens pulled from the lexer:
@@ -14,8 +25,8 @@ public class UnidadesMain {
       // replace error listener:
       //parser.removeErrorListeners(); // remove ConsoleErrorListener
       //parser.addErrorListener(new ErrorHandlingListener());
-      // begin parsing at test rule:
-      ParseTree tree = parser.test();
+      // begin parsing at main rule:
+      ParseTree tree = parser.main();
       if (parser.getNumberOfSyntaxErrors() == 0) {
          // print LISP-style tree:
          // System.out.println(tree.toStringTree(parser));
