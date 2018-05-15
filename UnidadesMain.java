@@ -3,6 +3,8 @@ import org.antlr.v4.runtime.tree.*;
 import static java.lang.System.*;
 import java.util.Scanner;
 import java.io.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class UnidadesMain {
    public static void main(String[] args) throws Exception {
@@ -36,24 +38,25 @@ public class UnidadesMain {
          walker.walk(units,tree);
          //print dos resultados da conversão, mais tarde isto vai ser substituido par enviar os resultados para um ficheiro
 	String [] aux = new String[2];
-	 int i = 0;
+	Queue<String> fila = new LinkedList<String>();
          while(!units.isEmpty()) {
            // System.out.print(units.getResult() + "\n");
 	   String a = units.getResult();
-     	   aux[i++] = a;
+     	   fila.add(a);
 		
          }
-	toText(aux);
+	toText(fila);
       }
    }
-   public static void toText (String [] x)throws IOException
+   public static void toText (Queue<String> fila)throws IOException
 	{	
 		BufferedWriter outputWriter = null;
 		outputWriter = new BufferedWriter(new FileWriter("test.txt"));
-		for(int a = x.length-1; a>=0;a--)
+		while(!fila.isEmpty())
 		{	
-		   System.out.printf("%s\n",x[a]);
-		   outputWriter.write(x[a]+"\n");
+		   System.out.printf("%s\n",fila.element());
+		   outputWriter.write(fila.element()+"\n");
+		   fila.remove();
 		}
 	   outputWriter.flush();  
  	   outputWriter.close();  	
