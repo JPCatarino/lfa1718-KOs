@@ -35,9 +35,27 @@ public class UnidadesMain {
          unitConverter units = new unitConverter();
          walker.walk(units,tree);
          //print dos resultados da conversão, mais tarde isto vai ser substituido par enviar os resultados para um ficheiro
+	String [] aux = new String[2];
+	 int i = 0;
          while(!units.isEmpty()) {
-            System.out.print(units.getResult() + "\n");
+           // System.out.print(units.getResult() + "\n");
+	   String a = units.getResult();
+     	   aux[i++] = a;
+		
          }
+	toText(aux);
       }
    }
+   public static void toText (String [] x)throws IOException
+	{	
+		BufferedWriter outputWriter = null;
+		outputWriter = new BufferedWriter(new FileWriter("test.txt"));
+		for(int a = x.length-1; a>=0;a--)
+		{	
+		   System.out.printf("%s\n",x[a]);
+		   outputWriter.write(x[a]+"\n");
+		}
+	   outputWriter.flush();  
+ 	   outputWriter.close();  	
+	}
 }
