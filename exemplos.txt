@@ -1,0 +1,8 @@
+Exemplos de introdução no UnidadesMain e o código que tem de gerar
+
+v = 2 m * 2 m = v = (2*2)m^2;
+Print v = Print v;
+
+(3m)^2 = (3^2)m^2
+
+3 m/s * 3 m = (3*3)m^2/s
