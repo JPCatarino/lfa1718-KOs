@@ -5,6 +5,7 @@ import java.util.Scanner;
 import java.io.*;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class UnidadesMain {
    public static void main(String[] args) throws Exception {
@@ -37,27 +38,25 @@ public class UnidadesMain {
          unitConverter units = new unitConverter();
          walker.walk(units,tree);
          //print dos resultados da conversão, mais tarde isto vai ser substituido par enviar os resultados para um ficheiro
-	String [] aux = new String[2];
-
-	Queue<String> fila = new LinkedList<String>();
+         Stack<String> stack = new Stack<String>();
+         Queue<String> fila = new LinkedList<String>();
          while(!units.isEmpty()) {
-           // System.out.print(units.getResult() + "\n");
-	   String a = units.getResult();
-     	   fila.add(a);
-		
+             // System.out.print(units.getResult() + "\n");
+             String a = units.getResult();
+             stack.push(a);
          }
-	toText(fila);
+        toText(stack);
       }
-   }
-   public static void toText (Queue<String> fila)throws IOException
+}
+   public static void toText (Stack<String> amont)throws IOException
 	{	
 		BufferedWriter outputWriter = null;
 		outputWriter = new BufferedWriter(new FileWriter("test.txt"));
-		while(!fila.isEmpty())
+		while(!amont.isEmpty())
 		{	
-		   System.out.printf("%s\n",fila.element());
-		   outputWriter.write(fila.element()+"\n");
-		   fila.remove();
+		   System.out.printf("%s\n",amont.peek());
+		   outputWriter.write(amont.peek()+"\n");
+		   amont.pop();
 
 		}
 	   outputWriter.flush();  
