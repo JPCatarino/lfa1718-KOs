@@ -4,7 +4,7 @@ lexer grammar BaseLexerRules;
 SIGNAL: '-';
 
 // Units used for dimensional analysis
-UNIT: ('m'|'g'|'s'|'A'|'K'|'mol'|'cd')+;
+UNIT: ('m'|'g'|'s'|'A'|'K'|'mol'|'cd');
 
 // Accepted variable types
 VARTYPE: 'void'

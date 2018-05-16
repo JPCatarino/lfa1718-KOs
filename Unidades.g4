@@ -6,9 +6,9 @@ main: (test NEWLINE)* EOF;
 test: (n = INT unit);
 
 unit:
-    den=unit '/' (num=unit)+    #unitDiv
-    |unit '^' INT               #unitPow
-    |UNIT                       #unitUNIT
+    UNIT                        #unitUNIT
+    |den=unit ':' num=unit      #unitDiv
+    |unit '**' INT              #unitPow
     ;
 
 
