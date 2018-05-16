@@ -1,40 +1,38 @@
 grammar BaseGrammar;
 import BaseLexerRules, Unidades;
 
-// Expressions must end with ';'
-// Expressions may or may not be separated by '\n' character
+
+// Instructions must end with ';'
+// Instructions may or may not be separated by '\n' character
 // Accepts empty lines
-main: (e';'('\n')*)* EOF;
+main: (stat ('\n')*)* EOF;
+stat: instruction ';';
 
-// General expression
-e:
- // Print/Read variable
- command VAR
- // Value atribution to variable
- // (This also accepts values that are not the result of an operation)
- | VAR '=' operation
- ;
+// General intruction
+instruction:
+    // Print/Read variable
+    COMMAND '(' NAME ')'
+    // Value atribution to variable
+    // (This also accepts values that are not the result of an operation)
+    | NAME '=' operation
+    ;
 
 
+/* ------------------
+ * OPERATIONS SECTION
+ * ------------------
+ */
 
-// Commands
-command: 'Print'
-       | 'Read'
-       ;
-
+// Operations
 operation:
     '(' n=operation ')'
-    |left=operation op=('*'|'/') right=operation
-    |left=operation op=('+'|'-') right=operation
-    |value
+    | left=operation NUMERIC_OPERATOR right=operation
+    | NAME
+    | value
     ;
 
 // Value
-value: INT (pow?) unit
-     | REAL (pow?) unit
-     ;
+value: SIGNAL? (INT|REAL) pow? UNIT?;
 
-signal: '-';
-
-pow: 'e' (signal?) (INT|REAL);
-
+// Equivalent to "*10^"
+pow: 'e' SIGNAL? (INT|REAL);

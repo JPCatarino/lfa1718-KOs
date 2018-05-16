@@ -48,7 +48,7 @@ REAL: INT ('.' INT)?;
 
 // Variable
 // (Must start with a letter and may have digits)
-NAME: [a-zA-Z_] [a-zA-Z_0-9]*;
+NAME: [a-zA-Z] [a-zA-Z_0-9]*;
 
 // Ignore WhiteSpaces
 WS: [ \t\r\n]+ -> skip;
