@@ -1,16 +1,20 @@
 grammar Unidades;
 import BaseLexerRules;
 
-main: (test NEWLINE)* EOF;
+main: (oper NEWLINE)* EOF;
 
-test: (n = INT unit);
+oper: expr;
+expr: '(' expr ')'
+    | expr NUMERIC_OPERATOR expr
+    | test  //num&unit
+    ;
+test: (n = INT unit); // ( INT unit ) ^2
 
 unit:
-    den=unit '/' (num=unit)+    #unitDiv
-    |unit '^' INT               #unitPow
-    |UNIT                       #unitUNIT
+    den=unit '/' (num=unit)+
+    unit '^' INT
+    |UNIT
     ;
-
 
 NEWLINE: '\r'? '\n';
 
