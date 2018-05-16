@@ -6,7 +6,10 @@ import BaseLexerRules, Unidades;
 // Instructions may or may not be separated by '\n' character
 // Accepts empty lines
 main: (stat ('\n')*)* EOF;
-stat: instruction ';';
+stat:
+    loop
+    | instruction ';'
+    ;
 
 // General intruction
 instruction:
@@ -17,6 +20,18 @@ instruction:
     | NAME '=' operation
     ;
 
+/* -------------
+ * LOOPS SECTION
+ * -------------
+ */
+loop:
+    // FOR LOOP
+    FOR '(' instruction ';' condition ';' instruction ')' '{' (stat ('\n')*)* '}'
+    // WHILE LOOP
+    | WHILE '(' condition ')' '{' (stat ('\n')*)* '}'
+    // DO-WHILE LOOP
+    | DO '{' (stat ('\n')*)* '}' WHILE '(' condition ')'
+    ;
 
 /* ------------------
  * OPERATIONS SECTION
@@ -30,6 +45,10 @@ operation:
     | NAME
     | value
     ;
+
+// Conditions
+condition:
+    (value|NAME) CONDITIONAL_OPERATOR (value|NAME);
 
 // Value
 value: SIGNAL? (INT|REAL) pow? UNIT?;
