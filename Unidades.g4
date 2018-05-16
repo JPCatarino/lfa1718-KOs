@@ -7,6 +7,7 @@ test: (n = INT unit);
 
 unit:
     UNIT                        #unitUNIT
+    |'(' unit ')'               #unitParents
     |den=unit ':' num=unit      #unitDiv
     |unit '**' INT              #unitPow
     ;
