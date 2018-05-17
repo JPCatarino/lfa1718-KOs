@@ -26,11 +26,12 @@ instruction:
  */
 loop:
     // FOR LOOP
-    FOR '(' instruction ';' condition ';' instruction ')' '{' (stat ('\n')*)* '}'
+    loop '(' instruction ';' condition ';' instruction ')' '{' (stat ('\n')*)* '}'
     // WHILE LOOP
-    | WHILE '(' condition ')' '{' (stat ('\n')*)* '}'
+    | loop '(' condition ')' '{' (stat ('\n')*)* '}'
     // DO-WHILE LOOP
-    | DO '{' (stat ('\n')*)* '}' WHILE '(' condition ')'
+    | loop '{' (stat ('\n')*)* '}' loop '(' condition ')'
+    |LOOP
     ;
 
 /* ------------------
