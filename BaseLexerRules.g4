@@ -13,15 +13,6 @@ VARTYPE: 'void'
        | 'double'
        ;
 
-// Loops
-LOOP: FOR
-    | WHILE
-    | DO
-    ;
-FOR: 'for';
-WHILE: 'while';
-DO: 'do';
-
 // Commands
 COMMAND: 'Print'
        | 'Read'
