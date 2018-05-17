@@ -1,9 +1,14 @@
 grammar Unidades;
 import BaseLexerRules;
 
-main: (test NEWLINE)* EOF;
+main: (oper NEWLINE)* EOF;
 
-test: (n = INT unit);
+oper: expr;
+expr: '(' expr ')'
+    | expr NUMERIC_OPERATOR expr
+    | test  //num&unit
+    ;
+test: (n = INT unit); // ( INT unit ) ^2
 
 unit:
     UNIT                        #unitUNIT
@@ -11,7 +16,6 @@ unit:
     |den=unit ':' num=unit      #unitDiv
     |unit '**' INT              #unitPow
     ;
-
 
 NEWLINE: '\r'? '\n';
 

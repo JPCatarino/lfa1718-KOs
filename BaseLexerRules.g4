@@ -23,22 +23,32 @@ COMMAND: 'Print'
  * -----------------
  */
 // Boolean Operators
-BOOLEAN_OPERATOR: 'and'
-                | 'or'
-                | 'xor'
-                | 'nand'
-                | 'nor'
-                | 'xnor'
-                ;
+BOOLEAN_OPERATOR:
+    'and'
+    | 'or'
+    | 'xor'
+    | 'nand'
+    | 'nor'
+    | 'xnor'
+    ;
 
 // Numeric Operators
-NUMERIC_OPERATOR: OP01
-                | OP02
-                | OP03
-                ;
+NUMERIC_OPERATOR:
+    OP01
+    | OP02
+    | OP03
+    ;
 OP01: '^';
 OP02: '*'|'/';
 OP03: '+'|'-';
+
+// Conditional Operators
+CONDITIONAL_OPERATOR:
+    // Equal
+    '=='
+    // Greater (or equal) OR Smaller (or equal)
+    | ('>'|'<') ('=')?
+    ;
 
 // Integer Value (int)
 INT: [0-9]+;
