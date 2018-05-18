@@ -1,0 +1,19 @@
+//templates
+
+module(stat) ::= <<
+import quantities as pq
+def main():
+    <stats(stat)>
+>>
+
+stats(stat) ::= <<
+<if(stat)><stat; separator="\n"><endif>
+>>
+
+
+
+variable(type,name) ::= " "
+
+assign(left,right) ::= "<left> = <right>"
+
+unit(num,un)::= "<num> * pq.<un>"
