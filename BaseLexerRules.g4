@@ -1,7 +1,7 @@
 lexer grammar BaseLexerRules;
 
 // Signal (negativa values)
-SIGNAL: '-';
+SIGNAL: ('+' | '-');
 
 // Units used for dimensional analysis
 UNIT: ('m'|'g'|'s'|'A'|'K'|'mol'|'cd');
