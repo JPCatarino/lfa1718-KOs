@@ -60,6 +60,9 @@ REAL: INT ('.' INT)?;
 // (Must start with a letter and may have digits)
 NAME: [a-zA-Z] [a-zA-Z_0-9]*;
 
+
+STRING: [a-zA-Z];
+
 // Ignore WhiteSpaces
 WS: [ \t\r\n]+ -> skip;
 

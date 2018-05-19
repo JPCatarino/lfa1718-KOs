@@ -1,7 +1,13 @@
 //templates
 
-module(stat) ::= <<
+unitClass(cname,stat) ::= <<
 import quantities as pq
+class <cname>:
+    UnitDic = {}
+    <stats(stat)>
+>>
+
+module(stat) ::= <<
 def main():
     <stats(stat)>
 >>
@@ -10,10 +16,24 @@ stats(stat) ::= <<
 <if(stat)><stat; separator="\n"><endif>
 >>
 
-
+div(left,right) ::= <<
+<left>/<right>
+>>
 
 variable(type,name) ::= " "
 
 assign(left,right) ::= "<left> = <right>"
 
-unit(num,un)::= "<num> * pq.<un>"
+unit(num,un,cname)::= "pq.Quantity(<num>,<name>.UnitDic.<un>)"
+
+useunit(uname,uunit) ::=<<
+UnitDic['<uname>'] = <uunit>.pq
+>>
+
+addunit(name,units,symbol) ::=<<
+pq.UnitQuantity('<name>',<units>,symbol='<symbol>')
+>>
+
+symbol(sym) ::=<<
+pq.<sym>
+>>
