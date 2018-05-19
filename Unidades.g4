@@ -11,7 +11,7 @@ stat:create
 
 create: 'create' 'unit' uname=NAME 'based on' unit 'with symbol' symbol=NAME;
 
-use:'use' unit;
+use:'use' NAME;
 
 unit:
     NAME                              #unitUNIT
@@ -19,6 +19,8 @@ unit:
     |unit '**' INT                    #unitPow
     ;
 
+
+WS: [ \t\r\n]+ -> skip;
 NEWLINE: '\r'? '\n';
 
 
