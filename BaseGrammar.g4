@@ -26,11 +26,11 @@ instruction:
  */
 loop:
     // FOR LOOP
-    'for' '(' instruction ';' condition ';' instruction ')' '{' (stat ('\n')*)* '}'
+    'for' '(' instruction ';' condition ';' instruction ')' '{' (stat ('\n')*)* '}'     #loopFor
     // WHILE LOOP
-    | 'while' '(' condition ')' '{' (stat ('\n')*)* '}'
+    | 'while' '(' condition ')' '{' (stat ('\n')*)* '}'                                 #loopWhile
     // DO-WHILE LOOP
-    | 'do' '{' (stat ('\n')*)* '}' 'while' '(' condition ')'
+    | 'do' '{' (stat ('\n')*)* '}' 'while' '(' condition ')'                            #loopDoWhile
     ;
 
 /* ------------------
@@ -54,4 +54,4 @@ condition:
 value: SIGNAL? (INT|REAL) pow? UNIT?;
 
 // Equivalent to "*10^"
-pow: 'e' SIGNAL? (INT|REAL);
+pow: 'e' (SIGNAL? (INT|REAL));
