@@ -1,10 +1,6 @@
-import quantities as pq
-
-
-class tryHard:
-    Dic = {}
-    Dic['kg'] =  pq.kg   
-
+import itertools
+import sys
+ 
 class unitDec:
     def __init__(self,unit,pot):
         self.unit = unit
@@ -25,8 +21,41 @@ class val:
             unitList = []
             unitList.append(unit)
         self.unit = unitList
+    
+    def add(value1,value2):
+        check = True
+        for x in value1.unit:
+            for y in value2.unit:
+                check = False
+                if(x.unit == y.unit and x.pot == y.pot):
+                    check = True
+                    break
+        if check:
+            unit = value1.unit
+            value = value1.value + value2.value
+        else:
+            print("ERROR: Not able to sum values with different units")
+            sys.exit()   
+        return val(value,unit) 
+
+    def sub(value1,value2):
+        check = True
+        for x in value1.unit:
+            for y in value2.unit:
+                check = False
+                if(x.unit == y.unit and x.pot == y.pot):
+                    check = True
+                    break
+        if check:
+            unit = value1.unit
+            value = value1.value - value2.value
+        else:
+            print("ERROR: Not able to subtract values with different units")
+            sys.exit()   
+        return val(value,unit) 
+
     def multiply(value1,value2):
-        tmp = list(set().union(value1.unit,value2.unit))
+        tmp = value1.unit + value2.unit
         for x in value1.unit:
             for y in value2.unit:
                 if x.unit == y.unit and x.pot == y.pot:
@@ -35,51 +64,60 @@ class val:
                             tmp.remove(z)
                             break            
                     for z in tmp:
-                        if z.unit == x.unit and z.pot == x.pot:
-                            z.pot = z.pot+1
+                        if z.unit == x.unit and z.pot == x.pot: 
+                            z.pot = z.pot+x.pot
+
+        for z, m in itertools.combinations(tmp, 2):
+            if(z.unit == m.unit and -z.pot == m.pot):
+                if(m in tmp and z in tmp):
+                    tmp.remove(z)
+                    tmp.remove(m)
+            elif(z.unit == m.unit and z.pot > m.pot and m.pot < 0):
+                if(m in tmp):
+                    z.pot = z.pot + m.pot
+                    tmp.remove(m)                 
+            elif(z.unit == m.unit and ((z.pot < 0 and m.pot < 0) or (z.pot > 0 and m.pot > 0))):
+                if(m in tmp):
+                    z.pot = z.pot + m.pot
+                    tmp.remove(m)    
         value = value1.value * value2.value
-        return val(value,tmp)    
+        return val(value,tmp) 
+    
+    def divide(value1,value2):
+        for x in value2.unit:
+            x.pot = -x.pot
+        tmp = value1.unit + value2.unit
+        for x in tmp:
+            print (x.unit + str(x.pot))
+        for z, m in itertools.combinations(tmp, 2):
+            print(z.unit + "("+ str(z.pot) +")" + m.unit + "("+ str(m.pot) +")")
+            if(z.unit == m.unit and -z.pot == m.pot):
+                if(m in tmp and z in tmp):
+                    tmp.remove(z)
+                    tmp.remove(m)
+            elif(z.unit == m.unit and z.pot > m.pot and m.pot < 0):
+                if(m in tmp):
+                    print("ola")
+                    z.pot = z.pot + m.pot
+                    tmp.remove(m)                 
+            elif(z.unit == m.unit and ((z.pot < 0 and m.pot < 0) or (z.pot > 0 and m.pot > 0))):
+                if(m in tmp):
+                    print("adeus")
+                    z.pot = z.pot + m.pot
+                    tmp.remove(m)
+        value = value1.value / value2.value
+        return val(value,tmp)                 
+        
     def printVal(value):
-        tmp = str(value.value)
+        tmp = str(value.value) + " "
         for x in value.unit:
-            tmp = tmp + x.unit
-            if(x.pot > 1 ):
+            if(x.pot == 1):
+                tmp = tmp + x.unit
+            if(x.pot > 1 and x.pot != 0):
+                tmp = tmp + x.unit
                 tmp = tmp + "^" + str(x.pot)
+            elif(x.pot < 0):
+                tmp = tmp + "/" + str(x.unit)
+                if(-x.pot > 1):
+                    tmp = tmp + "^" + str(-x.pot)
         return tmp 
-
-
-triun = unitDec("kg",1)
-triun2 = unitDec("kg",1)
-triun3 = unitDec("coco",2)
-triun4 = unitDec("popo",4)
-unitList = [triun,triun4]
-unitList2 = [triun3,triun2]
-
-tried = val(2,triun)
-trei = val(2,triun2)
-newVal = val(3,triun3)
-
-newvar = val.multiply(tried,trei)
-for x in newvar.unit:
-    print(x.unit)
-
-print("---------------------------------")
-newvar2 = val.multiply(newvar,newVal)    
-for x in newvar2.unit:
-   print(x.unit)
-
-print("---------------------------------")
-newVal2 = val(4,unitList)
-newVal3 = val(5,unitList2)
-newvar3 = val.multiply(newVal2,newVal3)
-for x in newvar3.unit:
-    print("Unidade: " + x.unit)
-    print("Pot: " + str(x.pot))
-print("---------------------------------")
-newun = unitDec("coco",2)
-newVal4 = val(4,newun)
-newvar4= val.multiply(newvar3,newVal4)
-for x in newvar4.unit:
-    print(x.unit)
-    print(x.pot)
-print(val.printVal(newvar4))
