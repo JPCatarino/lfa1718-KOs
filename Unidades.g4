@@ -6,12 +6,12 @@ main: statList EOF;
 statList: (stat? ';')*;
 
 stat:create
-    |use
+    |associate
     ;
 
-create: 'create' 'unit' uname=NAME 'based on' unit 'with symbol' symbol=NAME;
+create: 'create' 'unit' uname=unit 'named' NAME;
 
-use:'use' NAME;
+associate:'associate' NAME '->' NAME;
 
 unit:
     NAME                              #unitUNIT

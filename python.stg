@@ -1,7 +1,7 @@
 //templates
 
 unitClass(cname,stat) ::= <<
-import quantities as pq
+from unitClass import unitDec
 class <cname>:
     UnitDic = {}
     <stats(stat)>
@@ -24,16 +24,12 @@ variable(type,name) ::= " "
 
 assign(left,right) ::= "<left> = <right>"
 
-unit(num,un,cname)::= "pq.Quantity(<num>,<name>.UnitDic.<un>)"
-
-useunit(uname,uunit) ::=<<
-UnitDic['<uname>'] = <uunit>.pq
+unit(uname,upot)::= <<
+unitDec("<uname>",<upot>)
 >>
 
-addunit(name,units,symbol) ::=<<
-pq.UnitQuantity('<name>',<units>,symbol='<symbol>')
+createunit(uname,unit) ::=<<
+UnitDic['<uname>'] = <unit>
 >>
 
-symbol(sym) ::=<<
-pq.<sym>
->>
+

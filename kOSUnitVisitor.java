@@ -23,31 +23,16 @@ public class kOSUnitVisitor extends UnidadesBaseVisitor<ST>{
     }
 
     @Override public ST visitCreate(UnidadesParser.CreateContext ctx) {
-        ST res = stg.getInstanceOf("addunit");
-        res.add("name",ctx.uname.getText());
-        res.add("units",visit(ctx.unit()));
-        res.add("symbol",ctx.symbol.getText());
-        unitList.put(ctx.uname.getText(),ctx.symbol.getText());
-        return res;
-    }
-
-    @Override public ST visitUse(UnidadesParser.UseContext ctx) {
-        ST res = stg.getInstanceOf("useunit");
-        if(unitList.containsKey(ctx.NAME().getText())) {
-            res.add("uname", ctx.NAME().getText());
-            String unit = unitList.get(ctx.NAME().getText());
-            res.add("uunit", unit);
-        }
-        else{
-            System.err.println("ERROR:Create Unit before using it");
-            System.exit(1);
-        }
+        ST res = stg.getInstanceOf("createunit");
+        res.add("uname",ctx.NAME().getText());
+        res.add("unit",visit(ctx.uname));
         return res;
     }
 
     @Override public ST visitUnitUNIT(UnidadesParser.UnitUNITContext ctx) {
-        ST res = stg.getInstanceOf("symbol");
-        res.add("sym",ctx.NAME().getText());
+        ST res = stg.getInstanceOf("unit");
+        res.add("uname",ctx.NAME().getText());
+        res.add("upot","3");
         return res;
     }
 
@@ -58,7 +43,7 @@ public class kOSUnitVisitor extends UnidadesBaseVisitor<ST>{
         return res;
     }
 
-//    @Override public ST visitUnitPow(UnidadesParser.UnitPowContext ctx) { return visitChildren(ctx); }
+//    @Override public ST visitUnitPow(UnidadesParser.UnitPowContext ctx) {}
 
     protected STGroup stg = null;
 }
