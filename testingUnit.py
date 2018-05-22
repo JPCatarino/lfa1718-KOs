@@ -56,16 +56,6 @@ class val:
 
     def multiply(value1,value2):
         tmp = value1.unit + value2.unit
-        for x in value1.unit:
-            for y in value2.unit:
-                if x.unit == y.unit and x.pot == y.pot:
-                    for z in tmp:
-                        if z.unit == x.unit and z.pot == x.pot:
-                            tmp.remove(z)
-                            break            
-                    for z in tmp:
-                        if z.unit == x.unit and z.pot == x.pot: 
-                            z.pot = z.pot+x.pot
 
         for z, m in itertools.combinations(tmp, 2):
             if(z.unit == m.unit and -z.pot == m.pot):
@@ -88,21 +78,17 @@ class val:
             x.pot = -x.pot
         tmp = value1.unit + value2.unit
         for x in tmp:
-            print (x.unit + str(x.pot))
         for z, m in itertools.combinations(tmp, 2):
-            print(z.unit + "("+ str(z.pot) +")" + m.unit + "("+ str(m.pot) +")")
             if(z.unit == m.unit and -z.pot == m.pot):
                 if(m in tmp and z in tmp):
                     tmp.remove(z)
                     tmp.remove(m)
             elif(z.unit == m.unit and z.pot > m.pot and m.pot < 0):
                 if(m in tmp):
-                    print("ola")
                     z.pot = z.pot + m.pot
                     tmp.remove(m)                 
             elif(z.unit == m.unit and ((z.pot < 0 and m.pot < 0) or (z.pot > 0 and m.pot > 0))):
                 if(m in tmp):
-                    print("adeus")
                     z.pot = z.pot + m.pot
                     tmp.remove(m)
         value = value1.value / value2.value
