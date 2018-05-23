@@ -16,9 +16,6 @@ stats(stat) ::= <<
 <if(stat)><stat; separator="\n"><endif>
 >>
 
-div(left,right) ::= <<
-<left>/<right>
->>
 
 variable(type,name) ::= " "
 
@@ -32,4 +29,6 @@ createunit(uname,unit) ::=<<
 UnitDic['<uname>'] = <unit>
 >>
 
-
+glom(unit) ::=<<
+[<if(unit)><unit; separator=","><endif>]
+>>

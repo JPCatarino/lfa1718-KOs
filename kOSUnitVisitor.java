@@ -3,6 +3,7 @@ import org.stringtemplate.v4.*;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.antlr.v4.runtime.ParserRuleContext;
 import java.util.HashMap;
+import java.util.Map;
 
 public class kOSUnitVisitor extends UnidadesBaseVisitor<ST>{
     HashMap<String,String> unitList = new HashMap<String,String>();
@@ -32,18 +33,32 @@ public class kOSUnitVisitor extends UnidadesBaseVisitor<ST>{
     @Override public ST visitUnitUNIT(UnidadesParser.UnitUNITContext ctx) {
         ST res = stg.getInstanceOf("unit");
         res.add("uname",ctx.NAME().getText());
-        res.add("upot","3");
+        res.add("upot","1");
         return res;
     }
 
     @Override public ST visitUnitDivMult(UnidadesParser.UnitDivMultContext ctx) {
-        ST res = stg.getInstanceOf("div");
-        res.add("left",visit(ctx.num));
-        res.add("right",visit(ctx.den));
+        ST res = stg.getInstanceOf("glom");
+        ST left = visit(ctx.left);
+        ST right = visit(ctx.right);
+        if(ctx.op.getText().equals(":")){
+            Map attri = right.getAttributes();
+            int rightP =  Integer.parseInt(attri.get("upot").toString());
+            rightP = -rightP;
+            right.remove("upot");
+            right.add("upot",Integer.toString(rightP));
+        }
+        res.add("unit",left);
+        res.add("unit",right);
         return res;
     }
 
-//    @Override public ST visitUnitPow(UnidadesParser.UnitPowContext ctx) {}
+    @Override public ST visitUnitPow(UnidadesParser.UnitPowContext ctx) {
+        ST res = visit(ctx.unit());
+        res.remove("upot");
+        res.add("upot",ctx.INT().getText());
+        return res;
+    }
 
     protected STGroup stg = null;
 }

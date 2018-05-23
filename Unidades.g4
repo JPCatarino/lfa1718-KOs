@@ -14,9 +14,9 @@ create: 'create' 'unit' uname=unit 'named' NAME;
 associate:'associate' NAME '->' NAME;
 
 unit:
-    NAME                              #unitUNIT
-    |num=unit (':'|'*') den=unit      #unitDivMult
-    |unit '**' INT                    #unitPow
+    NAME                                    #unitUNIT
+    |left=unit op=(':'|'*') right=unit      #unitDivMult
+    |unit '**' INT                          #unitPow
     ;
 
 
