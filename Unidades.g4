@@ -6,19 +6,22 @@ main: statList EOF;
 statList: (stat? ';')*;
 
 stat:create
-    |associate
+    |pow
+    |compose
     ;
 
 create: 'create' 'unit' uname=unit 'named' NAME;
 
-associate:'associate' NAME '->' NAME;
+pow: 'unit' unit 'power of' INT;
 
-unit:
-    NAME                                    #unitUNIT
-    |left=unit op=(':'|'*') right=unit      #unitDivMult
-    |unit '**' INT                          #unitPow
-    ;
+compose:'compose' composedUnit;
 
+unit returns[String varName]:
+      NAME                                          #unitUNIT
+      ;
+
+composedUnit: left=NAME op=(':'|'*') right=NAME     #cUnitDivMult
+              ;
 
 WS: [ \t\r\n]+ -> skip;
 NEWLINE: '\r'? '\n';
