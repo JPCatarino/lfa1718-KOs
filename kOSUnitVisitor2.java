@@ -93,12 +93,15 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
 
     @Override public ST visitCUnitName(UnidadesParser.CUnitNameContext ctx) {
         ST res = stg.getInstanceOf("stats");
+        ST baseUnit = stg.getInstanceOf("tmpUnit");
         String id = ctx.NAME().getText();
         USymbol s = UnidadesParser.symbolTable.get(id);
+        baseUnit.add("uname",s.varName()+".unit");
+        baseUnit.add("upot",s.varName()+".pot");
         String tmp = newVarName();
         ST assign = stg.getInstanceOf("assign");
         assign.add("left",tmp);
-        assign.add("right",s.varName());
+        assign.add("right",baseUnit.render());
         ST group = stg.getInstanceOf("glom");
         res.add("stat",assign);
 
