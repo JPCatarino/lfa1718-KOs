@@ -25,18 +25,19 @@ public class UnidadesMain {
          // print LISP-style tree:
          // System.out.println(tree.toStringTree(parser));
          kOSUnitVisitor2 vis = new kOSUnitVisitor2();
-         ST code = vis.visit(tree);
-         String filename = "Output.py";
-         try
-         {
-            PrintWriter pw = new PrintWriter(new File(filename));
-            pw.print(code.render());
-            pw.close();
-         }
-         catch(IOException e)
-         {
-            System.err.println("ERROR: unable to write in file "+filename);
-            System.exit(3);
+         UnidadesSemanticCheck semanticCheck = new UnidadesSemanticCheck();
+         semanticCheck.visit(tree);
+         if (!ErrorHandling.error()) {
+            ST code = vis.visit(tree);
+            String filename = "Output.py";
+            try {
+               PrintWriter pw = new PrintWriter(new File(filename));
+               pw.print(code.render());
+               pw.close();
+            } catch (IOException e) {
+               System.err.println("ERROR: unable to write in file " + filename);
+               System.exit(3);
+            }
          }
       }
    }

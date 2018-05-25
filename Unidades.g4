@@ -1,6 +1,15 @@
 grammar Unidades;
 import BaseLexerRules;
 
+@parser::header {
+import java.util.Map;
+import java.util.HashMap;
+}
+
+@parser::members {
+static protected Map<String,USymbol> symbolTable = new HashMap<>();
+}
+
 main: statList EOF;
 
 statList: (stat? ';')*;
@@ -14,13 +23,15 @@ create: 'create' 'unit' uname=unit 'named' NAME;
 
 pow: 'unit' unit 'power of' INT;
 
-compose:'compose' composedUnit;
+compose:'compose' composedUnit 'named' NAME;
 
 unit returns[String varName]:
       NAME                                          #unitUNIT
       ;
 
-composedUnit: left=NAME op=(':'|'*') right=NAME     #cUnitDivMult
+composedUnit returns[String varName]:
+              NAME                                                   #cUnitName
+              |left=composedUnit op=(':'|'*') right=composedUnit     #cUnitDivMult
               ;
 
 WS: [ \t\r\n]+ -> skip;

@@ -28,6 +28,9 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
         ST cunit = stg.getInstanceOf("createunit");
         cunit.add("uname",ctx.NAME().getText());
         ST unit = visit(ctx.uname);
+        String id = ctx.NAME().getText();
+        USymbol s = UnidadesParser.symbolTable.get(id);
+        s.setVarName(ctx.uname.varName);
         cunit.add("unit",ctx.uname.varName);
         res.add("stat",unit);
         res.add("stat",cunit);
@@ -36,7 +39,22 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
      
     @Override public ST visitPow(UnidadesParser.PowContext ctx) { return visitChildren(ctx); }
      
-    @Override public ST visitCompose(UnidadesParser.ComposeContext ctx) { return visitChildren(ctx); }
+    @Override public ST visitCompose(UnidadesParser.ComposeContext ctx) {
+        ST res = stg.getInstanceOf("stats");
+        res.add("stat",visit(ctx.composedUnit()));
+        ST cunit = stg.getInstanceOf("createunit");
+        String id = ctx.NAME().getText();
+        USymbol s = UnidadesParser.symbolTable.get(id);
+        s.setVarName(newVarName());
+        ST assign = stg.getInstanceOf("assign");
+        assign.add("left",s.varName());
+        assign.add("right",ctx.composedUnit().varName);
+        res.add("stat",assign);
+        cunit.add("uname",ctx.NAME().getText());
+        cunit.add("unit",s.varName());
+        res.add("stat",cunit);
+        return res;
+    }
      
     @Override public ST visitUnitUNIT(UnidadesParser.UnitUNITContext ctx) {
         ctx.varName = newVarName();
@@ -49,7 +67,49 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
         return res;
     }
      
-    @Override public ST visitCUnitDivMult(UnidadesParser.CUnitDivMultContext ctx) { return visitChildren(ctx); }
+    @Override public ST visitCUnitDivMult(UnidadesParser.CUnitDivMultContext ctx) {
+        ST left = visit(ctx.left);
+        ST right = visit(ctx.right);
+        ST res = stg.getInstanceOf("stats");
+        res.add("stat",left);
+        res.add("stat",right);
+        String lvar = ctx.left.varName;
+        String rvar = ctx.right.varName;
+        if(ctx.op.getText().equals(":")){
+            ST inv = stg.getInstanceOf("invertPot");
+            inv.add("name",rvar);
+            res.add("stat",inv);
+        }
+        ctx.varName = newVarName();
+        ST group = stg.getInstanceOf("sum");
+        group.add("left",lvar);
+        group.add("right",rvar);
+        ST nAssign = stg.getInstanceOf("assign");
+        nAssign.add("left", ctx.varName);
+        nAssign.add("right",group);
+        res.add("stat",nAssign);
+        return res;
+    }
+
+    @Override public ST visitCUnitName(UnidadesParser.CUnitNameContext ctx) {
+        ST res = stg.getInstanceOf("stats");
+        String id = ctx.NAME().getText();
+        USymbol s = UnidadesParser.symbolTable.get(id);
+        String tmp = newVarName();
+        ST assign = stg.getInstanceOf("assign");
+        assign.add("left",tmp);
+        assign.add("right",s.varName());
+        ST group = stg.getInstanceOf("glom");
+        res.add("stat",assign);
+
+        ST assign2 = stg.getInstanceOf("assign");
+        ctx.varName = newVarName();
+        assign2.add("left",ctx.varName);
+        group.add("unit",tmp);
+        assign2.add("right",group);
+        res.add("stat",assign2);
+        return res;
+    }
 
 
     protected String newVarName() {
