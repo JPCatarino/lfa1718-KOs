@@ -66,7 +66,14 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
         res.add("right",un);
         return res;
     }
-     
+
+    @Override public ST visitCUnitParents(UnidadesParser.CUnitParentsContext ctx) {
+        ST res = visit(ctx.composedUnit());
+        ctx.varName = ctx.p.varName;
+        return res;
+    }
+
+
     @Override public ST visitCUnitDivMult(UnidadesParser.CUnitDivMultContext ctx) {
         ST left = visit(ctx.left);
         ST right = visit(ctx.right);
@@ -81,6 +88,7 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
             res.add("stat",inv);
         }
         ctx.varName = newVarName();
+        System.out.println(ctx.varName + "div");
         ST group = stg.getInstanceOf("sum");
         group.add("left",lvar);
         group.add("right",rvar);

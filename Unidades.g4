@@ -31,6 +31,7 @@ unit returns[String varName]:
 
 composedUnit returns[String varName]:
               NAME                                                   #cUnitName
+              |'(' p=composedUnit ')'                                  #cUnitParents
               |left=composedUnit op=(':'|'*') right=composedUnit     #cUnitDivMult
               ;
 
