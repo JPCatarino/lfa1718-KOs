@@ -1,6 +1,7 @@
-﻿Dependencias:
+﻿k_OS - Linguagem para Analise Dimensional
+
+Dependencias:
 python3
-python.quantities (https://pythonhosted.org/quantities/) (seguir instalação)
 
 
 
