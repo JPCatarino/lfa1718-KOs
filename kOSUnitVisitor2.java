@@ -37,7 +37,14 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
         return res;
     }
      
-    @Override public ST visitPow(UnidadesParser.PowContext ctx) { return visitChildren(ctx); }
+    @Override public ST visitPow(UnidadesParser.PowContext ctx) {
+        ST res = stg.getInstanceOf("assign");
+        String id = ctx.NAME().getText();
+        USymbol s = UnidadesParser.symbolTable.get(id);
+        res.add("left",s.varName()+".pot");
+        res.add("right",ctx.INT().getText());
+        return res;
+    }
      
     @Override public ST visitCompose(UnidadesParser.ComposeContext ctx) {
         ST res = stg.getInstanceOf("stats");
@@ -88,7 +95,6 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
             res.add("stat",inv);
         }
         ctx.varName = newVarName();
-        System.out.println(ctx.varName + "div");
         ST group = stg.getInstanceOf("sum");
         group.add("left",lvar);
         group.add("right",rvar);

@@ -21,7 +21,7 @@ stat:create
 
 create: 'create' 'unit' uname=unit 'named' NAME;
 
-pow: 'unit' unit 'power of' INT;
+pow: 'raise' NAME 'to power of' INT;
 
 compose:'compose' composedUnit 'named' NAME;
 
