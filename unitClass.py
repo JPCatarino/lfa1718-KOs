@@ -55,7 +55,13 @@ class val:
         return val(value,unit) 
 
     def multiply(value1,value2):
-        tmp = value1.unit + value2.unit
+        tmpLeft = []
+        tmpRight = []
+        for x in value1.unit:
+            tmpLeft.append(unitDec(x.unit,x.pot))
+        for x in value2.unit:
+            tmpRight.append(unitDec(x.unit,x.pot))
+        tmp = tmpLeft + tmpRight
         for z, m in itertools.combinations(tmp, 2):
             if(z.unit == m.unit and -z.pot == m.pot):
                 if(m in tmp and z in tmp):
@@ -73,9 +79,15 @@ class val:
         return val(value,tmp) 
     
     def divide(value1,value2):
+        tmpLeft = []
+        tmpRight = []
+        for x in value1.unit:
+            tmpLeft.append(unitDec(x.unit,x.pot))
         for x in value2.unit:
+            tmpRight.append(unitDec(x.unit,x.pot))
+        for x in tmpRight:
             x.pot = -x.pot
-        tmp = value1.unit + value2.unit
+        tmp = tmpLeft + tmpRight
         for z, m in itertools.combinations(tmp, 2):
             if(z.unit == m.unit and -z.pot == m.pot):
                 if(m in tmp and z in tmp):
@@ -94,14 +106,24 @@ class val:
         
     def printVal(value):
         tmp = str(value.value) + " "
+        neg = []
+        pos = []
         for x in value.unit:
-            if(x.pot == 1):
-                tmp = tmp + x.unit
-            if(x.pot > 1 and x.pot != 0):
-                tmp = tmp + x.unit
-                tmp = tmp + "^" + str(x.pot)
-            elif(x.pot < 0):
-                tmp = tmp + "/" + str(x.unit)
-                if(-x.pot > 1):
-                    tmp = tmp + "^" + str(-x.pot)
-        return tmp 
+            if(x.pot > 0):
+                pos.append(x)
+            if(x.pot < 0):
+                neg.append(x)
+        units = ""
+        if(len(pos)==0 and len(neg) != 0):
+            units += "1"
+        elif(len(pos)==0):
+            units = ""
+        else:
+            for x in pos:
+                units += x.unit + "^" + str(x.pot)
+        if(len(neg)!=0):
+            units += "/"
+            for x in neg:
+                units += x.unit + "^" + str(x.pot)
+        tmp += units
+        return tmp
