@@ -24,8 +24,11 @@ public class BaseGrammarMain {
       // begin parsing at main rule:
       ParseTree tree = parser.main();
       if (parser.getNumberOfSyntaxErrors() == 0) {
+        BaseGrammarSemanticCheck semanticCheck = new BaseGrammarSemanticCheck();
+        semanticCheck.visit(tree);
          // print LISP-style tree:
          // System.out.println(tree.toStringTree(parser));
+         /*
          testVisitor vis = new testVisitor();
          ST code = vis.visit(tree);
          String filename = "Output.py";
@@ -39,7 +42,7 @@ public class BaseGrammarMain {
          {
             System.err.println("ERROR: unable to write in file "+filename);
             System.exit(3);
-         }
+         }*/
       }
    }
 }
