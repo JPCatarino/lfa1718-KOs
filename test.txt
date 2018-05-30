@@ -1,0 +1,6 @@
+create unit lfa named lfa;
+create unit ee named ee;
+compose lfa*ee named test;
+raise lfa to power of 2;
+raise test to power of 2;
+compose test*lfa named something;
