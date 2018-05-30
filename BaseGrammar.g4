@@ -6,10 +6,13 @@ import BaseLexerRules;
 // Instructions must end with ';'
 // Instructions may or may not be separated by '\n' character
 // Accepts empty lines
-main: (stat ('\n')*)* EOF;
+main: statList EOF;
+
+statList: (stat)*;
+
 stat returns[String v]:
     loop
-    | instruction {$v = $instruction.v;} ';'
+    |instruction ';' {$v = $instruction.v;}
     ;
 
 // General intruction
@@ -18,7 +21,7 @@ instruction returns[String v]:
     COMMAND '(' NAME ')'                                    #print_readVar
     // Value atribution to variable
     // (This also accepts values that are not the result of an operation)
-    | NAME '=' operation  #assignment
+    |NAME '=' operation                                     #assignment
     ;
 
 /* -------------
@@ -43,8 +46,8 @@ loop:
 operation returns[String v]:
     '(' n=operation ')'                                     #par
     | left=operation NUMERIC_OPERATOR right=operation       #op
-    | NAME                   #assignVar
-    | value { $v = $value.text;}        #val
+    | NAME                                                  #assignVar
+    | value { $v = $value.text;}                            #val
 
     ;
 
@@ -57,3 +60,5 @@ value: SIGNAL? (INT|REAL) pow? NAME?;
 
 // Equivalent to "*10^"
 pow: 'e' (SIGNAL? (INT|REAL));
+
+WS: [ \t\r\n]+ -> skip;
