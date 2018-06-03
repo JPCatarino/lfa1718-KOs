@@ -68,3 +68,8 @@ for(var,min,max,stat) ::=<<
 for <var> in range (<min>, <max>):
     <stats(stat)>
 >>
+
+while(condition,stat) ::<<
+while (<condition>):
+    <stats(stat)>
+>>
