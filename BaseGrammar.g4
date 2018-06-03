@@ -66,7 +66,7 @@ condition:
     (value|NAME) CONDITIONAL_OPERATOR (value|NAME);
 
 // Value
-value: SIGNAL? (INT|REAL) pow? NAME?;
+value: ('+'|'-')? (INT|REAL) pow? STRING?;
 
 // Equivalent to "*10^"
 pow: 'e' (SIGNAL? (INT|REAL));
