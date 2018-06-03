@@ -69,6 +69,6 @@ condition:
 value: ('+'|'-')? (INT|REAL) pow? STRING?;
 
 // Equivalent to "*10^"
-pow: 'e' (SIGNAL? (INT|REAL));
+pow: 'e' (('+'|'-')? (INT|REAL));
 
 WS: [ \t\r\n]+ -> skip;

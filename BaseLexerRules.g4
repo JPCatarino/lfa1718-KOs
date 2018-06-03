@@ -47,9 +47,6 @@ CONDITIONAL_OPERATOR:
     | ('>'|'<') ('=')?
     ;
 
-// Signal (negativa values)
-SIGNAL: ('+' | '-');
-
 // Integer Value (int)
 INT: [0-9]+;
 
