@@ -1,8 +1,5 @@
 lexer grammar BaseLexerRules;
 
-// Signal (negativa values)
-SIGNAL: ('+' | '-');
-
 // Units used for dimensional analysis
 UNIT: ('m'|'g'|'s'|'A'|'K'|'mol'|'cd');
 
@@ -49,6 +46,9 @@ CONDITIONAL_OPERATOR:
     // Greater (or equal) OR Smaller (or equal)
     | ('>'|'<') ('=')?
     ;
+
+// Signal (negativa values)
+SIGNAL: ('+' | '-');
 
 // Integer Value (int)
 INT: [0-9]+;
