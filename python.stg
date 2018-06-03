@@ -63,3 +63,8 @@ if(condition,stat) ::=<<
 if(<condition>):
     <stats(stat)>
 >>
+
+for(var,min,max,stat) ::=<<
+for <var> in range (<min>, <max>):
+    <stats(stat)>
+>>

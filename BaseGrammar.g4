@@ -39,7 +39,7 @@ if_else:
  */
 loop:
     // FOR LOOP
-    'for' '(' instruction ';' condition ';' instruction ')' '{' (stat ('\n')*)* '}'     #loopFor
+    'for' '(' var=NAME ';' min=INT ';' max=INT ')' '{' (stat ('\n')*)* '}'     #loopFor
     // WHILE LOOP
     | 'while' '(' condition ')' '{' (stat ('\n')*)* '}'                                 #loopWhile
     // DO-WHILE LOOP
