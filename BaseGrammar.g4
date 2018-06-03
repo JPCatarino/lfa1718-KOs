@@ -1,7 +1,13 @@
 grammar BaseGrammar;
 import BaseLexerRules;
-@header { import java.util.*;}
-@parser::members {protected Map<String, String> symbolTable = new HashMap<String, String>();}
+@parser::header {
+import java.util.Map;
+import java.util.HashMap;
+}
+
+@parser::members {
+static protected Map<String,USymbol> symbolTable = new HashMap<>();
+}
 
 // Instructions must end with ';'
 // Instructions may or may not be separated by '\n' character
@@ -12,7 +18,7 @@ statList: (stat)*;
 
 stat returns[String v]:
     loop
-    |instruction ';' {$v = $instruction.v;}
+    |instruction  {$v = $instruction.v;}
     ;
 
 // General intruction

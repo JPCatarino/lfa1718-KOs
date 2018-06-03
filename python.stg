@@ -7,6 +7,11 @@ class <cname>:
     <stats(stat)>
 >>
 
+baseClass(cname,stat) ::= <<
+class <cname>:
+    <stats(stat)>
+>>
+
 module(stat) ::= <<
 def main():
     <stats(stat)>
@@ -55,8 +60,8 @@ glom(unit) ::=<<
 [<if(unit)><unit; separator=","><endif>]
 >>
 
-print(arg) ::=<<
-print(arg)
+print(arg)::=<<
+print(<arg>)
 >>
 
 if(condition,stat) ::=<<

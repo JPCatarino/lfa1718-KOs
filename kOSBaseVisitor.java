@@ -2,17 +2,11 @@ import java.io.File;
 import org.stringtemplate.v4.*;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.antlr.v4.runtime.ParserRuleContext;
-
-@parser::header {
 import java.util.Map;
 import java.util.HashMap;
-}
 
-@parser::members {
-static protected Map<String,USymbol> symbolTable = new HashMap<>();
-}
 
-public class kOSBaseVisitor extends BaseGrammarVisitor<ST> {
+public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
     @Override public ST visitMain(BaseGrammarParser.MainContext ctx) {
         stg = new STGroupFile("python.stg");
@@ -31,27 +25,28 @@ public class kOSBaseVisitor extends BaseGrammarVisitor<ST> {
 
     // FEITO
     // NÃO TESTADO!!!
-    @Override public T visitCommand(BaseGrammarParser.CommandContext ctx) {
+    @Override public ST visitCommand(BaseGrammarParser.CommandContext ctx) {
         ST res = stg.getInstanceOf("print");
-        ret.add("arg",ctx.NAME());
+        res.add("arg",ctx.NAME().getText());
         return res;
     }
 
     // FEITO
     // NÃO TESTADO!!!
-    @Override public T visitAssignment(BaseGrammarParser.AssignmentContext ctx) {
+    @Override public ST visitAssignment(BaseGrammarParser.AssignmentContext ctx) {
         ST res = stg.getInstanceOf("assign");
         // Left
         ST var = stg.getInstanceOf("variable");
-        var.add("name",ctx.NAME());
+        var.add("name",ctx.NAME().getText());
         res.add("left",var);
         // Right
         res.add("right",visit(ctx.operation()));
+        return res;
     }
 
     // FEITO
     // NÃO TESTADO!!!
-    @Override public T visitIf_else(BaseGrammarParser.If_elseContext ctx) {
+    @Override public ST visitIf_else(BaseGrammarParser.If_elseContext ctx) {
         ST res = stg.getInstanceOf("if");
         res.add("condition",ctx.condition());
         for(BaseGrammarParser.StatContext sc: ctx.stat())
@@ -61,7 +56,7 @@ public class kOSBaseVisitor extends BaseGrammarVisitor<ST> {
 
     // FEITO
     // NÃO TESTADO!!!
-    @Override public T visitLoopFor(BaseGrammarParser.LoopForContext ctx)
+    @Override public ST visitLoopFor(BaseGrammarParser.LoopForContext ctx){
         ST res = stg.getInstanceOf("for");
         res.add("var",ctx.var);
         res.add("min",ctx.min);
@@ -73,8 +68,8 @@ public class kOSBaseVisitor extends BaseGrammarVisitor<ST> {
 
     // FEITO
     // NÃO TESTADO!!!
-    @Override public T visitLoopWhile(BaseGrammarParser.LoopWhileContext ctx) {
-        ST res = stg.getInstaceOf("while");
+    @Override public ST visitLoopWhile(BaseGrammarParser.LoopWhileContext ctx) {
+        ST res = stg.getInstanceOf("while");
         res.add("condition",ctx.condition());
         for(BaseGrammarParser.StatContext sc: ctx.stat())
             res.add("stat", visit(sc));
@@ -83,34 +78,35 @@ public class kOSBaseVisitor extends BaseGrammarVisitor<ST> {
 
     // FEITO
     // NÃO TESTADO!!!
-    @Override public T visitLoopDoWhile(BaseGrammarParser.LoopDoWhileContext ctx) {
-        ST res = stg.getInstaceOf("do_while");
+    @Override public ST visitLoopDoWhile(BaseGrammarParser.LoopDoWhileContext ctx) {
+        ST res = stg.getInstanceOf("do_while");
         res.add("condition",ctx.condition());
         for(BaseGrammarParser.StatContext sc: ctx.stat())
             res.add("stat", visit(sc));
         return res;
     }
 
-    // AINDA TENHO QUE FAZER...
-    @Override public T visitPar(BaseGrammarParser.ParContext ctx) { return visitChildren(ctx); }
+/*    // AINDA TENHO QUE FAZER...
+    @Override public ST visitPar(BaseGrammarParser.ParContext ctx) { return visitChildren(ctx); }
 
     // AINDA TENHO QUE FAZER...
-    @Override public T visitVal(BaseGrammarParser.ValContext ctx) { return visitChildren(ctx); }
+    @Override public ST visitVal(BaseGrammarParser.ValContext ctx) { return visitChildren(ctx); }
 
     // AINDA TENHO QUE FAZER...
-    @Override public T visitOp(BaseGrammarParser.OpContext ctx) { return visitChildren(ctx); }
+    @Override public ST visitOp(BaseGrammarParser.OpContext ctx) { return visitChildren(ctx); }*/
 
     // FEITO
     // NÃO TESTADO!!!
-    @Override public T visitDecrement(BaseGrammarParser.DencrementContext ctx) {
+    @Override public ST visitDecrement(BaseGrammarParser.DecrementContext ctx) {
         ST res = stg.getInstanceOf("sub");
         res.add("left",ctx.NAME());
         res.add("right",1);
+        return res;
     }
 
     // FEITO
     // NÃO TESTADO!!!
-    @Override public T visitAssignVar(BaseGrammarParser.AssignVarContext ctx) {
+    @Override public ST visitAssignVar(BaseGrammarParser.AssignVarContext ctx) {
         ST var = stg.getInstanceOf("variable");
         var.add("name",ctx.NAME());
         return var;
@@ -118,20 +114,21 @@ public class kOSBaseVisitor extends BaseGrammarVisitor<ST> {
 
     // FEITO
     // NÃO TESTADO!!!
-    @Override public T visitIncrement(BaseGrammarParser.IncrementContext ctx) {
+    @Override public ST visitIncrement(BaseGrammarParser.IncrementContext ctx) {
         ST res = stg.getInstanceOf("sum");
         res.add("left",ctx.NAME());
         res.add("right",1);
+        return res;
     }
 
-    // AINDA TENHO QUE FAZER...
-    @Override public T visitCondition(BaseGrammarParser.ConditionContext ctx) { return visitChildren(ctx); }
+/*    // AINDA TENHO QUE FAZER...
+    @Override public ST visitCondition(BaseGrammarParser.ConditionContext ctx) { return visitChildren(ctx); }
 
     // AINDA TENHO QUE FAZER...
-    @Override public T visitValue(BaseGrammarParser.ValueContext ctx) { return visitChildren(ctx); }
+    @Override public ST visitValue(BaseGrammarParser.ValueContext ctx) { return visitChildren(ctx); }
 
     // AINDA TENHO QUE FAZER...
-    @Override public T visitPow(BaseGrammarParser.PowContext ctx) { return visitChildren(ctx); }
+    @Override public ST visitPow(BaseGrammarParser.PowContext ctx) { return visitChildren(ctx); }*/
 
     protected String newVarName() {
         varCount++;
