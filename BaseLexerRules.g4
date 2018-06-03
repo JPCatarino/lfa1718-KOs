@@ -1,8 +1,5 @@
 lexer grammar BaseLexerRules;
 
-// Units used for dimensional analysis
-UNIT: ('m'|'g'|'s'|'A'|'K'|'mol'|'cd');
-
 // Accepted variable types
 VARTYPE: 'void'
        | 'boolean'
