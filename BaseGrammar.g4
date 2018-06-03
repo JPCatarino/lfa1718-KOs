@@ -31,7 +31,7 @@ instruction returns[String v]:
  * --------------------
  */
 if:
-    'if' '(' condition ')' (('{'stat*'}')|stat?) ('else' (if|('{'stat*'}')|stat?))?;
+    'if' '(' condition ')' (('{'statList'}')|stat?) ('else' (if|('{'statList'}')|stat?))?;
 
 /* -------------
  * LOOPS SECTION
