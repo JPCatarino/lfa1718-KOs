@@ -24,6 +24,13 @@ instruction returns[String v]:
     |NAME '=' operation                                     #assignment
     ;
 
+/* --------------------
+ * CONDITIONALS SECTION
+ * --------------------
+ */
+if:
+    'if' '(' condition ')' (('{'stat*'}')|stat?) ('else' (if|('{'stat*'}')|stat?))?;
+
 /* -------------
  * LOOPS SECTION
  * -------------
@@ -41,7 +48,6 @@ loop:
  * OPERATIONS SECTION
  * ------------------
  */
-
 // Operations
 operation returns[String v]:
     '(' n=operation ')'                                     #par
