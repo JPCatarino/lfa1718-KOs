@@ -54,3 +54,7 @@ UnitDic['<uname>'] = <unit>
 glom(unit) ::=<<
 [<if(unit)><unit; separator=","><endif>]
 >>
+
+print(arg) ::=<<
+print(arg)
+>>

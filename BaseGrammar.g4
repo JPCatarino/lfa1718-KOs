@@ -18,7 +18,7 @@ stat returns[String v]:
 // General intruction
 instruction returns[String v]:
     // Print/Read variable
-    COMMAND '(' NAME ')'                                    #print_readVar
+    COMMAND '(' NAME ')'                                 #command
     // Value atribution to variable
     // (This also accepts values that are not the result of an operation)
     | NAME '=' operation                                 #assignment

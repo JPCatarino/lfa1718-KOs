@@ -29,8 +29,13 @@ public class kOSBaseVisitor extends BaseGrammarVisitor<ST> {
         return res;
     }
 
-    // AINDA TENHO QUE FAZER...
-    @Override public T visitPrint_readVar(BaseGrammarParser.Print_readVarContext ctx) { return visitChildren(ctx); }
+    // FEITO
+    // NÃO TESTADO!!!
+    @Override public T visitCommand(BaseGrammarParser.CommandContext ctx) {
+        ST res = stg.getInstanceOf("print");
+        ret.add("arg",ctx.NAME());
+        return res;
+    }
 
     // FEITO
     // NÃO TESTADO!!!
