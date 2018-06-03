@@ -50,14 +50,17 @@ INT: [0-9]+;
 // REAL Value (real/float)
 REAL: INT ('.' INT)?;
 
+// Unit
+STRING:[a-zA-Z]+;
+
 // Variable
 // (Must start with a letter and may have digits)
-NAME: [a-zA-Z] [a-zA-Z_0-9]*;
+NAME:[a-zA-Z][a-zA-Z_0-9]*;
 
-
-STRING: [a-zA-Z];
+// Signal
+SIGNAL: ('+'|'-');
 
 // Ignore WhiteSpaces
-WS: [ \t\r\n]+ -> skip;
+WS:[ \t\r\n]+ -> skip;
 
 NEWLINE: '\r'? '\n';

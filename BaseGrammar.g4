@@ -54,7 +54,7 @@ loop:
 operation returns[String v]:
     '(' n=operation ')'                                     #par
     | NAME '++'                                             #increment
-    | NAME '--'                                             #dencrement
+    | NAME '--'                                             #decrement
     | left=operation NUMERIC_OPERATOR right=operation       #op
     | NAME                                                  #assignVar
     | value { $v = $value.text;}                            #val
@@ -66,9 +66,9 @@ condition:
     (value|NAME) CONDITIONAL_OPERATOR (value|NAME);
 
 // Value
-value: ('+'|'-')? (INT|REAL) pow? STRING?;
+value: SIGNAL? (INT|REAL) pow? STRING?;
 
 // Equivalent to "*10^"
-pow: 'e' (('+'|'-')? (INT|REAL));
+pow: 'e' (SIGNAL? (INT|REAL));
 
 WS: [ \t\r\n]+ -> skip;
