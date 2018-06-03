@@ -49,8 +49,15 @@ public class kOSBaseVisitor extends BaseGrammarVisitor<ST> {
         res.add("right",visit(ctx.operation()));
     }
 
-    // AINDA TENHO QUE FAZER...
-    @Override public T visitIf_else(BaseGrammarParser.If_elseContext ctx) { return visitChildren(ctx); }
+    // FEITO
+    // NÃO TESTADO!!!
+    @Override public T visitIf_else(BaseGrammarParser.If_elseContext ctx) {
+        ST res = stg.getInstanceOf("if");
+        res.add("condition",ctx.condition());
+        for(BaseGrammarParser.StatContext sc: ctx.stat())
+            res.add("stat", visit(sc));
+        return res;
+    }
 
     // AINDA TENHO QUE FAZER...
     @Override public T visitLoopFor(BaseGrammarParser.LoopForContext ctx) { return visitChildren(ctx); }

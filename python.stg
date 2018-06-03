@@ -58,3 +58,8 @@ glom(unit) ::=<<
 print(arg) ::=<<
 print(arg)
 >>
+
+if(condition,stat) ::=<<
+if(<condition>):
+    <stats(stat)>
+>>
