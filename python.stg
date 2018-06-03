@@ -69,12 +69,12 @@ for <var> in range (<min>, <max>):
     <stats(stat)>
 >>
 
-while(condition,stat) ::<<
+while(condition,stat) ::=<<
 while (<condition>):
     <stats(stat)>
 >>
 
-do_while(condition,stat) ::<<
+do_while(condition,stat) ::=<<
 <stats(stat)>
 while (<condition>):
     <stats(stat)>
