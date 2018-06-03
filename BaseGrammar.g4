@@ -30,8 +30,8 @@ instruction returns[String v]:
  * CONDITIONALS SECTION
  * --------------------
  */
-if:
-    'if' '(' condition ')' (('{'statList'}')|stat?) ('else' (if|('{'statList'}')|stat?))?;
+if_else:
+    'if' '(' condition ')' (('{'statList'}')|stat?) ('else' (if_else|('{'statList'}')|stat?))?;
 
 /* -------------
  * LOOPS SECTION
