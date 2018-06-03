@@ -27,6 +27,15 @@ for x in <name>:
 sum(left,right) ::=<<
 <left> + <right>
 >>
+sub(left,right) ::=<<
+<left> - <right>
+>>
+mult(left,right) ::=<<
+<left> * <right>
+>>
+div(left,right) ::=<<
+<left> / <right>
+>>
 
 assign(left,right) ::= "<left> = <right>"
 
