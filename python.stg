@@ -17,7 +17,7 @@ stats(stat) ::= <<
 >>
 
 
-variable(type,name) ::= "<name>"
+variable(name) ::= "<name>"
 
 invertPot(name) ::= <<
 for x in <name>:
