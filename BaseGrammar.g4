@@ -21,7 +21,9 @@ instruction returns[String v]:
     COMMAND '(' NAME ')'                                    #print_readVar
     // Value atribution to variable
     // (This also accepts values that are not the result of an operation)
-    |NAME '=' operation                                     #assignment
+    | NAME '=' operation                                 #assignment
+    // Operation without storing result or (most common) variable increment/decrement
+    | operation                                          #soloOp
     ;
 
 /* --------------------
@@ -51,6 +53,8 @@ loop:
 // Operations
 operation returns[String v]:
     '(' n=operation ')'                                     #par
+    | NAME '++'                                             #increment
+    | NAME '--'                                             #dencrement
     | left=operation NUMERIC_OPERATOR right=operation       #op
     | NAME                                                  #assignVar
     | value { $v = $value.text;}                            #val
