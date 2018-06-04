@@ -29,13 +29,15 @@ value:
 
 // General intruction
 instruction returns[String v]:
+    // Variable declaration
+    varType NAME                                        #varDec
     // Print/Read variable
-    COMMAND '(' NAME ')'                                 #command
+    | COMMAND '(' NAME ')'                              #command
     // Value atribution to variable
     // (This also accepts values that are not the result of an operation)
-    | NAME '=' operation                                 #assignment
+    | NAME '=' operation                                #assignment
     // Operation without storing result or (most common) variable increment/decrement
-    | operation                                          #soloOp
+    | operation                                         #soloOp
     ;
 
 /* --------------------
@@ -82,6 +84,12 @@ condition:
 conditionE:
     value
     |NAME
+    ;
+
+// Variable Types
+varType:
+    'simpVar'   #simple
+    | 'unitVar' #unit
     ;
 
 // Equivalent to "*10^"
