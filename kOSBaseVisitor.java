@@ -121,9 +121,9 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         return res;
     }
 
-/*    // AINDA TENHO QUE FAZER...
-    @Override public ST visitCondition(BaseGrammarParser.ConditionContext ctx) { return visitChildren(ctx); }
+//    @Override public ST visitCondition(BaseGrammarParser.ConditionContext ctx) {}
 
+    /*
     // AINDA TENHO QUE FAZER...
     @Override public ST visitValue(BaseGrammarParser.ValueContext ctx) { return visitChildren(ctx); }
 

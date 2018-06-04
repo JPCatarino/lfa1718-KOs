@@ -69,7 +69,14 @@ operation returns[String v]:
 
 // Conditions
 condition:
-    (value|NAME) CONDITIONAL_OPERATOR (value|NAME);
+    conditionE CONDITIONAL_OPERATOR conditionE              #compare
+    |conditionE                                             #soloCond
+    ;
+
+conditionE:
+    value
+    |NAME
+    ;
 
 // Value
 value: SIGNAL? (INT|REAL) pow? STRING?;
