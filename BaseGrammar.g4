@@ -75,7 +75,14 @@ operation returns[String v]:
 
 // Conditions
 condition:
-    (value|NAME) CONDITIONAL_OPERATOR (value|NAME);
+    conditionE CONDITIONAL_OPERATOR conditionE              #compare
+    |conditionE                                             #soloCond
+    ;
+
+conditionE:
+    value
+    |NAME
+    ;
 
 // Equivalent to "*10^"
 pow: 'e' ('-')? (INT|REAL);

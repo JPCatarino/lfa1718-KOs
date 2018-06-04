@@ -1,0 +1,4 @@
+while(a_b > 1){
+    Print(a_b)
+    Print(a_c)
+}
