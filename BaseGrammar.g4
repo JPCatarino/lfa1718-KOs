@@ -21,6 +21,12 @@ stat returns[String v]:
     |instruction  {$v = $instruction.v;}
     ;
 
+// Value
+value:
+    (INT|REAL) pow? STRING?
+    | '(' '-' (INT|REAL) pow? STRING? ')'
+    ;
+
 // General intruction
 instruction returns[String v]:
     // Print/Read variable
@@ -71,10 +77,7 @@ operation returns[String v]:
 condition:
     (value|NAME) CONDITIONAL_OPERATOR (value|NAME);
 
-// Value
-value: SIGNAL? (INT|REAL) pow? STRING?;
-
 // Equivalent to "*10^"
-pow: 'e' (SIGNAL? (INT|REAL));
+pow: 'e' ('-')? (INT|REAL);
 
 WS: [ \t\r\n]+ -> skip;
