@@ -77,13 +77,13 @@ operation returns[String v]:
 
 // Conditions
 condition:
-    conditionE CONDITIONAL_OPERATOR conditionE              #compare
-    |conditionE                                             #soloCond
+    left=conditionE CONDITIONAL_OPERATOR right=conditionE              #compare
+    |conditionE                                                        #soloCond
     ;
 
 conditionE:
-    value
-    |NAME
+    value           #condiEValue
+    |NAME           #condiEVar
     ;
 
 // Variable Types

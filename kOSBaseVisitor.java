@@ -70,7 +70,7 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     // NÃO TESTADO!!!
     @Override public ST visitLoopWhile(BaseGrammarParser.LoopWhileContext ctx) {
         ST res = stg.getInstanceOf("while");
-        res.add("condition",ctx.condition());
+        res.add("condition",visit(ctx.condition()));
         for(BaseGrammarParser.StatContext sc: ctx.stat())
             res.add("stat", visit(sc));
         return res;
@@ -121,7 +121,22 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         return res;
     }
 
-//    @Override public ST visitCondition(BaseGrammarParser.ConditionContext ctx) {}
+    @Override public ST visitCompare(BaseGrammarParser.CompareContext ctx) {
+        ST res = stg.getInstanceOf("condition");
+        System.out.print("im here");
+        res.add("left", visit(ctx.left));
+        res.add("op", ctx.CONDITIONAL_OPERATOR().getText());
+        res.add("right", visit(ctx.right));
+        return res;
+    }
+
+    //    @Override public ST visitCondiEValue(BaseGrammarParser.CondiEValueContext ctx) { }
+
+    @Override public ST visitCondiEVar(BaseGrammarParser.CondiEVarContext ctx) {
+        ST res = stg.getInstanceOf("variable");
+        res.add("name",ctx.NAME().getText());
+        return res;
+    }
 
     /*
     // AINDA TENHO QUE FAZER...
