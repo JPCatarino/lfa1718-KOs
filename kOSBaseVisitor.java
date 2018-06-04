@@ -80,7 +80,7 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     // NÃO TESTADO!!!
     @Override public ST visitLoopDoWhile(BaseGrammarParser.LoopDoWhileContext ctx) {
         ST res = stg.getInstanceOf("do_while");
-        res.add("condition",ctx.condition());
+        res.add("condition",visit(ctx.condition()));
         for(BaseGrammarParser.StatContext sc: ctx.stat())
             res.add("stat", visit(sc));
         return res;
