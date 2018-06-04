@@ -1,3 +1,13 @@
+condiOperators ::= [
+   ">":">",
+   ">=":">=",
+   "<":"<",
+   "<=":"<=",
+   "==":"==",
+   default:"null"
+]
+
+
 //templates
 
 unitClass(cname,stat) ::= <<
@@ -40,6 +50,10 @@ mult(left,right) ::=<<
 >>
 div(left,right) ::=<<
 <left> / <right>
+>>
+
+condition(left,op,right) ::=<<
+<left> <condiOperators.(op)> <right>
 >>
 
 assign(left,right) ::= "<left> = <right>"

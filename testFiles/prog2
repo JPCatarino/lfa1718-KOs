@@ -1,4 +1,4 @@
-while(a_b > 1){
+while(a_b > a_c){
     Print(a_b)
     Print(a_c)
 }
