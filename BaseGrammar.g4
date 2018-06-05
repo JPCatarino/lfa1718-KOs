@@ -17,6 +17,7 @@ statList: (stat)*;
 
 stat:
     loop
+    |if_else
     |instruction
     ;
 
