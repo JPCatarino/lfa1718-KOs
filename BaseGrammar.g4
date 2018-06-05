@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.HashMap;
 }
 
-@parser::members {static protected Map<String,VarAssign> symbolTable = new HashMap<>();
+@parser::members {static protected Map<String,BGSymbol> symbolTable = new HashMap<>();
 }
 
 // Instructions must end with ';'

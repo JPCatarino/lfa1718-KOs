@@ -79,7 +79,7 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
         return res;
     }
     */
-    @Override public Boolean visitVarDec(BaseGrammarParser.AssignVarContext ctx){
+    @Override public Boolean visitVarDec(BaseGrammarParser.VarDecContext ctx) {
         Boolean res = true;
         String id = ctx.NAME().getText();
         if (BaseGrammarParser.symbolTable.containsKey(id)){
