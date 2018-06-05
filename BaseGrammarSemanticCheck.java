@@ -90,9 +90,8 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
 
             if(ctx.varType().getText().equals("simpVar")){
                 BaseGrammarParser.symbolTable.put(id, new BaseGrammarSymbol(id, vartype.simpVar));
-
-            }
-
+	   }else
+		BaseGrammarParser.symbolTable.put(id, new BaseGrammarSymbol(id, vartype.unitVar));
 
         }
         return res;

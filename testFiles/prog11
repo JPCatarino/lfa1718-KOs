@@ -1,0 +1,4 @@
+if(a_b > a_d)
+{
+	Print(d_c)
+}
