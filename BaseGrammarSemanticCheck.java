@@ -29,7 +29,26 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
     @Override public Boolean visitAssignVar(BaseGrammarParser.AssignVarContext ctx){     
         Boolean res = true;
         String name = ctx.NAME().getText();
-        ErrorHandling.printError(ctx, "Variable \""+name+"\" does not exist!");
+        if (!BaseGrammarParser.symbolTable.containsKey(name)){
+            ErrorHandling.printError(ctx, "Variable \""+name+"\" does not exist!");
+            res = false;
+        }
+        return res;
+    }
+
+    @Override public Boolean visitDecrement(BaseGrammarParser.DecrementContext ctx){     
+        Boolean res = true;
+        String name = ctx.NAME().getText();
+        if (!BaseGrammarParser.symbolTable.containsKey(name)){
+            ErrorHandling.printError(ctx, "Variable \""+name+"\" does not exist!");
+            res = false;
+        }
+        return res;
+    }
+
+    @Override public Boolean visitIncrement(BaseGrammarParser.IncrementContext ctx){     
+        Boolean res = true;
+        String name = ctx.NAME().getText();
         if (!BaseGrammarParser.symbolTable.containsKey(name)){
             ErrorHandling.printError(ctx, "Variable \""+name+"\" does not exist!");
             res = false;
