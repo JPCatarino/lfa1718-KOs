@@ -92,16 +92,7 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
                 BaseGrammarParser.symbolTable.put(id, new BaseGrammarSymbol(id, vartype.simpVar));
 
             }
-
-
         }
         return res;
-
-
     }
-
-
-
-
-
-    }
+}

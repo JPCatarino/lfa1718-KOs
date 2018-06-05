@@ -23,12 +23,14 @@ stat:
 
 // Value
 value:
-    (INT|REAL) pow? NAME?
-    | '(' '-' (INT|REAL) pow? NAME? ')'
+    num=(INT|REAL) pow? NAME                #valueUnit
+    | '(' '-' (INT|REAL) pow? NAME ')'  #valueUnitNeg
+    |(INT|REAL) pow?                    #valueS
+    | '(' '-' (INT|REAL) pow?')'        #valueSNeg
     ;
 
 // General intruction
-instruction:
+instruction returns[String varName]:
     // Variable declaration
     varType NAME                                        #varDec
     // Print/Read variable
