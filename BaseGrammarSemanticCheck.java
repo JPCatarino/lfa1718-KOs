@@ -3,7 +3,7 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
-    @Override public Boolean visitCheckVar(BaseGrammarParser.CheckVarContext ctx){
+    @Override public Boolean visitCommand(BaseGrammarParser.CommandContext ctx){
         Boolean res = true;
         String name = ctx.NAME().getText();
         if (!BaseGrammarParser.symbolTable.containsKey(name)){
