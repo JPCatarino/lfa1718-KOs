@@ -25,7 +25,7 @@ public class UnidadesSemanticCheck extends UnidadesBaseVisitor<Boolean> {
     public Boolean visitCreate(UnidadesParser.CreateContext ctx) {
         Boolean res = true;
 
-        String id = ctx.STRING().getText();
+        String id = ctx.NAME().getText();
 
 
         if (UnidadesParser.symbolTable.containsKey(id))
@@ -44,7 +44,7 @@ public class UnidadesSemanticCheck extends UnidadesBaseVisitor<Boolean> {
     public Boolean visitPow(UnidadesParser.PowContext ctx) {
         Boolean res = true;
 
-        String id = ctx.STRING().getText();
+        String id = ctx.NAME().getText();
 
         USymbol s = UnidadesParser.symbolTable.get(id);
 
@@ -61,7 +61,7 @@ public class UnidadesSemanticCheck extends UnidadesBaseVisitor<Boolean> {
     public Boolean visitCompose(UnidadesParser.ComposeContext ctx) {
         Boolean res = true;
 
-        String id = ctx.STRING().getText();
+        String id = ctx.NAME().getText();
 
         if (UnidadesParser.symbolTable.containsKey(id))
         {
@@ -87,7 +87,7 @@ public class UnidadesSemanticCheck extends UnidadesBaseVisitor<Boolean> {
     public Boolean visitCUnitName(UnidadesParser.CUnitNameContext ctx) {
         Boolean res = true;
 
-        String id = ctx.STRING().getText();
+        String id = ctx.NAME().getText();
 
         USymbol s = UnidadesParser.symbolTable.get(id);
 

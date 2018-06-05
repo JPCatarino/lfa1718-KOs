@@ -5,8 +5,7 @@ import java.util.Map;
 import java.util.HashMap;
 }
 
-@parser::members {
-static protected Map<String,USymbol> symbolTable = new HashMap<>();
+@parser::members {static protected Map<String,VarAssign> symbolTable = new HashMap<>();
 }
 
 // Instructions must end with ';'
@@ -16,19 +15,19 @@ main: statList EOF;
 
 statList: (stat)*;
 
-stat returns[String v]:
+stat:
     loop
-    |instruction  {$v = $instruction.v;}
+    |instruction
     ;
 
 // Value
 value:
-    (INT|REAL) pow? STRING?
-    | '(' '-' (INT|REAL) pow? STRING? ')'
+    (INT|REAL) pow? NAME?
+    | '(' '-' (INT|REAL) pow? NAME? ')'
     ;
 
 // General intruction
-instruction returns[String v]:
+instruction:
     // Variable declaration
     varType NAME                                        #varDec
     // Print/Read variable
@@ -65,13 +64,13 @@ loop:
  * ------------------
  */
 // Operations
-operation returns[String v]:
+operation:
     '(' n=operation ')'                                     #par
     | NAME '++'                                             #increment
     | NAME '--'                                             #decrement
     | left=operation NUMERIC_OPERATOR right=operation       #op
     | NAME                                                  #assignVar
-    | value { $v = $value.text;}                            #val
+    | value                                                 #val
 
     ;
 
@@ -95,4 +94,8 @@ varType:
 // Equivalent to "*10^"
 pow: 'e' ('-')? (INT|REAL);
 
+// Commands
+COMMAND: 'Print';
+
+NAME: [a-zA-Z] [a-zA-Z_0-9]*;
 WS: [ \t\r\n]+ -> skip;

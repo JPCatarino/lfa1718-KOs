@@ -4,8 +4,12 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 
 public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
 
+
     /*
     @Override public Boolean visitCheckVar(BaseGrammarParser.CheckVarContext ctx){
+
+    @Override public Boolean visitCommand(BaseGrammarParser.CommandContext ctx){
+
         Boolean res = true;
         String name = ctx.NAME().getText();
         if (!BaseGrammarParser.symbolTable.containsKey(name)){
@@ -27,7 +31,29 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
         Boolean res = true;
         String name = ctx.NAME().getText();
 
+
         ErrorHandling.printError(ctx, "Variable \""+name+"\" does not exist!");
+        if (!BaseGrammarParser.symbolTable.containsKey(name)){
+            ErrorHandling.printError(ctx, "Variable \""+name+"\" does not exist!");
+            res = false;
+        }
+        return res;
+    }
+
+    @Override public Boolean visitDecrement(BaseGrammarParser.DecrementContext ctx){     
+        Boolean res = true;
+        String name = ctx.NAME().getText();
+        if (!BaseGrammarParser.symbolTable.containsKey(name)){
+            ErrorHandling.printError(ctx, "Variable \""+name+"\" does not exist!");
+            res = false;
+        }
+        return res;
+    }
+
+    @Override public Boolean visitIncrement(BaseGrammarParser.IncrementContext ctx){     
+        Boolean res = true;
+        String name = ctx.NAME().getText();
+
         if (!BaseGrammarParser.symbolTable.containsKey(name)){
             ErrorHandling.printError(ctx, "Variable \""+name+"\" does not exist!");
             res = false;
