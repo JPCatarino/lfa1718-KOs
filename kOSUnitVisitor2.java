@@ -26,9 +26,9 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
     @Override public ST visitCreate(UnidadesParser.CreateContext ctx) {
         ST res = stg.getInstanceOf("stats");
         ST cunit = stg.getInstanceOf("createunit");
-        cunit.add("uname",ctx.STRING().getText());
+        cunit.add("uname",ctx.NAME().getText());
         ST unit = visit(ctx.uname);
-        String id = ctx.STRING().getText();
+        String id = ctx.NAME().getText();
         USymbol s = UnidadesParser.symbolTable.get(id);
         s.setVarName(ctx.uname.varName);
         cunit.add("unit",ctx.uname.varName);
@@ -39,7 +39,7 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
      
     @Override public ST visitPow(UnidadesParser.PowContext ctx) {
         ST res = stg.getInstanceOf("assign");
-        String id = ctx.STRING().getText();
+        String id = ctx.NAME().getText();
         USymbol s = UnidadesParser.symbolTable.get(id);
         res.add("left",s.varName()+".pot");
         res.add("right",ctx.INT().getText());
@@ -50,14 +50,14 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
         ST res = stg.getInstanceOf("stats");
         res.add("stat",visit(ctx.composedUnit()));
         ST cunit = stg.getInstanceOf("createunit");
-        String id = ctx.STRING().getText();
+        String id = ctx.NAME().getText();
         USymbol s = UnidadesParser.symbolTable.get(id);
         s.setVarName(newVarName());
         ST assign = stg.getInstanceOf("assign");
         assign.add("left",s.varName());
         assign.add("right",ctx.composedUnit().varName);
         res.add("stat",assign);
-        cunit.add("uname",ctx.STRING().getText());
+        cunit.add("uname",ctx.NAME().getText());
         cunit.add("unit",s.varName());
         res.add("stat",cunit);
         return res;
@@ -67,7 +67,7 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
         ctx.varName = newVarName();
         ST res = stg.getInstanceOf("assign");
         ST un = stg.getInstanceOf("unit");
-        un.add("uname",ctx.STRING().getText());
+        un.add("uname",ctx.NAME().getText());
         un.add("upot","1");
         res.add("left",ctx.varName);
         res.add("right",un);
@@ -108,7 +108,7 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
     @Override public ST visitCUnitName(UnidadesParser.CUnitNameContext ctx) {
         ST res = stg.getInstanceOf("stats");
         ST baseUnit = stg.getInstanceOf("tmpUnit");
-        String id = ctx.STRING().getText();
+        String id = ctx.NAME().getText();
         USymbol s = UnidadesParser.symbolTable.get(id);
         baseUnit.add("uname",s.varName()+".unit");
         baseUnit.add("upot",s.varName()+".pot");

@@ -19,22 +19,23 @@ stat:create
     |compose
     ;
 
-create: 'create' 'unit' uname=unit 'named' STRING;
+create: 'create' 'unit' uname=unit 'named' NAME;
 
-pow: 'raise' STRING 'to power of' INT;
+pow: 'raise' NAME 'to power of' INT;
 
-compose:'compose' composedUnit 'named' STRING;
+compose:'compose' composedUnit 'named' NAME;
 
 unit returns[String varName]:
-      STRING                                          #unitUNIT
+      NAME                                          #unitUNIT
       ;
 
 composedUnit returns[String varName]:
-              STRING                                                   #cUnitName
+              NAME                                                   #cUnitName
               |'(' p=composedUnit ')'                                  #cUnitParents
               |left=composedUnit op=(':'|'*') right=composedUnit     #cUnitDivMult
               ;
 
+NAME: [a-zA-Z] [a-zA-Z_0-9]*;
 WS: [ \t\r\n]+ -> skip;
 NEWLINE: '\r'? '\n';
 

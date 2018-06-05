@@ -22,8 +22,8 @@ stat:
 
 // Value
 value:
-    (INT|REAL) pow? STRING?
-    | '(' '-' (INT|REAL) pow? STRING? ')'
+    (INT|REAL) pow? NAME?
+    | '(' '-' (INT|REAL) pow? NAME? ')'
     ;
 
 // General intruction
@@ -94,4 +94,6 @@ varType:
 // Equivalent to "*10^"
 pow: 'e' ('-')? (INT|REAL);
 
+
+NAME: [a-zA-Z] [a-zA-Z_0-9]*;
 WS: [ \t\r\n]+ -> skip;
