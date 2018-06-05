@@ -53,11 +53,11 @@ if_else:
  */
 loop:
     // FOR LOOP
-    'for' '(' var=NAME ';' min=INT ';' max=INT ')' '{' (stat ('\n')*)* '}'     #loopFor
+    'for' '(' var=NAME ';' min=INT ';' max=INT ')' '{' statList '}'     #loopFor
     // WHILE LOOP
-    | 'while' '(' condition ')' '{' (stat ('\n')*)* '}'                                 #loopWhile
+    | 'while' '(' condition ')' '{' statList '}'                                 #loopWhile
     // DO-WHILE LOOP
-    | 'do' '{' (stat ('\n')*)* '}' 'while' '(' condition ')'                            #loopDoWhile
+    | 'do' '{' statList '}' 'while' '(' condition ')'                            #loopDoWhile
     ;
 
 /* ------------------

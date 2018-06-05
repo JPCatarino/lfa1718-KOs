@@ -61,8 +61,7 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         res.add("var",ctx.var);
         res.add("min",ctx.min);
         res.add("max",ctx.max);
-        for(BaseGrammarParser.StatContext sc: ctx.stat())
-            res.add("stat", visit(sc));
+        res.add("stat",visit(ctx.statList()));
         return res;
     }
 
@@ -71,8 +70,7 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     @Override public ST visitLoopWhile(BaseGrammarParser.LoopWhileContext ctx) {
         ST res = stg.getInstanceOf("while");
         res.add("condition",visit(ctx.condition()));
-        for(BaseGrammarParser.StatContext sc: ctx.stat())
-            res.add("stat", visit(sc));
+        res.add("stat",visit(ctx.statList()));
         return res;
     }
 
@@ -81,8 +79,7 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     @Override public ST visitLoopDoWhile(BaseGrammarParser.LoopDoWhileContext ctx) {
         ST res = stg.getInstanceOf("do_while");
         res.add("condition",visit(ctx.condition()));
-        for(BaseGrammarParser.StatContext sc: ctx.stat())
-            res.add("stat", visit(sc));
+        res.add("stat",visit(ctx.statList()));
         return res;
     }
 
@@ -123,7 +120,6 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
     @Override public ST visitCompare(BaseGrammarParser.CompareContext ctx) {
         ST res = stg.getInstanceOf("condition");
-        System.out.print("im here");
         res.add("left", visit(ctx.left));
         res.add("op", ctx.CONDITIONAL_OPERATOR().getText());
         res.add("right", visit(ctx.right));
