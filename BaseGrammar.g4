@@ -52,7 +52,7 @@ if_else:
  */
 loop:
     // FOR LOOP
-    'for' '(' var=NAME ';' min=INT ';' max=INT ')' '{' statList '}'     #loopFor
+    'for' '(' var=NAME ';' min=INT ';' max=INT ')' '{' statList '}'              #loopFor
     // WHILE LOOP
     | 'while' '(' condition ')' '{' statList '}'                                 #loopWhile
     // DO-WHILE LOOP
