@@ -3,6 +3,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
+
+    /*
     @Override public Boolean visitCheckVar(BaseGrammarParser.CheckVarContext ctx){
         Boolean res = true;
         String name = ctx.NAME().getText();
@@ -12,23 +14,19 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
         }
         return res;
     }
+    */
 
+    /*
     @Override public Boolean visitAssignment(BaseGrammarParser.AssignmentContext ctx){     
-        Boolean res = true;
-        String name = ctx.NAME().getText();
-        if (BaseGrammarParser.symbolTable.containsKey(name)){
-            ErrorHandling.printError(ctx, "Variable \""+name+"\" already declared!");
-            res = false;
-        }
-        else{
-            BaseGrammarParser.symbolTable.put(name, new VarAssign(name)); 
-        }
-        return res;
-    }
 
+    }
+    */
+
+    /*
     @Override public Boolean visitAssignVar(BaseGrammarParser.AssignVarContext ctx){     
         Boolean res = true;
         String name = ctx.NAME().getText();
+
         ErrorHandling.printError(ctx, "Variable \""+name+"\" does not exist!");
         if (!BaseGrammarParser.symbolTable.containsKey(name)){
             ErrorHandling.printError(ctx, "Variable \""+name+"\" does not exist!");
@@ -36,4 +34,48 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
         }
         return res;
     }
-}
+    */
+
+    /*
+    @Override public Boolean visitSimple(BaseGrammarParser.AssignVarContext ctx){
+        Boolean res = true;
+
+        String id = ctx.STRING().getText();
+
+        BGSymbol s = BaseGrammarParser.symbolTable.get(id);
+
+
+        if(s.type != vartype.simpVar){
+            ErrorHandling.printError(ctx, "Variable \"" + id + "\" should be Simple!");
+            res = false;
+
+        }
+        return res;
+    }
+    */
+    @Override public Boolean visitVarDec(BaseGrammarParser.AssignVarContext ctx){
+        Boolean res = true;
+        String id = ctx.NAME().getText();
+        if (BaseGrammarParser.symbolTable.containsKey(id)){
+            ErrorHandling.printError(ctx, "Variable \""+id+"\" already declared!");
+            res = false;
+        }
+        else{
+
+            if(ctx.varType().getText().equals("simpVar")){
+                BaseGrammarParser.symbolTable.put(id, new BaseGrammarSymbol(id, vartype.simpVar));
+
+            }
+
+
+        }
+        return res;
+
+
+    }
+
+
+
+
+
+    }

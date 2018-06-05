@@ -24,8 +24,8 @@ public class BaseGrammarMain {
       // begin parsing at main rule:
       ParseTree tree = parser.main();
       if (parser.getNumberOfSyntaxErrors() == 0) {
-        //BaseGrammarSemanticCheck semanticCheck = new BaseGrammarSemanticCheck();
-        //semanticCheck.visit(tree);
+        BaseGrammarSemanticCheck semanticCheck = new BaseGrammarSemanticCheck();
+        semanticCheck.visit(tree);
          // print LISP-style tree:
          // System.out.println(tree.toStringTree(parser));
 
