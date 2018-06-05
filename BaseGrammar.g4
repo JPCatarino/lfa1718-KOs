@@ -94,6 +94,8 @@ varType:
 // Equivalent to "*10^"
 pow: 'e' ('-')? (INT|REAL);
 
+// Commands
+COMMAND: 'Print';
 
 NAME: [a-zA-Z] [a-zA-Z_0-9]*;
 WS: [ \t\r\n]+ -> skip;
