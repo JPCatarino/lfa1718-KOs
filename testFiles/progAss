@@ -1,0 +1,3 @@
+unitVar temp
+temp = 2 lfa
+Print(temp)
