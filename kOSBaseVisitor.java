@@ -25,9 +25,24 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     // FEITO
     // NÃO TESTADO!!!
     @Override public ST visitCommand(BaseGrammarParser.CommandContext ctx) {
-        ST res = stg.getInstanceOf("print");
-        res.add("arg",ctx.NAME().getText());
-        return res;
+        ST res = stg.getInstanceOf("stats");
+        ST print = stg.getInstanceOf("print");
+        String id = ctx.NAME().getText();
+        BGSymbol s = BaseGrammarParser.symbolTable.get(id);
+        if(s.type == vartype.unitVar){
+            String tmpVar = newVarName();
+            ST printUn = stg.getInstanceOf("valPrint");
+            ST assign = stg.getInstanceOf("assign");
+            printUn.add("val",s.varName());
+            assign.add("left",tmpVar);
+            assign.add("right",printUn.render());
+            print.add("arg",tmpVar);
+            res.add("stat",assign.render());
+            res.add("stat",print.render());
+            return res;
+        }
+        print.add("arg",s.varName());
+        return print;
     }
 
     // FEITO

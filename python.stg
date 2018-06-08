@@ -32,6 +32,9 @@ stats(stat) ::= <<
 <if(stat)><stat; separator="\n"><endif>
 >>
 
+valPrint(val) ::= <<
+val.printVal(<val>)
+>>
 
 variable(name) ::= "<name>"
 
