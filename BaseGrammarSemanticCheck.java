@@ -24,11 +24,34 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
     }
     */
 
-    /*
-    @Override public Boolean visitAssignment(BaseGrammarParser.AssignmentContext ctx){     
+    //verificar se é simple var ou unit var
+    //simVar i = 2kg -> erro
+    @Override public Boolean visitAssignment(BaseGrammarParser.AssignmentContext ctx){
+        Boolean res = true;
+        String id = ctx.NAME().getText();
+
+
+        if (!BaseGrammarParser.symbolTable.containsKey(id)){
+            ErrorHandling.printError(ctx, "Variable \"" + name + "\" is not declared!");
+            res = false;
+        }
+        else{
+            if(ctx.varType().getText().equals("simpVar")){
+                String abc = "ola";
+
+            }
+            else {
+                String abc = "ola";
+
+            }
+
+
+
+        }
+        return res;
 
     }
-    */
+
 
     /*
 
@@ -89,19 +112,16 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
     }
 
     @Override
-    public Boolean visitAssignVar(BaseGrammarParser.AssignVarContext ctx) {
+   // public Boolean visitAssignVar(BaseGrammarParser.AssignVarContext ctx) {
+
+    //}
+
+    public Boolean visitOp(BaseGrammarParser.OpContext ctx) {
         Boolean res = true;
-        String id = ctx.NAME().getText();
 
 
-        if (BaseGrammarParser.symbolTable.containsKey( if)){
-            ErrorHandling.printError(ctx, "Variable \"" + name + "\" is already declared!");
-            res = false;
-        }
-        else{
-
-        }
         return res;
+
     }
 
 

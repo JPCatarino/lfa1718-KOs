@@ -22,7 +22,7 @@ stat:
     ;
 
 // Value
-value:
+value returns[String v]:
     num=(INT|REAL) pow? NAME                #valueUnit
     | '(' '-' (INT|REAL) pow? NAME ')'  #valueUnitNeg
     |(INT|REAL) pow?                    #valueS
@@ -67,7 +67,7 @@ loop:
  * ------------------
  */
 // Operations
-operation:
+operation returns [tipo ty] :
     '(' n=operation ')'                                     #par
     | NAME '++'                                             #increment
     | NAME '--'                                             #decrement
