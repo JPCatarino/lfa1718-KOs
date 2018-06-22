@@ -7,6 +7,13 @@ condiOperators ::= [
    default:"null"
 ]
 
+Operators ::= [
+   "+":"+",
+   "-":"-",
+   "*":"*",
+   "/":":",
+   default:"null"
+]
 
 //templates
 
@@ -54,6 +61,10 @@ mult(left,right) ::=<<
 >>
 div(left,right) ::=<<
 <left> / <right>
+>>
+
+contaSimples(left,op,right)::=<<
+<left> <Operators.(op)> <right>
 >>
 
 condition(left,op,right) ::=<<
