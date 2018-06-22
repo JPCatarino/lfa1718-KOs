@@ -109,9 +109,15 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         res.add("stat",visit(ctx.value()));
         return res;
     }
-/*
-    // AINDA TENHO QUE FAZER...
-    @Override public ST visitOp(BaseGrammarParser.OpContext ctx) { return visitChildren(ctx); }*/
+
+
+    @Override public ST visitOp(BaseGrammarParser.OpContext ctx) {
+        ST res = stg.getInstanceOf("contaSimples");
+        res.add("left",visit(ctx.left));
+        res.add("op",ctx.NUMERIC_OPERATOR().getText());
+        res.add("right",visit(ctx.right));
+        return res;
+    }
 
     // FEITO
     // NÃO TESTADO!!!
@@ -164,7 +170,6 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         res.add("unit",unit.render());
         return res;
     }
-
     /*
     // AINDA TENHO QUE FAZER...
     @Override public ST visitValue(BaseGrammarParser.ValueContext ctx) { return visitChildren(ctx); }

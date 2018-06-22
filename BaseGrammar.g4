@@ -22,8 +22,9 @@ stat:
     ;
 
 // Value
+
 value returns[String v]:
-    num=(INT|REAL) pow? NAME                #valueUnit
+    num=(INT|REAL) pow? NAME            #valueUnit
     | '(' '-' (INT|REAL) pow? NAME ')'  #valueUnitNeg
     |(INT|REAL) pow?                    #valueS
     | '(' '-' (INT|REAL) pow?')'        #valueSNeg
