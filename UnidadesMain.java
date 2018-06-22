@@ -29,7 +29,7 @@ public class UnidadesMain {
          semanticCheck.visit(tree);
          if (!ErrorHandling.error()) {
             ST code = vis.visit(tree);
-            String filename = "Output.py";
+            String filename = "Units.py";
             try {
                PrintWriter pw = new PrintWriter(new File(filename));
                pw.print(code.render());

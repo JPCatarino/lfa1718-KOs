@@ -1,0 +1,3 @@
+do{
+	Print(a_b)
+}while(a_b > 0)	

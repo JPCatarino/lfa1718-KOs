@@ -17,9 +17,10 @@ class <cname>:
     <stats(stat)>
 >>
 
-baseClass(cname,stat) ::= <<
-class <cname>:
-    <stats(stat)>
+baseClass(stat) ::= <<
+from unitClass import val
+from Units import prog1
+<stats(stat)>
 >>
 
 module(stat) ::= <<
@@ -31,6 +32,9 @@ stats(stat) ::= <<
 <if(stat)><stat; separator="\n"><endif>
 >>
 
+valPrint(val) ::= <<
+val.printVal(<val>)
+>>
 
 variable(name) ::= "<name>"
 
@@ -66,8 +70,16 @@ tmpUnit(uname,upot)::= <<
 unitDec(<uname>,<upot>)
 >>
 
+dicUnit(uname)::= <<
+prog1.UnitDic['<uname>']
+>>
+
 createunit(uname,unit) ::=<<
 UnitDic['<uname>'] = <unit>
+>>
+
+val(uvalue,unit) ::=<<
+val(<uvalue>,<unit>)
 >>
 
 glom(unit) ::=<<

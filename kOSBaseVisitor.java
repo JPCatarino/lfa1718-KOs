@@ -11,7 +11,6 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     @Override public ST visitMain(BaseGrammarParser.MainContext ctx) {
         stg = new STGroupFile("python.stg");
         ST res = stg.getInstanceOf("baseClass");
-        res.add("cname", "prog1");
         res.add("stat",visit(ctx.statList()));
         return res;
     }
@@ -26,19 +25,36 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     // FEITO
     // NÃO TESTADO!!!
     @Override public ST visitCommand(BaseGrammarParser.CommandContext ctx) {
-        ST res = stg.getInstanceOf("print");
-        res.add("arg",ctx.NAME().getText());
-        return res;
+        ST res = stg.getInstanceOf("stats");
+        ST print = stg.getInstanceOf("print");
+        String id = ctx.NAME().getText();
+        BGSymbol s = BaseGrammarParser.symbolTable.get(id);
+        if(s.type == vartype.unitVar){
+            String tmpVar = newVarName();
+            ST printUn = stg.getInstanceOf("valPrint");
+            ST assign = stg.getInstanceOf("assign");
+            printUn.add("val",s.varName());
+            assign.add("left",tmpVar);
+            assign.add("right",printUn.render());
+            print.add("arg",tmpVar);
+            res.add("stat",assign.render());
+            res.add("stat",print.render());
+            return res;
+        }
+        print.add("arg",s.varName());
+        return print;
     }
 
     // FEITO
     // NÃO TESTADO!!!
     @Override public ST visitAssignment(BaseGrammarParser.AssignmentContext ctx) {
         ST res = stg.getInstanceOf("assign");
+        ctx.varName = newVarName();
         // Left
-        ST var = stg.getInstanceOf("variable");
-        var.add("name",ctx.NAME().getText());
-        res.add("left",var);
+        String id = ctx.NAME().getText();
+        BGSymbol s = BaseGrammarParser.symbolTable.get(id);
+        s.setVarName(ctx.varName);
+        res.add("left",ctx.varName);
         // Right
         res.add("right",visit(ctx.operation()));
         return res;
@@ -83,12 +99,17 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         return res;
     }
 
-/*    // AINDA TENHO QUE FAZER...
+/*   // AINDA TENHO QUE FAZER...
     @Override public ST visitPar(BaseGrammarParser.ParContext ctx) { return visitChildren(ctx); }
+*/
 
-    // AINDA TENHO QUE FAZER...
-    @Override public ST visitVal(BaseGrammarParser.ValContext ctx) { return visitChildren(ctx); }
 
+    @Override public ST visitVal(BaseGrammarParser.ValContext ctx) {
+        ST res = stg.getInstanceOf("stats");
+        res.add("stat",visit(ctx.value()));
+        return res;
+    }
+/*
     // AINDA TENHO QUE FAZER...
     @Override public ST visitOp(BaseGrammarParser.OpContext ctx) { return visitChildren(ctx); }*/
 
@@ -131,6 +152,16 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     @Override public ST visitCondiEVar(BaseGrammarParser.CondiEVarContext ctx) {
         ST res = stg.getInstanceOf("variable");
         res.add("name",ctx.NAME().getText());
+        return res;
+    }
+
+
+    @Override public ST visitValueUnit(BaseGrammarParser.ValueUnitContext ctx) {
+        ST res = stg.getInstanceOf("val");
+        res.add("uvalue",ctx.num.getText());
+        ST unit = stg.getInstanceOf("dicUnit");
+        unit.add("uname",ctx.NAME().getText());
+        res.add("unit",unit.render());
         return res;
     }
 
