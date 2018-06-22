@@ -2,6 +2,10 @@ import static java.lang.System.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+
+
+//ERROR HANDLING FEITO POR ÓSCAR PIMENTEL, APESAR DE ESTAR ATRIBUIDO AO DANIEL POR ENGANO (CONFLITOS DE COMMITS)
+
 public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
 
 
@@ -27,18 +31,7 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
     */
 
     /*
-    @Override public Boolean visitAssignVar(BaseGrammarParser.AssignVarContext ctx){     
-        Boolean res = true;
-        String name = ctx.NAME().getText();
 
-
-        ErrorHandling.printError(ctx, "Variable \""+name+"\" does not exist!");
-        if (!BaseGrammarParser.symbolTable.containsKey(name)){
-            ErrorHandling.printError(ctx, "Variable \""+name+"\" does not exist!");
-            res = false;
-        }
-        return res;
-    }
 
     @Override public Boolean visitDecrement(BaseGrammarParser.DecrementContext ctx){     
         Boolean res = true;
@@ -90,7 +83,6 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
 
             if(ctx.varType().getText().equals("simpVar")){
                 BaseGrammarParser.symbolTable.put(id, new BaseGrammarSymbol(id, vartype.simpVar));
-
             }
 
 
@@ -98,6 +90,22 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
         return res;
 
 
+    }
+
+    @Override public Boolean visitAssignVar(BaseGrammarParser.AssignVarContext ctx){
+        Boolean res = true;
+        String id = ctx.NAME().getText();
+
+
+
+        if (BaseGrammarParser.symbolTable.containsKey(if)){
+            ErrorHandling.printError(ctx, "Variable \""+name+"\" is already declared!");
+            res = false;
+        }
+        else{
+
+        }
+        return res;
     }
 
 
