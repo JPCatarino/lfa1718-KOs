@@ -106,12 +106,27 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
     @Override public ST visitVal(BaseGrammarParser.ValContext ctx) {
         ST res = stg.getInstanceOf("stats");
-        res.add("stat",visit(ctx.value()));
+        res.add("stat", visit(ctx.value()));
+        if (ctx.value().v.equals("UnitV")) {
+            ctx.ty = tipo.composta;
+        }
         return res;
     }
 
 
     @Override public ST visitOp(BaseGrammarParser.OpContext ctx) {
+        ST left = visit(ctx.left);
+        ST right = visit(ctx.right);
+        if(ctx.left.ty == tipo.composta && ctx.right.ty == tipo.composta){
+            ST res = stg.getInstanceOf("stats");
+            if(ctx.NUMERIC_OPERATOR().getText().equals("+")){
+                res = stg.getInstanceOf("valAdd");
+                res.add("val1", left);
+                res.add("val2", right);
+            }
+            ctx.ty = tipo.composta;
+            return res;
+        }
         ST res = stg.getInstanceOf("contaSimples");
         res.add("left",visit(ctx.left));
         res.add("op",ctx.NUMERIC_OPERATOR().getText());
@@ -168,6 +183,7 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         ST unit = stg.getInstanceOf("dicUnit");
         unit.add("uname",ctx.NAME().getText());
         res.add("unit",unit.render());
+        ctx.v = "UnitV";
         return res;
     }
     /*
@@ -176,6 +192,10 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
     // AINDA TENHO QUE FAZER...
     @Override public ST visitPow(BaseGrammarParser.PowContext ctx) { return visitChildren(ctx); }*/
+
+    @Override public ST visitValueUnitNeg(BaseGrammarParser.ValueUnitNegContext ctx) { return visitChildren(ctx); }
+    @Override public ST visitValueS(BaseGrammarParser.ValueSContext ctx) { return visitChildren(ctx); }
+    @Override public ST visitValueSNeg(BaseGrammarParser.ValueSNegContext ctx) { return visitChildren(ctx); }
 
     protected String newVarName() {
         varCount++;
