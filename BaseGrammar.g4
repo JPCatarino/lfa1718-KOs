@@ -48,7 +48,12 @@ instruction returns[String varName]:
  * --------------------
  */
 if_else:
-    'if' '(' condition ')' (('{'statList'}')|stat?) ('else' (if_else|('{'statList'}')|stat?))?;
+    'if' '(' condition ')' (ifA=ifArg) ('else' (elseA=ifArg))?;
+
+ifArg:
+    '{'statList'}'      #ifStatList
+    |stat?              #ifStat
+    ;
 
 /* -------------
  * LOOPS SECTION

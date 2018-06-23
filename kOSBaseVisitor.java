@@ -63,12 +63,26 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     // FEITO
     // NÃO TESTADO!!!
     @Override public ST visitIf_else(BaseGrammarParser.If_elseContext ctx) {
-        ST res = stg.getInstanceOf("if");
-        res.add("condition",ctx.condition());
-        for(BaseGrammarParser.StatContext sc: ctx.stat())
-            res.add("stat", visit(sc));
+        ST res = stg.getInstanceOf("stats");
+        ST ifCond = stg.getInstanceOf("if");
+        ifCond.add("condition",visit(ctx.condition()));
+        ifCond.add("stat", visit(ctx.ifA));
+        res.add("stat",ifCond);
+        if(ctx.elseA != null) {
+            ST els = stg.getInstanceOf("else");
+            els.add("stat", visit(ctx.elseA));
+            res.add("stat", els);
+        }
         return res;
     }
+
+    @Override public ST visitIfStatList(BaseGrammarParser.IfStatListContext ctx) {
+        ST res = stg.getInstanceOf("stats");
+        res.add("stat",visit(ctx.statList()));
+        return visit(ctx.statList());
+    }
+
+    @Override public ST visitIfStat(BaseGrammarParser.IfStatContext ctx) { return visitChildren(ctx); }
 
     // FEITO
     // NÃO TESTADO!!!

@@ -110,6 +110,11 @@ if(<condition>):
     <stats(stat)>
 >>
 
+else(condition,stat) ::=<<
+else:
+    <stats(stat)>
+>>
+
 for(var,min,max,stat) ::=<<
 for <var> in range (<min>, <max>):
     <stats(stat)>
