@@ -1,0 +1,11 @@
+unitVar a
+simpVar b
+a = 2 lfa
+b = 1 muito
+
+if(a>b){
+    unitVar i
+    i = 1 muito
+}
+
+Print(i)

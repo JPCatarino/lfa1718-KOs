@@ -102,7 +102,23 @@ class val:
                     z.pot = z.pot + m.pot
                     tmp.remove(m)
         value = value1.value / value2.value
-        return val(value,tmp)                 
+        return val(value,tmp)
+
+    def greater(value1,value2):
+        if(value1.value > value2.value):
+            return True
+        return False
+
+    def lesser(value1,value2):
+        if(value1.value < value2.value):
+            return True 
+        return False    
+
+    def equalTo(value1,value2):
+        if(value1.value == value2.value):
+            return True
+        return False
+            
         
     def printVal(value):
         tmp = str(value.value) + " "

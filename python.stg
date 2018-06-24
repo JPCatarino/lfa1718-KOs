@@ -43,6 +43,10 @@ valPrint(val) ::= <<
 val.printVal(<val>)
 >>
 
+valAdd(val1,val2) ::=<<
+val.add(<val1>,<val2>)
+>>
+
 variable(name) ::= "<name>"
 
 invertPot(name) ::= <<
@@ -103,6 +107,11 @@ print(<arg>)
 
 if(condition,stat) ::=<<
 if(<condition>):
+    <stats(stat)>
+>>
+
+else(condition,stat) ::=<<
+else:
     <stats(stat)>
 >>
 
