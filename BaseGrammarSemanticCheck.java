@@ -32,22 +32,22 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
 
 
         if (!BaseGrammarParser.symbolTable.containsKey(id)){
-            ErrorHandling.printError(ctx, "Variable \"" + name + "\" is not declared!");
+            ErrorHandling.printError(ctx, "Variable \"" + id + "\" is not declared!");
             res = false;
         }
         else{
-            if(ctx.varType().getText().equals("simpVar")){
+            //if(ctx.varType().getText().equals("simpVar")){
                 String abc = "ola";
 
             }
-            else {
-                String abc = "ola";
+            //else {
+              //  String abc = "ola";
 
-            }
+            //}
 
 
 
-        }
+        //}
         return res;
 
     }
@@ -111,17 +111,42 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
         return res;
     }
 
-    @Override
-   // public Boolean visitAssignVar(BaseGrammarParser.AssignVarContext ctx) {
+    //@Override
+    // public Boolean visitAssignVar(BaseGrammarParser.AssignVarContext ctx) {
 
     //}
-
+    @Override
     public Boolean visitOp(BaseGrammarParser.OpContext ctx) {
         Boolean res = true;
 
+        visit(ctx.right);
+        visit(ctx.left);
+        String operator = ctx.NUMERIC_OPERATOR().getText();
+        if (ctx.left.ty == ctx.right.ty) {
+
+
+        }
+
+        if (ctx.left.ty.equals(vartype.simpVar) && ctx.right.ty.equals(vartype.unitVar)) {
+            if (operator.equals("/") || operator.equals("+") || operator.equals("-")) {
+                ErrorHandling.printError(ctx, "You cannot make that operation between a simple variable and an unit variable!");
+                res = false;
+
+            }
+
+
+        }
+
+        if (ctx.left.ty.equals(vartype.unitVar) && ctx.right.ty.equals(vartype.simpVar)) {
+            if (operator.equals("+") || operator.equals("-")) {
+                ErrorHandling.printError(ctx, "You cannot make that operation between a simple variable and an unit variable!");
+                res = false;
+
+            }
+        }
+        res = true;
 
         return res;
-
     }
 
 
