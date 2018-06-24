@@ -7,11 +7,28 @@ condiOperators ::= [
    default:"null"
 ]
 
+unitCondiOperators ::= [
+   ">":"greater",
+   ">=":">=",
+   "<":"lesser",
+   "<=":"<=",
+   "==":"equal",
+   default:"null"
+]
+
 Operators ::= [
    "+":"+",
    "-":"-",
    "*":"*",
-   "/":":",
+   "/":"/",
+   default:"null"
+]
+
+unitOperators ::= [
+   "+":"add",
+   "-":"sub",
+   "*":"multiply",
+   "/":"divide",
    default:"null"
 ]
 
@@ -43,8 +60,8 @@ valPrint(val) ::= <<
 val.printVal(<val>)
 >>
 
-valAdd(val1,val2) ::=<<
-val.add(<val1>,<val2>)
+valConta(val1,val2,op) ::=<<
+val.<unitOperators.(op)>(<val1>,<val2>)
 >>
 
 variable(name) ::= "<name>"
@@ -73,6 +90,10 @@ contaSimples(left,op,right)::=<<
 
 condition(left,op,right) ::=<<
 <left> <condiOperators.(op)> <right>
+>>
+
+unitCondition(left,op,right) ::=<<
+val.<unitCondiOperators.(op)>(<left>,<right>)
 >>
 
 assign(left,right) ::= "<left> = <right>"

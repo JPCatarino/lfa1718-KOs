@@ -26,7 +26,7 @@ stat:
 value returns[vartype typ]:
     num=(INT|REAL) pow? NAME            #valueUnit
     | '(' '-' (INT|REAL) pow? NAME ')'  #valueUnitNeg
-    |(INT|REAL) pow?                    #valueS
+    |num=(INT|REAL) pow?                    #valueS
     | '(' '-' (INT|REAL) pow?')'        #valueSNeg
     ;
 
@@ -89,7 +89,7 @@ condition:
     |conditionE                                                        #soloCond
     ;
 
-conditionE:
+conditionE returns [vartype type]:
     value           #condiEValue
     |NAME           #condiEVar
     ;
