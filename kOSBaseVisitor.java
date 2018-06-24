@@ -121,8 +121,8 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     @Override public ST visitVal(BaseGrammarParser.ValContext ctx) {
         ST res = stg.getInstanceOf("stats");
         res.add("stat", visit(ctx.value()));
-        if (ctx.value().v.equals("UnitV")) {
-            ctx.ty = tipo.composta;
+        if (ctx.value().typ == vartype.unitVar) {
+            ctx.ty = vartype.unitVar;
         }
         return res;
     }
@@ -131,14 +131,14 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     @Override public ST visitOp(BaseGrammarParser.OpContext ctx) {
         ST left = visit(ctx.left);
         ST right = visit(ctx.right);
-        if(ctx.left.ty == tipo.composta && ctx.right.ty == tipo.composta){
+        if(ctx.left.ty == vartype.unitVar && ctx.right.ty == vartype.unitVar){
             ST res = stg.getInstanceOf("stats");
             if(ctx.NUMERIC_OPERATOR().getText().equals("+")){
                 res = stg.getInstanceOf("valAdd");
                 res.add("val1", left);
                 res.add("val2", right);
             }
-            ctx.ty = tipo.composta;
+            ctx.ty = vartype.unitVar;
             return res;
         }
         ST res = stg.getInstanceOf("contaSimples");
@@ -199,7 +199,7 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         ST unit = stg.getInstanceOf("dicUnit");
         unit.add("uname",ctx.NAME().getText());
         res.add("unit",unit.render());
-        ctx.v = "UnitV";
+        ctx.typ = vartype.unitVar;
         return res;
     }
     /*
