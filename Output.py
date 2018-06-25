@@ -1,4 +1,5 @@
 from unitClass import val
 from Units import prog1
-v1 = val(2,prog1.UnitDic['blank_nights'])
-depression + 1
+v1 = val(20,prog1.UnitDic['valores'])
+v2 = val.printVal(v1)
+print(v2)
