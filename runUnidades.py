@@ -28,6 +28,6 @@ def exeJava(filepath):
     subprocess.Popen(["java","UnidadesMain",filepath]).wait()
 
 def cleanAntlr():
-    subprocess.Popen(["antlr4-clean"]).wait()    
+    subprocess.Popen(["antlr4-clean"],stdout=subprocess.DEVNULL).wait()    
 
 main()
