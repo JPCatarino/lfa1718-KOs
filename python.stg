@@ -32,6 +32,12 @@ unitOperators ::= [
    default:"null"
 ]
 
+unitSimpOperators ::= [
+   "*":"multiply_simp",
+   "/":"divide_simp",
+   default:"null"
+]
+
 //templates
 
 unitClass(cname,stat) ::= <<
@@ -62,6 +68,10 @@ val.printVal(<val>)
 
 valConta(val1,val2,op) ::=<<
 val.<unitOperators.(op)>(<val1>,<val2>)
+>>
+
+valContaSimp(val1,val2,op) ::=<<
+val.<unitSimpOperators.(op)>(<val1>,<val2>)
 >>
 
 variable(name) ::= "<name>"
