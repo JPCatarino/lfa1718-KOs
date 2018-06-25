@@ -1,0 +1,3 @@
+unitVar teste
+teste = 20 valores
+Print(teste)
