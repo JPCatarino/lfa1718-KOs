@@ -150,7 +150,7 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         String id = ctx.NAME().getText();
         BGSymbol s = BaseGrammarParser.symbolTable.get(id);
         ST res = stg.getInstanceOf("sub");
-        res.add("name",s.varName());
+        res.add("left",s.varName());
         res.add("right",1);
         //ctx.type = s.type();
         return res;
@@ -168,7 +168,7 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         String id = ctx.NAME().getText();
         BGSymbol s = BaseGrammarParser.symbolTable.get(id);
         ST res = stg.getInstanceOf("sub");
-        res.add("name",s.varName());
+        res.add("left",s.varName());
         res.add("right",1);
         //ctx.type = s.type();
         return res;

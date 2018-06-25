@@ -159,3 +159,19 @@ pass
 pow(exponent) ::=<<
 *(10**<exponent>)
 >>
+
+sum_on_self(left, right) ::=<<
+<left> = <sum(left, right)>
+>>
+
+sub_on_self(left, right) ::=<<
+<left> = <sub(left, right)>
+>>
+
+mult_on_self(left, right) ::=<<
+<left> = <mult(left, right)>
+>>
+
+div_on_self(left, right) ::=<<
+<left> = <div(left, right)>
+>>
