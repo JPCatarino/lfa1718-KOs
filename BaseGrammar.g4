@@ -35,13 +35,15 @@ instruction returns[String varName]:
     // Variable declaration
     varType NAME                                        #varDec
     // Print/Read variable
-    | COMMAND '(' NAME ')'                              #command
+    | print                                             #instPrint
     // Value atribution to variable
     // (This also accepts values that are not the result of an operation)
     | NAME '=' operation                                #assignment
     // Operation without storing result or (most common) variable increment/decrement
     | operation                                         #soloOp
     ;
+
+print: 'Print' '(' NAME ')';
 
 /* --------------------
  * CONDITIONALS SECTION
@@ -103,8 +105,6 @@ varType:
 // Equivalent to "*10^"
 pow: 'e' ('-')? (INT|REAL);
 
-// Commands
-COMMAND: 'Print';
 
 NAME: [a-zA-Z] [a-zA-Z_0-9]*;
 WS: [ \t\r\n]+ -> skip;

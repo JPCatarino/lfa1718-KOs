@@ -22,7 +22,9 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         return res;
     }
 
-    @Override public ST visitCommand(BaseGrammarParser.CommandContext ctx) {
+    @Override public ST visitInstPrint(BaseGrammarParser.InstPrintContext ctx) { return visit(ctx.print());}
+
+    @Override public ST visitPrint(BaseGrammarParser.PrintContext ctx) {
         ST res = stg.getInstanceOf("stats");
         ST print = stg.getInstanceOf("print");
         String id = ctx.NAME().getText();
