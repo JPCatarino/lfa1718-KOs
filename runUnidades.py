@@ -19,15 +19,15 @@ def main():
 
 
 def compileAntlr():
-    subprocess.Popen(["antlr4","-visitor","BaseGrammar.g4"]).wait()
+    subprocess.Popen(["antlr4","-visitor","Unidades.g4"]).wait()
 
 def compileJava():
-    subprocess.Popen("javac BaseGrammar*.java",shell=True).wait()
+    subprocess.Popen("javac Unidades*.java",shell=True).wait()
 
 def exeJava(filepath):
-    subprocess.Popen(["java","BaseGrammarMain",filepath]).wait()
+    subprocess.Popen(["java","UnidadesMain",filepath]).wait()
 
 def cleanAntlr():
-    subprocess.Popen(["antlr4-clean"]).wait()
+    subprocess.Popen(["antlr4-clean"]).wait()    
 
 main()
