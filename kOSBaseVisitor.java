@@ -147,9 +147,12 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
 
     @Override public ST visitDecrement(BaseGrammarParser.DecrementContext ctx) {
+        String id = ctx.NAME().getText();
+        BGSymbol s = BaseGrammarParser.symbolTable.get(id);
         ST res = stg.getInstanceOf("sub");
-        res.add("left",ctx.NAME());
+        res.add("name",s.varName());
         res.add("right",1);
+        //ctx.type = s.type();
         return res;
     }
 
@@ -162,9 +165,12 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
 
     @Override public ST visitIncrement(BaseGrammarParser.IncrementContext ctx) {
-        ST res = stg.getInstanceOf("sum");
-        res.add("left",ctx.NAME());
+        String id = ctx.NAME().getText();
+        BGSymbol s = BaseGrammarParser.symbolTable.get(id);
+        ST res = stg.getInstanceOf("sub");
+        res.add("name",s.varName());
         res.add("right",1);
+        //ctx.type = s.type();
         return res;
     }
 
