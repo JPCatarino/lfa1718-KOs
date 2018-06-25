@@ -151,3 +151,7 @@ do_while(condition,stat) ::=<<
 while (<condition>):
     <stats(stat)>
 >>
+
+pass()::=<<
+pass
+>>
