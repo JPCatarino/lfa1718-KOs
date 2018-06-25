@@ -155,3 +155,7 @@ while (<condition>):
 pass()::=<<
 pass
 >>
+
+pow(exponent) ::<<
+*(10**<exponent>)
+>>
