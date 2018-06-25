@@ -156,6 +156,6 @@ pass()::=<<
 pass
 >>
 
-pow(exponent) ::<<
+pow(exponent) ::=<<
 *(10**<exponent>)
 >>

@@ -74,8 +74,8 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
     @Override public ST visitIfStatList(BaseGrammarParser.IfStatListContext ctx) {
         ST res = stg.getInstanceOf("stats");
-        if(visit(ctx.statList()==null) { res.add("stat", stg.getInstanceOf("pass")); }
-        else                           { res.add("stat", visit(ctx.statList())); }
+        if(visit(ctx.statList())==null) { res.add("stat", stg.getInstanceOf("pass")); }
+        else                            { res.add("stat", visit(ctx.statList())); }
         return visit(ctx.statList());
     }
 
