@@ -138,7 +138,7 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
             ctx.ty = vartype.unitVar;
             return res;
         }
-        // else if((ctx.left.ty == vartype.unitVar && ctx.right.ty == vartype.simpVar) || (ctx.left.ty == vartype.simpVar && ctx.right.ty == vartype.unitVar)){
+        //else if((ctx.left.ty == vartype.unitVar && ctx.right.ty == vartype.simpVar) || (ctx.left.ty == vartype.simpVar && ctx.right.ty == vartype.unitVar)){
         else if((ctx.left.ty == vartype.unitVar) ^ (ctx.right.ty == vartype.unitVar)){
             ST res = stg.getInstanceOf("valContaSimp");
             res.add("val1", left);
@@ -170,8 +170,11 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
 
     @Override public ST visitAssignVar(BaseGrammarParser.AssignVarContext ctx) {
+        String id = ctx.NAME().getText();
+        BGSymbol s = BaseGrammarParser.symbolTable.get(id);
         ST var = stg.getInstanceOf("variable");
-        var.add("name",ctx.NAME());
+        var.add("name",s.varName());
+        ctx.ty = s.type();
         return var;
     }
 
