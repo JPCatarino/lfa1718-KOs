@@ -109,9 +109,13 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         return res;
     }
 
-/*   // AINDA TENHO QUE FAZER...
-    @Override public ST visitPar(BaseGrammarParser.ParContext ctx) { return visitChildren(ctx); }
-*/
+    @Override public ST visitPar(BaseGrammarParser.ParContext ctx) {
+        ST res = stg.getInstanceOf("stats");
+        res.add("stat",visit(ctx.operation()));
+        ctx.ty = ctx.operation().ty;
+        return res;
+    }
+
 
 
     @Override public ST visitVal(BaseGrammarParser.ValContext ctx) {
