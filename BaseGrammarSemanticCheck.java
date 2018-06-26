@@ -1,9 +1,9 @@
 import static java.lang.System.*;
 
 
-
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.TerminalNode;
+
 import java.util.Map;
 import java.util.HashMap;
 
@@ -32,6 +32,7 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
     public Boolean visitAssignment(BaseGrammarParser.AssignmentContext ctx) {
         Boolean res = true;
         String id = ctx.NAME().getText();
+        BGSymbol s = BaseGrammarParser.symbolTable.get(id);
 
 
         if (!BaseGrammarParser.symbolTable.containsKey(id)) {
@@ -41,6 +42,10 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
 
 
             res = visit(ctx.operation());
+            if (s.type() != ctx.operation().ty) {
+                ErrorHandling.printError(ctx, "Type mismatch!");
+                res = false;
+            }
 
         }
         return res;
@@ -118,7 +123,7 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
         visit(ctx.left);
         String operator = ctx.NUMERIC_OPERATOR().getText();
         if (ctx.left.ty == ctx.right.ty) {
-
+            ctx.ty = ctx.left.ty;
 
         }
 
@@ -127,8 +132,9 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
                 ErrorHandling.printError(ctx, "You cannot make that operation between a simple variable and an unit variable!");
                 res = false;
 
-            }
 
+            }
+            ctx.ty = vartype.unitVar;
 
         }
 
@@ -137,7 +143,9 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
                 ErrorHandling.printError(ctx, "You cannot make that operation between a simple variable and an unit variable!");
                 res = false;
 
+
             }
+            ctx.ty = vartype.unitVar;
         }
         return res;
     }
@@ -176,7 +184,7 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
 
 
     @Override
-    public Boolean visitAssignVar(BaseGrammarParser.AssignVarContext ctx){
+    public Boolean visitAssignVar(BaseGrammarParser.AssignVarContext ctx) {
         Boolean res = true;
         String id = ctx.NAME().getText();
 
@@ -191,9 +199,10 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
         return res;
     }
 
-    @Override public Boolean visitVal(BaseGrammarParser.ValContext ctx) {
+    @Override
+    public Boolean visitVal(BaseGrammarParser.ValContext ctx) {
         Boolean res = visit(ctx.value());
-         ctx.ty = ctx.value().typ;
+        ctx.ty = ctx.value().typ;
         return res;
     }
 
