@@ -214,7 +214,12 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         return res;
     }
 
-    //    @Override public ST visitCondiEValue(BaseGrammarParser.CondiEValueContext ctx) { }
+    @Override public ST visitCondiEValue(BaseGrammarParser.CondiEValueContext ctx) {
+        ST res = stg.getInstanceOf("stats");
+        res.add("stat",visit(ctx.value()));
+        ctx.type = ctx.value().typ;
+        return res;
+    }
 
     @Override public ST visitCondiEVar(BaseGrammarParser.CondiEVarContext ctx) {
         String id = ctx.NAME().getText();
