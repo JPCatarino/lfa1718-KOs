@@ -1,0 +1,7 @@
+unitVar t1
+simpVar t2
+t1 = 5 lfa
+t2 = 2
+unitVar t3
+t3 = t1 / t2
+Print(t3)

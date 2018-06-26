@@ -1,0 +1,5 @@
+unitVar t1
+simpVar t2
+t1 = 5 lfa
+t2 = 2
+Print(t1+t2)

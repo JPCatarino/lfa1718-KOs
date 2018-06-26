@@ -104,6 +104,19 @@ class val:
         value = value1.value / value2.value
         return val(value,tmp)
 
+    def multiply_simp(value1,value2):
+        return val(value1.value * value2,value1.unit)
+
+    def divide_simp(value1,value2):
+        return val(value1.value / value2,value1.unit)
+
+    def add_simp(value1,value2):
+        return val(value1.value + value2,value1.unit)
+
+    def sub_simp(value1,value2):
+        return val(value1.value - value2,value1.unit)
+
+
     def greater(value1,value2):
         if(value1.value > value2.value):
             return True

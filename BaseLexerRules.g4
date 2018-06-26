@@ -7,9 +7,6 @@ VARTYPE: 'void'
        | 'double'
        ;
 
-// Commands
-COMMAND: 'Print';
-
 /* -----------------
  * OPERATORS SECTION
  * -----------------

@@ -32,6 +32,14 @@ unitOperators ::= [
    default:"null"
 ]
 
+unitSimpOperators ::= [
+   "+":"add_simp",
+   "-":"sub_simp",
+   "*":"multiply_simp",
+   "/":"divide_simp",
+   default:"null"
+]
+
 //templates
 
 unitClass(cname,stat) ::= <<
@@ -62,6 +70,10 @@ val.printVal(<val>)
 
 valConta(val1,val2,op) ::=<<
 val.<unitOperators.(op)>(<val1>,<val2>)
+>>
+
+valContaSimp(val1,val2,op) ::=<<
+val.<unitSimpOperators.(op)>(<val1>,<val2>)
 >>
 
 variable(name) ::= "<name>"
@@ -150,4 +162,28 @@ do_while(condition,stat) ::=<<
 <stats(stat)>
 while (<condition>):
     <stats(stat)>
+>>
+
+pass()::=<<
+pass
+>>
+
+pow(exponent) ::=<<
+*(10**<exponent>)
+>>
+
+sum_on_self(left, right) ::=<<
+<left> = <sum(left, right)>
+>>
+
+sub_on_self(left, right) ::=<<
+<left> = <sub(left, right)>
+>>
+
+mult_on_self(left, right) ::=<<
+<left> = <mult(left, right)>
+>>
+
+div_on_self(left, right) ::=<<
+<left> = <div(left, right)>
 >>
