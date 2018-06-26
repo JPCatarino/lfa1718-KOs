@@ -1,6 +1,7 @@
 import static java.lang.System.*;
 
 
+
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import java.util.Map;
@@ -187,6 +188,12 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
             res = false;
         }
 
+        return res;
+    }
+
+    @Override public Boolean visitVal(BaseGrammarParser.ValContext ctx) {
+        Boolean res = visit(ctx.value());
+         ctx.ty = ctx.value().typ;
         return res;
     }
 
