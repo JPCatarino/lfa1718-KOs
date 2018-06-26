@@ -52,7 +52,21 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
 
     }
 
+    @Override public Boolean visitCompare(BaseGrammarParser.CompareContext ctx){     
+        Boolean res = true;
+        if (ctx.left.type.equals(vartype.unitVar) && ctx.right.type.equals(vartype.simpVar)) {
+            ErrorHandling.printError(ctx, "You cannot make that operation between a simple variable and an unit variable!");
+            res = false;
+        }
+        if (ctx.left.ty.equals(vartype.simpVar) && ctx.right.ty.equals(vartype.unitVar)) {
+            ErrorHandling.printError(ctx, "You cannot make that operation between a simple variable and an unit variable!");
+            res = false;
+        }
+        return res;
+    }
 
+    
+    
     /*
 
 
@@ -115,6 +129,7 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
     // public Boolean visitAssignVar(BaseGrammarParser.AssignVarContext ctx) {
 
     //}
+
     @Override
     public Boolean visitOp(BaseGrammarParser.OpContext ctx) {
         Boolean res = true;
@@ -148,7 +163,6 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
 
         return res;
     }
-
 
 }
 
