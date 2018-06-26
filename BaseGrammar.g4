@@ -25,7 +25,7 @@ stat:
 value returns[vartype typ]:
     num=(INT|REAL) pow? NAME            #valueUnit
     | '(' '-' (INT|REAL) pow? NAME ')'  #valueUnitNeg
-    |num=(INT|REAL) pow?                    #valueS
+    |num=(INT|REAL) pow?                #valueS
     | '(' '-' (INT|REAL) pow?')'        #valueSNeg
     ;
 
