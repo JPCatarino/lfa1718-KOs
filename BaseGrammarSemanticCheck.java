@@ -54,19 +54,41 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
 
     @Override public Boolean visitCompare(BaseGrammarParser.CompareContext ctx){     
         Boolean res = true;
+        visit(ctx.right);
+        visit(ctx.left);
+        
         if (ctx.left.type.equals(vartype.unitVar) && ctx.right.type.equals(vartype.simpVar)) {
-            ErrorHandling.printError(ctx, "You cannot make that operation between a simple variable and an unit variable!");
+            ErrorHandling.printError(ctx, "You cannot compare an unit variable with a simple variable!");
             res = false;
         }
-        if (ctx.left.ty.equals(vartype.simpVar) && ctx.right.ty.equals(vartype.unitVar)) {
-            ErrorHandling.printError(ctx, "You cannot make that operation between a simple variable and an unit variable!");
+        if (ctx.left.type.equals(vartype.simpVar) && ctx.right.type.equals(vartype.unitVar)) {
+            ErrorHandling.printError(ctx, "You cannot compare a simple variable with an unit variable!");
             res = false;
         }
+        
         return res;
     }
 
+    @Override public Boolean visitCondiEValue(BaseGrammarParser.CondiEValueContext ctx)
+     { Boolean res = visit(ctx.value());
+        ctx.type = ctx.value().typ;
+        return res;
+    }
     
-    
+
+     @Override public Boolean visitCondiEVar(BaseGrammarParser.CondiEVarContext ctx)
+      { Boolean res = true;
+        String id = ctx.NAME().getText();
+
+        if (BaseGrammarParser.symbolTable.containsKey(id)) {
+            BGSymbol s = BaseGrammarParser.symbolTable.get(id);
+            ctx.type = s.type;
+        } else {
+            ErrorHandling.printError(ctx, "Variable \"" + id + "\" does not exist!");
+            res = false;
+        }
+
+        return res;}
     /*
 
 
