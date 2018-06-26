@@ -158,8 +158,9 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
     @Override public ST visitDecrement(BaseGrammarParser.DecrementContext ctx) {
       vartype vt = BaseGrammarParser.symbolTable.get(ctx.NAME().getText()).type();
-      if(vt == vartype.unitVar) { ST res = stg.getInstanceOf("valContaSimp"); } // unitVar
-      else                      { ST res = stg.getInstanceOf("contaSimples"); } // simpVar
+      ST res;
+      if(vt == vartype.unitVar) { res = stg.getInstanceOf("valContaSimp"); } // unitVar
+      else                      { res = stg.getInstanceOf("contaSimples"); } // simpVar
       res.add("val1", ctx.NAME());
       res.add("val2", 1);
       res.add("op", "-");
@@ -177,8 +178,9 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
     @Override public ST visitIncrement(BaseGrammarParser.IncrementContext ctx) {
         vartype vt = BaseGrammarParser.symbolTable.get(ctx.NAME().getText()).type();
-        if(vt == vartype.unitVar) { ST res = stg.getInstanceOf("valContaSimp"); } // unitVar
-        else                      { ST res = stg.getInstanceOf("contaSimples"); } // simpVar
+        ST res;
+        if(vt == vartype.unitVar) { res = stg.getInstanceOf("valContaSimp"); } // unitVar
+        else                      { res = stg.getInstanceOf("contaSimples"); } // simpVar
         res.add("val1", ctx.NAME());
         res.add("val2", 1);
         res.add("op", "+");
