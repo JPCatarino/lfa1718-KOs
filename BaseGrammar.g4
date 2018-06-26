@@ -8,7 +8,6 @@ import java.util.HashMap;
 @parser::members {static protected Map<String,BGSymbol> symbolTable = new HashMap<>();
 }
 
-// Instructions must end with ';'
 // Instructions may or may not be separated by '\n' character
 // Accepts empty lines
 main: statList EOF;
