@@ -33,6 +33,8 @@ unitOperators ::= [
 ]
 
 unitSimpOperators ::= [
+   "+":"add_simp",
+   "-":"sub_simp",
    "*":"multiply_simp",
    "/":"divide_simp",
    default:"null"

@@ -109,9 +109,13 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         return res;
     }
 
-/*   // AINDA TENHO QUE FAZER...
-    @Override public ST visitPar(BaseGrammarParser.ParContext ctx) { return visitChildren(ctx); }
-*/
+    @Override public ST visitPar(BaseGrammarParser.ParContext ctx) {
+        ST res = stg.getInstanceOf("stats");
+        res.add("stat",visit(ctx.operation()));
+        ctx.ty = ctx.operation().ty;
+        return res;
+    }
+
 
 
     @Override public ST visitVal(BaseGrammarParser.ValContext ctx) {
@@ -138,7 +142,7 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
             ctx.ty = vartype.unitVar;
             return res;
         }
-        // else if((ctx.left.ty == vartype.unitVar && ctx.right.ty == vartype.simpVar) || (ctx.left.ty == vartype.simpVar && ctx.right.ty == vartype.unitVar)){
+        //else if((ctx.left.ty == vartype.unitVar && ctx.right.ty == vartype.simpVar) || (ctx.left.ty == vartype.simpVar && ctx.right.ty == vartype.unitVar)){
         else if((ctx.left.ty == vartype.unitVar) ^ (ctx.right.ty == vartype.unitVar)){
             ST res = stg.getInstanceOf("valContaSimp");
             res.add("val1", left);
@@ -159,19 +163,23 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     @Override public ST visitDecrement(BaseGrammarParser.DecrementContext ctx) {
       vartype vt = BaseGrammarParser.symbolTable.get(ctx.NAME().getText()).type();
       ST res;
-      if(vt == vartype.unitVar) { res = stg.getInstanceOf("valContaSimp"); } // unitVar
-      else                      { res = stg.getInstanceOf("contaSimples"); } // simpVar
-      res.add("val1", ctx.NAME());
+      String id = ctx.NAME().getText();
+      BGSymbol s = BaseGrammarParser.symbolTable.get(id);
+      if(vt == vartype.unitVar) { res = stg.getInstanceOf("valContaSimp"); ctx.ty = vartype.unitVar;} // unitVar
+      else                      { res = stg.getInstanceOf("contaSimples"); ctx.ty = vartype.simpVar;} // simpVar
+      res.add("val1", s.varName());
       res.add("val2", 1);
       res.add("op", "-");
-      ctx.ty = vartype.simpVar;
       return res;
-  }
+    }
 
 
     @Override public ST visitAssignVar(BaseGrammarParser.AssignVarContext ctx) {
+        String id = ctx.NAME().getText();
+        BGSymbol s = BaseGrammarParser.symbolTable.get(id);
         ST var = stg.getInstanceOf("variable");
-        var.add("name",ctx.NAME());
+        var.add("name",s.varName());
+        ctx.ty = s.type();
         return var;
     }
 
@@ -179,12 +187,13 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     @Override public ST visitIncrement(BaseGrammarParser.IncrementContext ctx) {
         vartype vt = BaseGrammarParser.symbolTable.get(ctx.NAME().getText()).type();
         ST res;
-        if(vt == vartype.unitVar) { res = stg.getInstanceOf("valContaSimp"); } // unitVar
-        else                      { res = stg.getInstanceOf("contaSimples"); } // simpVar
-        res.add("val1", ctx.NAME());
+        String id = ctx.NAME().getText();
+        BGSymbol s = BaseGrammarParser.symbolTable.get(id);
+        if(vt == vartype.unitVar) { res = stg.getInstanceOf("valContaSimp"); ctx.ty = vartype.unitVar; }
+        else{ res = stg.getInstanceOf("contaSimples"); ctx.ty = vartype.simpVar; }
+        res.add("val1", s.varName());
         res.add("val2", 1);
         res.add("op", "+");
-        ctx.ty = vartype.simpVar;
         return res;
     }
 
