@@ -37,17 +37,11 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
             ErrorHandling.printError(ctx, "Variable \"" + id + "\" is not declared!");
             res = false;
         } else {
-            //if(ctx.varType().getText().equals("simpVar")){
-            String abc = "ola";
+
+
+            res = visit(ctx.operation());
 
         }
-        //else {
-        //  String abc = "ola";
-
-        //}
-
-
-        //}
         return res;
 
     }
@@ -144,8 +138,6 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
 
             }
         }
-        res = true;
-
         return res;
     }
 
