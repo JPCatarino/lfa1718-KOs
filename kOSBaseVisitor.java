@@ -52,8 +52,11 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         // Left
         String id = ctx.NAME().getText();
         BGSymbol s = BaseGrammarParser.symbolTable.get(id);
-        s.setVarName(ctx.varName);
-        res.add("left",ctx.varName);
+        if(s.varName() == null) {
+            s.setVarName(ctx.varName);
+            res.add("left", ctx.varName);
+        }
+        else res.add("left",s.varName());
         // Right
         res.add("right",visit(ctx.operation()));
         return res;
