@@ -281,7 +281,10 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     @Override public ST visitValueUnitNeg(BaseGrammarParser.ValueUnitNegContext ctx) {
         ST res = stg.getInstanceOf("signedVal");
         res.add("sign", "-");
-        res.add("uvalue",ctx.num.getText());
+        if(ctx.pow() != null)
+            res.add("uvalue",ctx.num.getText() + visit(ctx.pow()).render());
+        else
+            res.add("uvalue",ctx.num.getText());
         ST unit = stg.getInstanceOf("dicUnit");
         unit.add("uname",ctx.NAME().getText());
         res.add("unit",unit.render());
@@ -291,7 +294,10 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
     @Override public ST visitValueS(BaseGrammarParser.ValueSContext ctx) {
         ST res = stg.getInstanceOf("variable");
-        res.add("name",ctx.num.getText());
+        if(ctx.pow() != null)
+            res.add("name",ctx.num.getText() + visit(ctx.pow()).render());
+        else
+            res.add("name",ctx.num.getText());
         ctx.typ = vartype.simpVar;
         return res;
     }
@@ -299,7 +305,10 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     @Override public ST visitValueSNeg(BaseGrammarParser.ValueSNegContext ctx) {
         ST res = stg.getInstanceOf("signedVariable");
         res.add("sign", "-");
-        res.add("unsigVal",ctx.num.getText());
+        if(ctx.pow() != null)
+            res.add("unsigVal",ctx.num.getText() + visit(ctx.pow()).render());
+        else
+            res.add("unsigVal",ctx.num.getText());
         ctx.typ = vartype.simpVar;
         return res;
     }
