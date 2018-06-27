@@ -128,6 +128,34 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
         return res;
     }
 
+    @Override public ST visitSetConvValue(UnidadesParser.SetConvValueContext ctx) {
+        ST res = stg.getInstanceOf("stats");
+        ST dic = stg.getInstanceOf("iniD");
+        String varName = newVarName();
+        dic.add("var",varName);
+        res.add("stat",dic);
+        ST tmpD = stg.getInstanceOf("addD");
+        tmpD.add("dName",varName);
+        tmpD.add("dVal",visit(ctx.dtn));
+        tmpD.add("dUnit",ctx.dtn.uniNa);
+        res.add("stat",tmpD);
+        ST convD = stg.getInstanceOf("addD");
+        convD.add("dName","conv");
+        convD.add("dUnit",ctx.src.getText());
+        convD.add("dVal",varName);
+        res.add("stat",convD);
+        return res;
+    }
+
+    @Override public ST visitValue(UnidadesParser.ValueContext ctx) {
+        ST res = stg.getInstanceOf("val");
+        res.add("uvalue",ctx.INT().getText());
+        res.add("unit",ctx.NAME().getText());
+        ctx.uniNa = ctx.NAME().getText();
+        return res;
+    }
+
+
 
     protected String newVarName() {
         varCount++;

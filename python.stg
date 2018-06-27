@@ -58,14 +58,22 @@ unitClass(cname,stat) ::= <<
 from unitClass import unitDec
 class <cname>:
     UnitDic = {}
+    conv = {}
     <stats(stat)>
 >>
 
 baseClass(stat) ::= <<
 from unitClass import val
 from Units import prog1
-conv = []
 <stats(stat)>
+>>
+
+iniD(var) ::= <<
+<var> = {}
+>>
+
+addD(dName,dVal,dUnit) ::=<<
+<dName>['<dUnit>'] = <dVal>
 >>
 
 module(stat) ::= <<

@@ -22,7 +22,7 @@ stat:
 
 // Value
 
-value returns[vartype typ]:
+value returns[vartype typ,String unit]:
     num=(INT|REAL) pow? NAME            #valueUnit
     | '!' num=(INT|REAL) pow? NAME      #valueUnitNeg
     |num=(INT|REAL) pow?                #valueS
@@ -104,7 +104,6 @@ conditionE returns [vartype type]:
     |NAME           #condiEVar
     ;
 
-setConvValue: src=value '$' dtn=value;
 
 convValue: src=value '€' (dtnV=value|dtnN=NAME);
 

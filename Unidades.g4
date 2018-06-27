@@ -17,6 +17,7 @@ statList: (stat? ';')*;
 stat:create
     |pow
     |compose
+    |setConvValue
     ;
 
 create: 'create' 'unit' uname=unit 'named' NAME;
@@ -34,6 +35,11 @@ composedUnit returns[String varName]:
               |'(' p=composedUnit ')'                                  #cUnitParents
               |left=composedUnit op=(':'|'*') right=composedUnit     #cUnitDivMult
               ;
+
+setConvValue: src=NAME '$' dtn=value;
+
+value returns[String uniNa]: INT NAME;
+
 
 NAME: [a-zA-Z] [a-zA-Z_0-9]*;
 WS: [ \t\r\n]+ -> skip;
