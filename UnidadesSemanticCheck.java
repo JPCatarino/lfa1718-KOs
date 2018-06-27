@@ -1,25 +1,6 @@
 
 
 public class UnidadesSemanticCheck extends UnidadesBaseVisitor<Boolean> {
-/*
-    @Override
-    public T visitMain(UnidadesParser.MainContext ctx) {
-        return visitChildren(ctx);
-    }
-*/
-
-
-/*    @Override
-    public T visitStatList(UnidadesParser.StatListContext ctx) {
-        return visitChildren(ctx);
-    }*/
-
-
-/*    @Override
-    public T visitStat(UnidadesParser.StatContext ctx) {
-        return visitChildren(ctx);
-    }*/
-
 
     @Override
     public Boolean visitCreate(UnidadesParser.CreateContext ctx) {
@@ -28,16 +9,13 @@ public class UnidadesSemanticCheck extends UnidadesBaseVisitor<Boolean> {
         String id = ctx.NAME().getText();
 
 
-        if (UnidadesParser.symbolTable.containsKey(id))
-        {
-            ErrorHandling.printError(ctx, "Variable \""+id+"\" already declared!");
+        if (UnidadesParser.symbolTable.containsKey(id)) {
+            ErrorHandling.printError(ctx, "Variable \"" + id + "\" already declared!");
             res = false;
-        }
-        else
+        } else
             UnidadesParser.symbolTable.put(id, new UnitSymbol(id, tipo.simples));
-    return res;
+        return res;
     }
-
 
 
     @Override
@@ -48,13 +26,13 @@ public class UnidadesSemanticCheck extends UnidadesBaseVisitor<Boolean> {
 
         USymbol s = UnidadesParser.symbolTable.get(id);
 
-        if(s.type != tipo.simples){
+        if (s.type != tipo.simples) {
             ErrorHandling.printError(ctx, "Variable \"" + id + "\" should be Simple!");
             res = false;
         }
 
         return res;
-        }
+    }
 
 
     @Override
@@ -63,25 +41,14 @@ public class UnidadesSemanticCheck extends UnidadesBaseVisitor<Boolean> {
 
         String id = ctx.NAME().getText();
 
-        if (UnidadesParser.symbolTable.containsKey(id))
-        {
-            ErrorHandling.printError(ctx, "Variable \""+id+"\" already declared!");
+        if (UnidadesParser.symbolTable.containsKey(id)) {
+            ErrorHandling.printError(ctx, "Variable \"" + id + "\" already declared!");
             res = false;
-        }
-        else
+        } else
             UnidadesParser.symbolTable.put(id, new UnitSymbol(id, tipo.composta));
         res = visitChildren(ctx);
         return res;
     }
-
-
-
-/*    @Override
-    public Boolean visitUnitUNIT(UnidadesParser.UnitUNITContext ctx) {
-        return visitChildren(ctx);
-    }*/
-
-
 
     @Override //verificar (garantir) se é simples
     public Boolean visitCUnitName(UnidadesParser.CUnitNameContext ctx) {
@@ -92,8 +59,7 @@ public class UnidadesSemanticCheck extends UnidadesBaseVisitor<Boolean> {
         USymbol s = UnidadesParser.symbolTable.get(id);
 
 
-
-        if(s.type != tipo.simples){
+        if (s.type != tipo.simples) {
             ErrorHandling.printError(ctx, "Variable \"" + id + "\" should be Simple!");
             res = false;
         }
