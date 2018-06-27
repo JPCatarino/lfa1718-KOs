@@ -1,8 +1,0 @@
-for(a_d; 3 ; 4)
-{
-	if(a_b > a_d)
-	{
-		Print(x_s)
-	}	
-
-}

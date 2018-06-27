@@ -1,6 +1,0 @@
-create unit lfa named lfa;
-create unit ee named ee;
-create unit mt named muito;
-create unit fx named fixe;
-compose lfa*ee*(muito:fixe) named obgMos;
-raise obgMos to power of 2;

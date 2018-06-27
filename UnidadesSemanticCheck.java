@@ -10,7 +10,7 @@ public class UnidadesSemanticCheck extends UnidadesBaseVisitor<Boolean> {
 
 
         if (UnidadesParser.symbolTable.containsKey(id)) {
-            ErrorHandling.printError(ctx, "Variable \"" + id + "\" already declared!");
+            ErrorHandling.printError(ctx, "A variable named \"" + id + "\" was already declared!");
             res = false;
         } else
             UnidadesParser.symbolTable.put(id, new UnitSymbol(id, tipo.simples));
@@ -42,7 +42,7 @@ public class UnidadesSemanticCheck extends UnidadesBaseVisitor<Boolean> {
         String id = ctx.NAME().getText();
 
         if (UnidadesParser.symbolTable.containsKey(id)) {
-            ErrorHandling.printError(ctx, "Variable \"" + id + "\" already declared!");
+            ErrorHandling.printError(ctx, "A variable named \"" + id + "\" was already declared!");
             res = false;
         } else
             UnidadesParser.symbolTable.put(id, new UnitSymbol(id, tipo.composta));

@@ -1,8 +1,0 @@
-for(n_a ; 4 ; 10)
-{
-	Print(n_b)
-	while(a_b < a_c)
-	{
-		Print(a_d)
-	}
-}

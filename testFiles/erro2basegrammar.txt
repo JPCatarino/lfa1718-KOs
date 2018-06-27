@@ -1,0 +1,19 @@
+unitVar a
+simpVar b
+simpVar res
+simpVar kos
+
+
+res = 2+3*(4/2)-1/(8-4)
+
+
+
+a = 2.5e 2 lfa
+b = 7.5 muito
+c = 4
+
+
+Print(c)
+
+kos = res + a
+
