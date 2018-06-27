@@ -24,9 +24,9 @@ stat:
 
 value returns[vartype typ]:
     num=(INT|REAL) pow? NAME            #valueUnit
-    | '(' '!' num=(INT|REAL) pow? NAME ')'  #valueUnitNeg
+    | '!' num=(INT|REAL) pow? NAME      #valueUnitNeg
     |num=(INT|REAL) pow?                #valueS
-    | '(' '!' num=(INT|REAL) pow?')'        #valueSNeg
+    | '!' num=(INT|REAL) pow?           #valueSNeg
     ;
 
 // General intruction

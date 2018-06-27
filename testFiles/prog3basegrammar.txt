@@ -1,0 +1,23 @@
+unitVar k
+unitVar a
+unitVar res2
+unitVar b
+simpVar flag = 5
+unitVar test
+simpVar o
+simpVar count
+
+a = 5 cd
+b = 7.6 g
+k= 8 mol
+
+res2 = 2*k + b/2
+
+for(i;0;100){
+    count++
+    if(count>=flag){
+        o = count + flag
+        test = 2 batatas
+    }
+}
+Print(res2)
