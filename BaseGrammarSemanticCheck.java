@@ -22,23 +22,36 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
     @Override
     public Boolean visitAssignment(BaseGrammarParser.AssignmentContext ctx) {
         Boolean res = true;
-        String id = ctx.NAME().getText();
-        BGSymbol s = BaseGrammarParser.symbolTable.get(id);
+        String id;
+        BGSymbol s;
+        if(ctx.varType() != null){
+            id = ctx.NAME().getText();
+            if (BaseGrammarParser.symbolTable.containsKey(id)) {
+                ErrorHandling.printError(ctx, "Variable \"" + id + "\" already declared!");
+                res = false;
+            } else {
+                if (ctx.varType().getText().equals("simpVar")) {
+                    BaseGrammarParser.symbolTable.put(id, new BaseGrammarSymbol(id, vartype.simpVar));
+                } else
+                    BaseGrammarParser.symbolTable.put(id, new BaseGrammarSymbol(id, vartype.unitVar));
+            }
+        }
+        else {
+            id = ctx.NAME().getText();
+        }
+        s = BaseGrammarParser.symbolTable.get(id);
 
 
         if (!BaseGrammarParser.symbolTable.containsKey(id)) {
             ErrorHandling.printError(ctx, "Variable \"" + id + "\" is not declared!");
-            res = false;
-        } else {
-
-
+            res = false; }
+        else {
             res = visit(ctx.operation());
             if (s.type() != ctx.operation().ty) {
                 ErrorHandling.printError(ctx, "Type mismatch!");
-                res = false;
-            }
-
+                res = false; }
         }
+
         return res;
 
     }

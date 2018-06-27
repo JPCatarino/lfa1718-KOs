@@ -37,7 +37,7 @@ instruction returns[String varName]:
     | print                                             #instPrint
     // Value atribution to variable
     // (This also accepts values that are not the result of an operation)
-    | NAME '=' operation                                #assignment
+    |(varType)? NAME '=' operation                                #assignment
     // Operation without storing result or (most common) variable increment/decrement
     | operation                                         #soloOp
     | deincrement                                       #instDeincr
