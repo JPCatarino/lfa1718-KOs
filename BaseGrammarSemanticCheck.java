@@ -251,6 +251,15 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
         return res;
     }
 
+    @Override
+    public Boolean visitPar(BaseGrammarParser.ParContext ctx) {
+        Boolean res = visit(ctx.operation());
+
+        ctx.ty = ctx.operation().ty;
+
+        return res;
+    }
+
 
 }
 
