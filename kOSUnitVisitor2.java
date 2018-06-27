@@ -150,7 +150,7 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
     @Override public ST visitValue(UnidadesParser.ValueContext ctx) {
         ST res = stg.getInstanceOf("val");
         res.add("uvalue",ctx.INT().getText());
-        res.add("unit",ctx.NAME().getText());
+        res.add("unit","UnitDic[\'" + ctx.NAME().getText() + "\']");
         ctx.uniNa = ctx.NAME().getText();
         return res;
     }

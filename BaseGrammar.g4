@@ -22,7 +22,7 @@ stat:
 
 // Value
 
-value returns[vartype typ,String unit]:
+value returns[vartype typ,String unit,String nr]:
     num=(INT|REAL) pow? NAME            #valueUnit
     | '!' num=(INT|REAL) pow? NAME      #valueUnitNeg
     |num=(INT|REAL) pow?                #valueS
@@ -41,6 +41,7 @@ instruction returns[String varName]:
     // Operation without storing result or (most common) variable increment/decrement
     | operation                                         #soloOp
     | deincrement                                       #instDeincr
+    | convValue                                         #instConv
     ;
 
 print: 'Print' '(' NAME ')';
