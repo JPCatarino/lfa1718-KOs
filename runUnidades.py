@@ -1,21 +1,23 @@
 import subprocess
 import os.path
+import sys
 
 def main():
-    filepath = input("file path: ")
-    if(filepath == ""):
+    if(len(sys.argv)-1 == 0):
         compileAntlr()
         compileJava()
-        exit()    
-    if(os.path.isfile(filepath)):
-        compileAntlr()
-        compileJava()
-        exeJava(filepath)
-        cleanAntlr()
         exit()
     else:
-        print("no such file")
-        exit()
+        filepath = sys.argv[1]
+        if(os.path.isfile(filepath)):
+            compileAntlr()
+            compileJava()
+            exeJava(filepath)
+            cleanAntlr()
+            exit()
+        else:
+            print("USAGE: python3 runUnidades [filepath]")
+            exit()
 
 
 def compileAntlr():
