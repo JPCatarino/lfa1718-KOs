@@ -50,7 +50,7 @@ print: 'Print' '(' NAME ')';
  * --------------------
  */
 if_else:
-    'if' '(' condition ')' (ifA=ifArg) ('else' (elseA=ifArg))?;
+    'if' '(' (cc=condition|bc=booleanCondition) ')' (ifA=ifArg) ('else' (elseA=ifArg))?;
 
 ifArg:
     '{'statList'}'      #ifStatList
@@ -88,6 +88,12 @@ deincrement returns [vartype ty]:
         ;
 
 // Conditions
+booleanCondition:
+    left=booleanCondition BOOLEAN_OPERATOR right=booleanCondition   #boolCondOp
+    |NOT condition                                                  #boolNotCond
+    |condition                                                      #boolCond
+    ;
+
 condition:
     left=conditionE CONDITIONAL_OPERATOR right=conditionE              #compare
     |conditionE                                                        #soloCond
@@ -98,6 +104,8 @@ conditionE returns [vartype type]:
     |NAME           #condiEVar
     ;
 
+
+
 // Variable Types
 varType:
     'simpVar'   #simple
@@ -107,6 +115,11 @@ varType:
 // Equivalent to "*10^"
 pow: 'e^' (min='-')? exp=(INT|REAL);
 
+BOOLEAN_OPERATOR:
+    'and'
+    | 'or'
+    ;
+NOT: 'not';
 
 NAME: [a-zA-Z] [a-zA-Z_0-9]*;
 WS: [ \t\r\n]+ -> skip;

@@ -66,7 +66,10 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     @Override public ST visitIf_else(BaseGrammarParser.If_elseContext ctx) {
         ST res = stg.getInstanceOf("stats");
         ST ifCond = stg.getInstanceOf("if");
-        ifCond.add("condition",visit(ctx.condition()));
+        if(ctx.bc == null)
+            ifCond.add("condition",visit(ctx.condition()));
+        else
+            ifCond.add("condition",visit(ctx.booleanCondition()));
         ifCond.add("stat", visit(ctx.ifA));
         res.add("stat",ifCond);
         if(ctx.elseA != null) {
@@ -236,6 +239,22 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         res.add("right", visit(ctx.right));
         return res;
     }
+
+    @Override public ST visitBoolNotCond(BaseGrammarParser.BoolNotCondContext ctx) {
+        ST res = stg.getInstanceOf("boolNot");
+        res.add("val",visit(ctx.condition()));
+        return res;
+    }
+
+    @Override public ST visitBoolCondOp(BaseGrammarParser.BoolCondOpContext ctx) {
+        ST res = stg.getInstanceOf("boolCondition");
+        res.add("left",visit(ctx.left));
+        res.add("op",ctx.BOOLEAN_OPERATOR().getText());
+        res.add("right",visit(ctx.right));
+        return res;
+    }
+
+    @Override public ST visitBoolCond(BaseGrammarParser.BoolCondContext ctx) {return visitChildren(ctx); }
 
     @Override public ST visitCondiEValue(BaseGrammarParser.CondiEValueContext ctx) {
         ST res = stg.getInstanceOf("stats");

@@ -11,15 +11,6 @@ VARTYPE: 'void'
  * OPERATORS SECTION
  * -----------------
  */
-// Boolean Operators
-BOOLEAN_OPERATOR:
-    'and'
-    | 'or'
-    | 'xor'
-    | 'nand'
-    | 'nor'
-    | 'xnor'
-    ;
 
 // Numeric Operators
 NUMERIC_OPERATOR:
