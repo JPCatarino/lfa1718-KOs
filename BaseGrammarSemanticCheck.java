@@ -45,17 +45,29 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
     @Override
     public Boolean visitCompare(BaseGrammarParser.CompareContext ctx) {
         Boolean res = true;
-        Boolean right = hvisit(ctx.right);
+
+
+        Boolean right = visit(ctx.right);
         Boolean left = visit(ctx.left);
 
-        if (ctx.left.type.equals(vartype.unitVar) && ctx.right.type.equals(vartype.simpVar)) {
-            ErrorHandling.printError(ctx, "You cannot compare an unit variable with a simple variable!");
+        if ((left == false) || (right == false)) {
+            System.out.println(right + " " + left);
+            ErrorHandling.printError(ctx, "You cannot compare with a variable that does not exist!");
             res = false;
         }
-        if (ctx.left.type.equals(vartype.simpVar) && ctx.right.type.equals(vartype.unitVar)) {
-            ErrorHandling.printError(ctx, "You cannot compare a simple variable with an unit variable!");
-            res = false;
+        if ((left == true) && (right == true)) {
+
+            if (ctx.left.type.equals(vartype.unitVar) && ctx.right.type.equals(vartype.simpVar)) {
+                ErrorHandling.printError(ctx, "You cannot compare an unit variable with a simple variable!");
+                res = false;
+            }
+            if (ctx.left.type.equals(vartype.simpVar) && ctx.right.type.equals(vartype.unitVar)) {
+                ErrorHandling.printError(ctx, "You cannot compare a simple variable with an unit variable!");
+                res = false;
+            }
+
         }
+
 
         return res;
     }
