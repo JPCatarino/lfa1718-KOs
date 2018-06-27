@@ -52,8 +52,11 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         // Left
         String id = ctx.NAME().getText();
         BGSymbol s = BaseGrammarParser.symbolTable.get(id);
-        s.setVarName(ctx.varName);
-        res.add("left",ctx.varName);
+        if(s.varName() == null) {
+            s.setVarName(ctx.varName);
+            res.add("left", ctx.varName);
+        }
+        else res.add("left",s.varName());
         // Right
         res.add("right",visit(ctx.operation()));
         return res;
@@ -86,9 +89,9 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
     @Override public ST visitLoopFor(BaseGrammarParser.LoopForContext ctx){
         ST res = stg.getInstanceOf("for");
-        res.add("var",ctx.var);
-        res.add("min",ctx.min);
-        res.add("max",ctx.max);
+        res.add("var",ctx.var.getText());
+        res.add("min",ctx.min.getText());
+        res.add("max",ctx.max.getText());
         res.add("stat",visit(ctx.statList()));
         return res;
     }
@@ -145,6 +148,13 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         //else if((ctx.left.ty == vartype.unitVar && ctx.right.ty == vartype.simpVar) || (ctx.left.ty == vartype.simpVar && ctx.right.ty == vartype.unitVar)){
         else if((ctx.left.ty == vartype.unitVar) ^ (ctx.right.ty == vartype.unitVar)){
             ST res = stg.getInstanceOf("valContaSimp");
+            if(ctx.left.ty == vartype.simpVar && ctx.right.ty == vartype.unitVar){
+                res.add("val1", right);
+                res.add("val2",left);
+                res.add("op",ctx.NUMERIC_OPERATOR().getText());
+                ctx.ty = vartype.unitVar;
+                return res;
+            }
             res.add("val1", left);
             res.add("val2",right);
             res.add("op",ctx.NUMERIC_OPERATOR().getText());
@@ -161,16 +171,19 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
 
     @Override public ST visitDecrement(BaseGrammarParser.DecrementContext ctx) {
-      vartype vt = BaseGrammarParser.symbolTable.get(ctx.NAME().getText()).type();
-      ST res;
-      String id = ctx.NAME().getText();
-      BGSymbol s = BaseGrammarParser.symbolTable.get(id);
-      if(vt == vartype.unitVar) { res = stg.getInstanceOf("valContaSimp"); ctx.ty = vartype.unitVar;} // unitVar
-      else                      { res = stg.getInstanceOf("contaSimples"); ctx.ty = vartype.simpVar;} // simpVar
-      res.add("val1", s.varName());
-      res.add("val2", 1);
-      res.add("op", "-");
-      return res;
+        vartype vt = BaseGrammarParser.symbolTable.get(ctx.NAME().getText()).type();
+        ST res = stg.getInstanceOf("assign");
+        ST op;
+        String id = ctx.NAME().getText();
+        BGSymbol s = BaseGrammarParser.symbolTable.get(id);
+        if(vt == vartype.unitVar) { op = stg.getInstanceOf("valContaSimp"); ctx.ty = vartype.unitVar; }
+        else                      { op = stg.getInstanceOf("contaSimples"); ctx.ty = vartype.simpVar; }
+        op.add("left", s.varName());
+        op.add("right", 1);
+        op.add("op", "-");
+        res.add("left", s.varName());
+        res.add("right", op);
+        return res;
     }
 
 
@@ -186,14 +199,17 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
     @Override public ST visitIncrement(BaseGrammarParser.IncrementContext ctx) {
         vartype vt = BaseGrammarParser.symbolTable.get(ctx.NAME().getText()).type();
-        ST res;
+        ST res = stg.getInstanceOf("assign");
+        ST op;
         String id = ctx.NAME().getText();
         BGSymbol s = BaseGrammarParser.symbolTable.get(id);
-        if(vt == vartype.unitVar) { res = stg.getInstanceOf("valContaSimp"); ctx.ty = vartype.unitVar; }
-        else{ res = stg.getInstanceOf("contaSimples"); ctx.ty = vartype.simpVar; }
-        res.add("val1", s.varName());
-        res.add("val2", 1);
-        res.add("op", "+");
+        if(vt == vartype.unitVar) { op = stg.getInstanceOf("valContaSimp"); ctx.ty = vartype.unitVar; }
+        else                      { op = stg.getInstanceOf("contaSimples"); ctx.ty = vartype.simpVar; }
+        op.add("left", s.varName());
+        op.add("right", 1);
+        op.add("op", "+");
+        res.add("left", s.varName());
+        res.add("right", op);
         return res;
     }
 
@@ -230,6 +246,12 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         return res;
     }
 
+    /*
+    // AINDA TENHO QUE FAZER...
+    @Override public ST visitValue(BaseGrammarParser.ValueContext ctx) { return visitChildren(ctx); }
+
+    // AINDA TENHO QUE FAZER...
+    @Override public ST visitPow(BaseGrammarParser.PowContext ctx) { return visitChildren(ctx); }*/
 
     @Override public ST visitValueUnit(BaseGrammarParser.ValueUnitContext ctx) {
         ST res = stg.getInstanceOf("val");
@@ -240,14 +262,17 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         ctx.typ = vartype.unitVar;
         return res;
     }
-    /*
-    // AINDA TENHO QUE FAZER...
-    @Override public ST visitValue(BaseGrammarParser.ValueContext ctx) { return visitChildren(ctx); }
 
-    // AINDA TENHO QUE FAZER...
-    @Override public ST visitPow(BaseGrammarParser.PowContext ctx) { return visitChildren(ctx); }*/
-
-    @Override public ST visitValueUnitNeg(BaseGrammarParser.ValueUnitNegContext ctx) { return visitChildren(ctx); }
+    @Override public ST visitValueUnitNeg(BaseGrammarParser.ValueUnitNegContext ctx) {
+        ST res = stg.getInstanceOf("signedVal");
+        res.add("sign", "-");
+        res.add("uvalue",ctx.num.getText());
+        ST unit = stg.getInstanceOf("dicUnit");
+        unit.add("uname",ctx.NAME().getText());
+        res.add("unit",unit.render());
+        ctx.typ = vartype.unitVar;
+        return res;
+    }
 
     @Override public ST visitValueS(BaseGrammarParser.ValueSContext ctx) {
         ST res = stg.getInstanceOf("variable");
@@ -256,7 +281,13 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         return res;
     }
 
-    @Override public ST visitValueSNeg(BaseGrammarParser.ValueSNegContext ctx) { return visitChildren(ctx); }
+    @Override public ST visitValueSNeg(BaseGrammarParser.ValueSNegContext ctx) {
+        ST res = stg.getInstanceOf("signedVariable");
+        res.add("sign", "-");
+        res.add("unsigVal",ctx.num.getText());
+        ctx.typ = vartype.simpVar;
+        return res;
+    }
 
     protected String newVarName() {
         varCount++;
