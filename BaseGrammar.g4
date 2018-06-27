@@ -110,3 +110,4 @@ pow: 'e' (min='-')? exp=(INT|REAL);
 
 NAME: [a-zA-Z] [a-zA-Z_0-9]*;
 WS: [ \t\r\n]+ -> skip;
+COMMENT: '--' ~[\r\n]* -> skip;
