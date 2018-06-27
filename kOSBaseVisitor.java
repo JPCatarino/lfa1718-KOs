@@ -253,16 +253,24 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         return res;
     }
 
-    /*
-    // AINDA TENHO QUE FAZER...
-    @Override public ST visitValue(BaseGrammarParser.ValueContext ctx) { return visitChildren(ctx); }
 
-    // AINDA TENHO QUE FAZER...
-    @Override public ST visitPow(BaseGrammarParser.PowContext ctx) { return visitChildren(ctx); }*/
+    @Override public ST visitPow(BaseGrammarParser.PowContext ctx) {
+        ST res = stg.getInstanceOf("pow");
+
+        if(ctx.min != null)
+            res.add("exponent",  "-" + ctx.exp.getText());
+        else
+            res.add("exponent", ctx.exp.getText());
+
+        return res;
+    }
 
     @Override public ST visitValueUnit(BaseGrammarParser.ValueUnitContext ctx) {
         ST res = stg.getInstanceOf("val");
-        res.add("uvalue",ctx.num.getText());
+        if(ctx.pow() != null)
+            res.add("uvalue",ctx.num.getText() + visit(ctx.pow()).render());
+        else
+            res.add("uvalue",ctx.num.getText());
         ST unit = stg.getInstanceOf("dicUnit");
         unit.add("uname",ctx.NAME().getText());
         res.add("unit",unit.render());
