@@ -1,7 +1,6 @@
 import static java.lang.System.*;
 
 
-
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -24,7 +23,7 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
         Boolean res = true;
         String id;
         BGSymbol s;
-        if(ctx.varType() != null){
+        if (ctx.varType() != null) {
             id = ctx.NAME().getText();
             if (BaseGrammarParser.symbolTable.containsKey(id)) {
                 ErrorHandling.printError(ctx, "Variable \"" + id + "\" already declared!");
@@ -35,8 +34,7 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
                 } else
                     BaseGrammarParser.symbolTable.put(id, new BaseGrammarSymbol(id, vartype.unitVar));
             }
-        }
-        else {
+        } else {
             id = ctx.NAME().getText();
         }
         s = BaseGrammarParser.symbolTable.get(id);
@@ -44,12 +42,13 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
 
         if (!BaseGrammarParser.symbolTable.containsKey(id)) {
             ErrorHandling.printError(ctx, "Variable \"" + id + "\" is not declared!");
-            res = false; }
-        else {
+            res = false;
+        } else {
             res = visit(ctx.operation());
             if (s.type() != ctx.operation().ty) {
                 ErrorHandling.printError(ctx, "Type mismatch!");
-                res = false; }
+                res = false;
+            }
         }
 
         return res;

@@ -4,9 +4,9 @@ simpVar c
 unitVar d
 
 a = 2.5e 2 lfa
-b = 1 muito
+b = 1 Kg
 c = 20
-d = 3 kos
+d = 3 cd
 
 if(d>b){
     for(i;1;20){

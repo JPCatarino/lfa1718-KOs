@@ -1,0 +1,15 @@
+unitVar k
+unitVar a
+unitVar res
+unitVar res2
+unitVar b
+
+a = 5 cd
+b = 7.6 g
+k= 8 mol
+
+res2 = 2*k + b/2
+res = 2/2Kg
+
+Print(res2)
+
