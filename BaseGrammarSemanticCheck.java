@@ -50,8 +50,7 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
         Boolean right = visit(ctx.right);
         Boolean left = visit(ctx.left);
 
-        if ((left == false) || (right == false)) {
-            System.out.println(right + " " + left);
+        if((left== false) || (right == false)){
             ErrorHandling.printError(ctx, "You cannot compare with a variable that does not exist!");
             res = false;
         }
