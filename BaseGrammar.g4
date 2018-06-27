@@ -24,9 +24,9 @@ stat:
 
 value returns[vartype typ]:
     num=(INT|REAL) pow? NAME            #valueUnit
-    | '(' '-' num=(INT|REAL) pow? NAME ')'  #valueUnitNeg
+    | '(' '!' num=(INT|REAL) pow? NAME ')'  #valueUnitNeg
     |num=(INT|REAL) pow?                #valueS
-    | '(' '-' num=(INT|REAL) pow?')'        #valueSNeg
+    | '(' '!' num=(INT|REAL) pow?')'        #valueSNeg
     ;
 
 // General intruction
@@ -113,7 +113,7 @@ varType:
     ;
 
 // Equivalent to "*10^"
-pow: 'e^' (min='-')? exp=(INT|REAL);
+pow: 'e^' (min='!')? exp=(INT|REAL);
 
 BOOLEAN_OPERATOR:
     'and'
