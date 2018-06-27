@@ -178,9 +178,16 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         BGSymbol s = BaseGrammarParser.symbolTable.get(id);
         if(vt == vartype.unitVar) { op = stg.getInstanceOf("valContaSimp"); ctx.ty = vartype.unitVar; }
         else                      { op = stg.getInstanceOf("contaSimples"); ctx.ty = vartype.simpVar; }
-        op.add("left", s.varName());
-        op.add("right", 1);
-        op.add("op", "-");
+        if(ctx.ty == vartype.unitVar){
+            op.add("val1", s.varName());
+            op.add("val2", 1);
+            op.add("op", "-");
+        }
+        else {
+            op.add("left", s.varName());
+            op.add("right", 1);
+            op.add("op", "-");
+        }
         res.add("left", s.varName());
         res.add("right", op);
         return res;

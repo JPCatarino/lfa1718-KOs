@@ -40,6 +40,7 @@ instruction returns[String varName]:
     | NAME '=' operation                                #assignment
     // Operation without storing result or (most common) variable increment/decrement
     | operation                                         #soloOp
+    | deincrement                                       #instDeincr
     ;
 
 print: 'Print' '(' NAME ')';
@@ -76,13 +77,15 @@ loop:
 // Operations
 operation returns [vartype ty] :
     '(' n=operation ')'                                     #par
-    | NAME '++'                                             #increment
-    | NAME '--'                                             #decrement
     | left=operation NUMERIC_OPERATOR right=operation       #op
     | NAME                                                  #assignVar
     | value                                                 #val
-
     ;
+
+deincrement returns [vartype ty]:
+          NAME '++'                                             #increment
+        | NAME '--'                                             #decrement
+        ;
 
 // Conditions
 condition:
