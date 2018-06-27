@@ -131,8 +131,17 @@ class val:
         if(value1.value == value2.value):
             return True
         return False
-            
-        
+
+    def greaterEqual(value1,value2):
+        if(val.greater(value1,value2) or val.equalTo(value1,value2)):
+            return True
+        return False
+    
+    def lesserEqual(value1,value2):        
+        if(val.lesser(value1,value2) or val.equalTo(value1,value2)):
+            return True
+        return False    
+    
     def printVal(value):
         tmp = str(value.value) + " "
         neg = []

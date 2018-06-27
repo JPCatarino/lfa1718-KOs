@@ -15,9 +15,9 @@ condiOperators ::= [
 
 unitCondiOperators ::= [
    ">":"greater",
-   ">=":">=",
+   ">=":"greaterEqual",
    "<":"lesser",
-   "<=":"<=",
+   "<=":"lesserEqual",
    "==":"equal",
    default:"null"
 ]
