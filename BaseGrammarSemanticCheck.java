@@ -1,6 +1,7 @@
 import static java.lang.System.*;
 
 
+
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -234,6 +235,19 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
     public Boolean visitVal(BaseGrammarParser.ValContext ctx) {
         Boolean res = visit(ctx.value());
         ctx.ty = ctx.value().typ;
+        return res;
+    }
+
+    @Override
+    public Boolean visitPrint(BaseGrammarParser.PrintContext ctx) {
+        Boolean res = true;
+        String id = ctx.NAME().getText();
+
+        if (!BaseGrammarParser.symbolTable.containsKey(id)) {
+            ErrorHandling.printError(ctx, "Variable \"" + id + "\" does not exist! You can not print a variable that does not exist!");
+            res = false;
+        }
+
         return res;
     }
 
