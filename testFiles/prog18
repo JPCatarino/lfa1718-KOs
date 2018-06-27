@@ -1,0 +1,8 @@
+simpVar desespero
+unitVar frustracao
+desespero = (-5)
+frustracao = (-9 lfa)
+desespero++
+desespero--
+desespero = desespero + (-2)
+frustracao = frustracao + (-1 lfa)

@@ -22,10 +22,6 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         return res;
     }
 
-    @Override public T visitValueUnitNeg(BaseGrammarParser.ValueUnitNegContext ctx) { return visitChildren(ctx); }
-
-    @Override public T visitValueSNeg(BaseGrammarParser.ValueSNegContext ctx) { return visitChildren(ctx); }
-
     @Override public ST visitInstPrint(BaseGrammarParser.InstPrintContext ctx) { return visit(ctx.print());}
 
     @Override public ST visitPrint(BaseGrammarParser.PrintContext ctx) {
@@ -168,16 +164,19 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
 
     @Override public ST visitDecrement(BaseGrammarParser.DecrementContext ctx) {
-      vartype vt = BaseGrammarParser.symbolTable.get(ctx.NAME().getText()).type();
-      ST res;
-      String id = ctx.NAME().getText();
-      BGSymbol s = BaseGrammarParser.symbolTable.get(id);
-      if(vt == vartype.unitVar) { res = stg.getInstanceOf("valContaSimp"); ctx.ty = vartype.unitVar;} // unitVar
-      else                      { res = stg.getInstanceOf("contaSimples"); ctx.ty = vartype.simpVar;} // simpVar
-      res.add("left", s.varName());
-      res.add("right", 1);
-      res.add("op", "-");
-      return res;
+        vartype vt = BaseGrammarParser.symbolTable.get(ctx.NAME().getText()).type();
+        ST res = stg.getInstanceOf("assign");
+        ST op;
+        String id = ctx.NAME().getText();
+        BGSymbol s = BaseGrammarParser.symbolTable.get(id);
+        if(vt == vartype.unitVar) { op = stg.getInstanceOf("valContaSimp"); ctx.ty = vartype.unitVar; }
+        else                      { op = stg.getInstanceOf("contaSimples"); ctx.ty = vartype.simpVar; }
+        op.add("left", s.varName());
+        op.add("right", 1);
+        op.add("op", "-");
+        res.add("left", s.varName());
+        res.add("right", op);
+        return res;
     }
 
 
@@ -198,7 +197,7 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         String id = ctx.NAME().getText();
         BGSymbol s = BaseGrammarParser.symbolTable.get(id);
         if(vt == vartype.unitVar) { op = stg.getInstanceOf("valContaSimp"); ctx.ty = vartype.unitVar; }
-        else{ op = stg.getInstanceOf("contaSimples"); ctx.ty = vartype.simpVar; }
+        else                      { op = stg.getInstanceOf("contaSimples"); ctx.ty = vartype.simpVar; }
         op.add("left", s.varName());
         op.add("right", 1);
         op.add("op", "+");
@@ -275,7 +274,7 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         return res;
     }
 
-    @Override public ST visitValueSNeg(BaseGrammarParser.ValueSNegContext ctx) { ST res = stg.getInstanceOf("variable");
+    @Override public ST visitValueSNeg(BaseGrammarParser.ValueSNegContext ctx) {
         ST res = stg.getInstanceOf("signedVariable");
         res.add("sign", "-");
         res.add("unsigVal",ctx.num.getText());
