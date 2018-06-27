@@ -1,3 +1,9 @@
+valSignal ::= [
+  "+":"+",
+  "-":"-",
+  default:"null"
+]
+
 condiOperators ::= [
    ">":">",
    ">=":">=",
@@ -78,6 +84,10 @@ val.<unitSimpOperators.(op)>(<val1>,<val2>)
 
 variable(name) ::= "<name>"
 
+signedVariable(sign, unsigVal) ::=<<
+(<valSignal.(sign)><unsigVal>)
+>>
+
 invertPot(name) ::= <<
 for x in <name>:
     x.pot = -x.pot
@@ -128,6 +138,10 @@ UnitDic['<uname>'] = <unit>
 
 val(uvalue,unit) ::=<<
 val(<uvalue>,<unit>)
+>>
+
+signedVal(sign,uvalue,unit) ::=<<
+val(<valSignal.(sign)><uvalue>,<unit>)
 >>
 
 glom(unit) ::=<<

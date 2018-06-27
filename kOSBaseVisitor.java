@@ -22,6 +22,10 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         return res;
     }
 
+    @Override public T visitValueUnitNeg(BaseGrammarParser.ValueUnitNegContext ctx) { return visitChildren(ctx); }
+
+    @Override public T visitValueSNeg(BaseGrammarParser.ValueSNegContext ctx) { return visitChildren(ctx); }
+
     @Override public ST visitInstPrint(BaseGrammarParser.InstPrintContext ctx) { return visit(ctx.print());}
 
     @Override public ST visitPrint(BaseGrammarParser.PrintContext ctx) {
@@ -236,6 +240,12 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         return res;
     }
 
+    /*
+    // AINDA TENHO QUE FAZER...
+    @Override public ST visitValue(BaseGrammarParser.ValueContext ctx) { return visitChildren(ctx); }
+
+    // AINDA TENHO QUE FAZER...
+    @Override public ST visitPow(BaseGrammarParser.PowContext ctx) { return visitChildren(ctx); }*/
 
     @Override public ST visitValueUnit(BaseGrammarParser.ValueUnitContext ctx) {
         ST res = stg.getInstanceOf("val");
@@ -246,14 +256,17 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         ctx.typ = vartype.unitVar;
         return res;
     }
-    /*
-    // AINDA TENHO QUE FAZER...
-    @Override public ST visitValue(BaseGrammarParser.ValueContext ctx) { return visitChildren(ctx); }
 
-    // AINDA TENHO QUE FAZER...
-    @Override public ST visitPow(BaseGrammarParser.PowContext ctx) { return visitChildren(ctx); }*/
-
-    @Override public ST visitValueUnitNeg(BaseGrammarParser.ValueUnitNegContext ctx) { return visitChildren(ctx); }
+    @Override public ST visitValueUnitNeg(BaseGrammarParser.ValueUnitNegContext ctx) {
+        ST res = stg.getInstanceOf("signedVal");
+        res.add("sign", "-");
+        res.add("uvalue",ctx.num.getText());
+        ST unit = stg.getInstanceOf("dicUnit");
+        unit.add("uname",ctx.NAME().getText());
+        res.add("unit",unit.render());
+        ctx.typ = vartype.unitVar;
+        return res;
+    }
 
     @Override public ST visitValueS(BaseGrammarParser.ValueSContext ctx) {
         ST res = stg.getInstanceOf("variable");
@@ -262,7 +275,13 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         return res;
     }
 
-    @Override public ST visitValueSNeg(BaseGrammarParser.ValueSNegContext ctx) { return visitChildren(ctx); }
+    @Override public ST visitValueSNeg(BaseGrammarParser.ValueSNegContext ctx) { ST res = stg.getInstanceOf("variable");
+        ST res = stg.getInstanceOf("signedVariable");
+        res.add("sign", "-");
+        res.add("unsigVal",ctx.num.getText());
+        ctx.typ = vartype.simpVar;
+        return res;
+    }
 
     protected String newVarName() {
         varCount++;
