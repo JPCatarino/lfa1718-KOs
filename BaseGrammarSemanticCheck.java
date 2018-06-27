@@ -50,7 +50,7 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
         Boolean right = visit(ctx.right);
         Boolean left = visit(ctx.left);
 
-        if((left== false) || (right == false)){
+        if ((left == false) || (right == false)) {
             ErrorHandling.printError(ctx, "You cannot compare with a variable that does not exist!");
             res = false;
         }
@@ -94,30 +94,31 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
 
         return res;
     }
-    /*
 
 
-    @Override public Boolean visitDecrement(BaseGrammarParser.DecrementContext ctx){     
+    @Override
+    public Boolean visitDecrement(BaseGrammarParser.DecrementContext ctx) {
         Boolean res = true;
         String name = ctx.NAME().getText();
-        if (!BaseGrammarParser.symbolTable.containsKey(name)){
-            ErrorHandling.printError(ctx, "Variable \""+name+"\" does not exist!");
+        if (!BaseGrammarParser.symbolTable.containsKey(name)) {
+            ErrorHandling.printError(ctx, "Variable \"" + name + "\" does not exist! You cannot decrement a variable that does not exist.");
             res = false;
         }
         return res;
     }
 
-    @Override public Boolean visitIncrement(BaseGrammarParser.IncrementContext ctx){     
+    @Override
+    public Boolean visitIncrement(BaseGrammarParser.IncrementContext ctx) {
         Boolean res = true;
         String name = ctx.NAME().getText();
 
-        if (!BaseGrammarParser.symbolTable.containsKey(name)){
-            ErrorHandling.printError(ctx, "Variable \""+name+"\" does not exist!");
+        if (!BaseGrammarParser.symbolTable.containsKey(name)) {
+            ErrorHandling.printError(ctx, "Variable \"" + name + "\" does not exist! You cannot increment a variable that does not exist.");
             res = false;
         }
         return res;
     }
-    */
+
 
     @Override
     public Boolean visitVarDec(BaseGrammarParser.VarDecContext ctx) {
@@ -140,33 +141,42 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
     public Boolean visitOp(BaseGrammarParser.OpContext ctx) {
         Boolean res = true;
 
-        visit(ctx.right);
-        visit(ctx.left);
+        Boolean left = visit(ctx.left);
+        Boolean right = visit(ctx.right);
         String operator = ctx.NUMERIC_OPERATOR().getText();
-        if (ctx.left.ty == ctx.right.ty) {
-            ctx.ty = ctx.left.ty;
 
+
+        if ((left == false) || (right == false)) {
+            ErrorHandling.printError(ctx, "You cannot operate with a variable that does not exist!");
+            res = false;
         }
 
-        if (ctx.left.ty.equals(vartype.simpVar) && ctx.right.ty.equals(vartype.unitVar)) {
-            if (operator.equals("/") || operator.equals("+") || operator.equals("-")) {
-                ErrorHandling.printError(ctx, "You cannot make that operation between a simple variable and an unit variable!");
-                res = false;
-
+        if ((left == true) && (right == true)) {
+            if (ctx.left.ty == ctx.right.ty) {
+                ctx.ty = ctx.left.ty;
 
             }
-            ctx.ty = vartype.unitVar;
 
-        }
+            if (ctx.left.ty.equals(vartype.simpVar) && ctx.right.ty.equals(vartype.unitVar)) {
+                if (operator.equals("/") || operator.equals("+") || operator.equals("-")) {
+                    ErrorHandling.printError(ctx, "You cannot make that operation between a simple variable and an unit variable!");
+                    res = false;
 
-        if (ctx.left.ty.equals(vartype.unitVar) && ctx.right.ty.equals(vartype.simpVar)) {
-            if (operator.equals("+") || operator.equals("-")) {
-                ErrorHandling.printError(ctx, "You cannot make that operation between a simple variable and an unit variable!");
-                res = false;
 
+                }
+                ctx.ty = vartype.unitVar;
 
             }
-            ctx.ty = vartype.unitVar;
+
+            if (ctx.left.ty.equals(vartype.unitVar) && ctx.right.ty.equals(vartype.simpVar)) {
+                if (operator.equals("+") || operator.equals("-")) {
+                    ErrorHandling.printError(ctx, "You cannot make that operation between a simple variable and an unit variable!");
+                    res = false;
+
+
+                }
+                ctx.ty = vartype.unitVar;
+            }
         }
         return res;
     }
