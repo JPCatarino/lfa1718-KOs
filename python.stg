@@ -46,6 +46,12 @@ unitSimpOperators ::= [
    default:"null"
 ]
 
+boolOperators ::= [
+   "and":"and",
+   "or":"or",
+   default:"null"
+]
+
 //templates
 
 unitClass(cname,stat) ::= <<
@@ -116,6 +122,14 @@ condition(left,op,right) ::=<<
 
 unitCondition(left,op,right) ::=<<
 val.<unitCondiOperators.(op)>(<left>,<right>)
+>>
+
+boolCondition(left,op,right) ::=<<
+<left> <boolOperators.(op)> <right>
+>>
+
+boolNot(val) ::=<<
+ not <val>
 >>
 
 assign(left,right) ::= "<left> = <right>"
