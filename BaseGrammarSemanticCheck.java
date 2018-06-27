@@ -14,17 +14,7 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
     /*
     @Override public Boolean visitCheckVar(BaseGrammarParser.CheckVarContext ctx){
 
-    @Override public Boolean visitCommand(BaseGrammarParser.CommandContext ctx){
-
-        Boolean res = true;
-        String name = ctx.NAME().getText();
-        if (!BaseGrammarParser.symbolTable.containsKey(name)){
-            ErrorHandling.printError(ctx, "Variable \""+name+"\" does not exist!");
-            res = false;
-        }
-        return res;
-    }
-    */
+     */
 
     //verificar se é simple var ou unit var
     //simVar i = 2kg -> erro
@@ -52,12 +42,12 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
 
     }
 
-    @Override public Boolean visitCompare(BaseGrammarParser.CompareContext ctx){     
+    @Override
     public Boolean visitCompare(BaseGrammarParser.CompareContext ctx) {
         Boolean res = true;
-        visit(ctx.right);
-        visit(ctx.left);
-        
+        Boolean right = hvisit(ctx.right);
+        Boolean left = visit(ctx.left);
+
         if (ctx.left.type.equals(vartype.unitVar) && ctx.right.type.equals(vartype.simpVar)) {
             ErrorHandling.printError(ctx, "You cannot compare an unit variable with a simple variable!");
             res = false;
@@ -66,19 +56,21 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
             ErrorHandling.printError(ctx, "You cannot compare a simple variable with an unit variable!");
             res = false;
         }
-        
+
         return res;
     }
 
-    @Override public Boolean visitCondiEValue(BaseGrammarParser.CondiEValueContext ctx)
-     { Boolean res = visit(ctx.value());
+    @Override
+    public Boolean visitCondiEValue(BaseGrammarParser.CondiEValueContext ctx) {
+        Boolean res = visit(ctx.value());
         ctx.type = ctx.value().typ;
         return res;
     }
-    
 
-     @Override public Boolean visitCondiEVar(BaseGrammarParser.CondiEVarContext ctx)
-      { Boolean res = true;
+
+    @Override
+    public Boolean visitCondiEVar(BaseGrammarParser.CondiEVarContext ctx) {
+        Boolean res = true;
         String id = ctx.NAME().getText();
 
         if (BaseGrammarParser.symbolTable.containsKey(id)) {
@@ -89,7 +81,8 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
             res = false;
         }
 
-        return res;}
+        return res;
+    }
     /*
 
 
@@ -115,23 +108,6 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
     }
     */
 
-    /*
-    @Override public Boolean visitSimple(BaseGrammarParser.AssignVarContext ctx){
-        Boolean res = true;
-
-        String id = ctx.STRING().getText();
-
-        BGSymbol s = BaseGrammarParser.symbolTable.get(id);
-
-
-        if(s.type != vartype.simpVar){
-            ErrorHandling.printError(ctx, "Variable \"" + id + "\" should be Simple!");
-            res = false;
-
-        }
-        return res;
-    }
-    */
     @Override
     public Boolean visitVarDec(BaseGrammarParser.VarDecContext ctx) {
         Boolean res = true;
@@ -148,10 +124,6 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
         return res;
     }
 
-    //@Override
-    // public Boolean visitAssignVar(BaseGrammarParser.AssignVarContext ctx) {
-
-    //}
 
     @Override
     public Boolean visitOp(BaseGrammarParser.OpContext ctx) {
