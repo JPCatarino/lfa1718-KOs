@@ -105,7 +105,7 @@ varType:
     ;
 
 // Equivalent to "*10^"
-pow: 'e' (min='-')? exp=(INT|REAL);
+pow: 'e^' (min='-')? exp=(INT|REAL);
 
 
 NAME: [a-zA-Z] [a-zA-Z_0-9]*;
