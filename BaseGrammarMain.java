@@ -31,20 +31,18 @@ public class BaseGrammarMain {
           semanticCheck.visit(tree);
           // print LISP-style tree:
           // System.out.println(tree.toStringTree(parser));
-
-          kOSBaseVisitor vis = new kOSBaseVisitor();
-          ST code = vis.visit(tree);
-          String filename = "Output.py";
-          try
-          {
-              PrintWriter pw = new PrintWriter(new File(filename));
-              pw.print(code.render());
-              pw.close();
-          }
-          catch(IOException e)
-          {
-              ErrorHandling.printError("Unable to write in file "+filename);
-              System.exit(3);
+          if(!ErrorHandling.error()) {
+              kOSBaseVisitor vis = new kOSBaseVisitor();
+              ST code = vis.visit(tree);
+              String filename = "Output.py";
+              try {
+                  PrintWriter pw = new PrintWriter(new File(filename));
+                  pw.print(code.render());
+                  pw.close();
+              } catch (IOException e) {
+                  ErrorHandling.printError("Unable to write in file " + filename);
+                  System.exit(3);
+              }
           }
         }
       } 
