@@ -148,6 +148,13 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         //else if((ctx.left.ty == vartype.unitVar && ctx.right.ty == vartype.simpVar) || (ctx.left.ty == vartype.simpVar && ctx.right.ty == vartype.unitVar)){
         else if((ctx.left.ty == vartype.unitVar) ^ (ctx.right.ty == vartype.unitVar)){
             ST res = stg.getInstanceOf("valContaSimp");
+            if(ctx.left.ty == vartype.simpVar && ctx.right.ty == vartype.unitVar){
+                res.add("val1", right);
+                res.add("val2",left);
+                res.add("op",ctx.NUMERIC_OPERATOR().getText());
+                ctx.ty = vartype.unitVar;
+                return res;
+            }
             res.add("val1", left);
             res.add("val2",right);
             res.add("op",ctx.NUMERIC_OPERATOR().getText());
