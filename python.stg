@@ -64,6 +64,7 @@ class <cname>:
 baseClass(stat) ::= <<
 from unitClass import val
 from Units import prog1
+conv = []
 <stats(stat)>
 >>
 

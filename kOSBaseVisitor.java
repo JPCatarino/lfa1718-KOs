@@ -8,6 +8,8 @@ import java.util.HashMap;
 
 public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
+    HashMap<String,Map<String,Value>>> outMap = new HashMap<String,HashMap<String,Integer>>();
+
     @Override public ST visitMain(BaseGrammarParser.MainContext ctx) {
         stg = new STGroupFile("python.stg");
         ST res = stg.getInstanceOf("baseClass");

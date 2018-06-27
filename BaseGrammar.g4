@@ -104,7 +104,9 @@ conditionE returns [vartype type]:
     |NAME           #condiEVar
     ;
 
+setConvValue: src=value '$' dtn=value;
 
+convValue: src=value '€' (dtnV=value|dtnN=NAME);
 
 // Variable Types
 varType:
