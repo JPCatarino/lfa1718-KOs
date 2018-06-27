@@ -53,6 +53,7 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
     }
 
     @Override public Boolean visitCompare(BaseGrammarParser.CompareContext ctx){     
+    public Boolean visitCompare(BaseGrammarParser.CompareContext ctx) {
         Boolean res = true;
         visit(ctx.right);
         visit(ctx.left);
