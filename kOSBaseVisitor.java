@@ -68,10 +68,8 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         ST res = stg.getInstanceOf("stats");
         ST conVal = stg.getInstanceOf("getConv");
         visit(ctx.src);
-        if(ctx.dtnV == null){
-            conVal.add("dsrc",ctx.src.unit);
-            conVal.add("ddtn",ctx.dtnN.getText());
-        }
+        conVal.add("dsrc",ctx.src.unit);
+        conVal.add("ddtn",ctx.dest.getText());
         ST ass = stg.getInstanceOf("assign");
         String varName = newVarName();
         ass.add("left",varName);

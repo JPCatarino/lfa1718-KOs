@@ -106,7 +106,7 @@ conditionE returns [vartype type]:
     ;
 
 
-convValue: src=value '€' (dtnV=value|dtnN=NAME);
+convValue: src=value '€' dest=NAME;
 
 // Variable Types
 varType:
