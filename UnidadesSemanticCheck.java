@@ -85,5 +85,17 @@ public class UnidadesSemanticCheck extends UnidadesBaseVisitor<Boolean> {
         return true;
     }
 
+    @Override public Boolean visitSetConvValue(UnidadesParser.SetConvValueContext ctx) {
+        visit(ctx.dtn);
+        String id = ctx.src.getText();
+
+        USymbol s = UnidadesParser.symbolTable.get(id);
+        if(s == null ){
+            ErrorHandling.printError(ctx, "Variable \"" + id + "\" does not exist!");
+            return false;
+        }
+        return true;}
+
+
 }
             
