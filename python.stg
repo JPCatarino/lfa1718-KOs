@@ -27,6 +27,7 @@ Operators ::= [
    "-":"-",
    "*":"*",
    "/":"/",
+   "^":"**",
    default:"null"
 ]
 
@@ -43,6 +44,7 @@ unitSimpOperators ::= [
    "-":"sub_simp",
    "*":"multiply_simp",
    "/":"divide_simp",
+   "^":"power_simp",
    default:"null"
 ]
 

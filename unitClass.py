@@ -116,6 +116,17 @@ class val:
     def sub_simp(value1,value2):
         return val(value1.value - value2,value1.unit)
 
+    def power_simp(value1,value2):
+        tmpUList = []
+        for x in value1.unit:
+            tmpUList.append(unitDec(x.unit,x.pot))
+        for y in tmpUList:
+            if(y.pot > 1):
+                y.pot += value2;
+            else:
+                y.pot = value2
+        return val(value1.value**value2,tmpUList)
+
 
     def greater(value1,value2):
         if(value1.value > value2.value):
