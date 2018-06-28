@@ -1,6 +1,6 @@
 import itertools
 import sys
- 
+
 class unitDec:
     def __init__(self,unit,pot):
         self.unit = unit
@@ -9,7 +9,7 @@ class unitDec:
         tmp = unit.unit
         if(unit.pot > 1 ):
             tmp = tmp + "^" + str(unit.pot)
-        return tmp 
+        return tmp
 
 
 class val:
@@ -21,7 +21,7 @@ class val:
             unitList = []
             unitList.append(unit)
         self.unit = unitList
-    
+
     def add(value1,value2):
         check = True
         for x in value1.unit:
@@ -35,8 +35,8 @@ class val:
             value = value1.value + value2.value
         else:
             print("ERROR: Not able to sum values with different units")
-            sys.exit()   
-        return val(value,unit) 
+            sys.exit()
+        return val(value,unit)
 
     def sub(value1,value2):
         check = True
@@ -51,8 +51,8 @@ class val:
             value = value1.value - value2.value
         else:
             print("ERROR: Not able to subtract values with different units")
-            sys.exit()   
-        return val(value,unit) 
+            sys.exit()
+        return val(value,unit)
 
     def multiply(value1,value2):
         tmpLeft = []
@@ -70,14 +70,14 @@ class val:
             elif(z.unit == m.unit and z.pot > m.pot and m.pot < 0):
                 if(m in tmp):
                     z.pot = z.pot + m.pot
-                    tmp.remove(m)                 
+                    tmp.remove(m)
             elif(z.unit == m.unit and ((z.pot < 0 and m.pot < 0) or (z.pot > 0 and m.pot > 0))):
                 if(m in tmp):
                     z.pot = z.pot + m.pot
-                    tmp.remove(m)    
+                    tmp.remove(m)
         value = value1.value * value2.value
-        return val(value,tmp) 
-    
+        return val(value,tmp)
+
     def divide(value1,value2):
         tmpLeft = []
         tmpRight = []
@@ -96,7 +96,7 @@ class val:
             elif(z.unit == m.unit and z.pot > m.pot and m.pot < 0):
                 if(m in tmp):
                     z.pot = z.pot + m.pot
-                    tmp.remove(m)                 
+                    tmp.remove(m)
             elif(z.unit == m.unit and ((z.pot < 0 and m.pot < 0) or (z.pot > 0 and m.pot > 0))):
                 if(m in tmp):
                     z.pot = z.pot + m.pot
@@ -129,30 +129,20 @@ class val:
 
 
     def greater(value1,value2):
-        if(value1.value > value2.value):
-            return True
-        return False
+        return(value1.value > value2.value)
 
     def lesser(value1,value2):
-        if(value1.value < value2.value):
-            return True 
-        return False    
+        return(value1.value < value2.value)
 
     def equalTo(value1,value2):
-        if(value1.value == value2.value):
-            return True
-        return False
+        return(value1.value == value2.value)
 
     def greaterEqual(value1,value2):
-        if(val.greater(value1,value2) or val.equalTo(value1,value2)):
-            return True
-        return False
-    
-    def lesserEqual(value1,value2):        
-        if(val.lesser(value1,value2) or val.equalTo(value1,value2)):
-            return True
-        return False    
-    
+        return(val.greater(value1,value2) or val.equalTo(value1,value2))
+
+    def lesserEqual(value1,value2):
+        return(val.lesser(value1,value2) or val.equalTo(value1,value2))
+
     def printVal(value):
         tmp = str(value.value) + " "
         neg = []
