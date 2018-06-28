@@ -118,7 +118,10 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
     @Override public ST visitLoopFor(BaseGrammarParser.LoopForContext ctx){
         ST res = stg.getInstanceOf("for");
-        res.add("var",ctx.var.getText());
+        String id = ctx.var.getText();
+        BGSymbol s = BaseGrammarParser.symbolTable.get(id);
+        s.setVarName(newVarName());
+        res.add("var",s.varName());
         res.add("min",ctx.min.getText());
         res.add("max",ctx.max.getText());
         res.add("stat",visit(ctx.statList()));
