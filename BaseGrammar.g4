@@ -64,11 +64,11 @@ ifArg:
  */
 loop:
     // FOR LOOP
-    'for' '(' var=NAME ';' min=INT ';' max=INT ')' '{' statList '}'              #loopFor
+    'for' '(' var=NAME ';' min=INT ';' max=INT ')' '{' statList '}'                                       #loopFor
     // WHILE LOOP
-    | 'while' '(' condition ')' '{' statList '}'                                 #loopWhile
+    | 'while' '(' (cc=condition|bc=booleanCondition) ')' '{' statList '}'                                 #loopWhile
     // DO-WHILE LOOP
-    | 'do' '{' statList '}' 'while' '(' condition ')'                            #loopDoWhile
+    | 'do' '{' statList '}' 'while' '(' (cc=condition|bc=booleanCondition) ')'                            #loopDoWhile
     ;
 
 /* ------------------
