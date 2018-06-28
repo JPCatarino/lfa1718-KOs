@@ -272,6 +272,37 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
         return res;
     }
 
+    @Override
+    public Boolean visitLoopFor(BaseGrammarParser.LoopForContext ctx) {
+        Boolean res = true;
+        String id = ctx.var.getText();
+        BGSymbol s = BaseGrammarParser.symbolTable.get(id);
+        long min = Long.parseLong(ctx.min.getText());
+        long max = Long.parseLong(ctx.max.getText());
+
+
+        if (BaseGrammarParser.symbolTable.containsKey(id)) {
+            ErrorHandling.printError(ctx, "A variable named \"" + id + "\" was already declared! You cannot use it as a variable for a for loop!");
+            res = false;
+        }
+
+        BaseGrammarParser.symbolTable.put(id, new BaseGrammarSymbol(id, vartype.simpVar));
+
+        if (min >= max) {
+            ErrorHandling.printError("The min value can not be greater or equal than the max value!");
+            res = false;
+        }
+
+        if (max > 2147483647) {
+            ErrorHandling.printError("Max cannot be greater than 2^31 - 1!");
+            res = false;
+
+        }
+
+
+        return res;
+    }
+
 
 }
 

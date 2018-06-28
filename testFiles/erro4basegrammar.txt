@@ -1,0 +1,21 @@
+simpVar i
+simpVar output
+
+i=3
+
+output = 2
+
+for(i;2;1){
+Print(output)
+}
+
+for(a;0;2147483645){
+Print(output)
+}
+
+for(a;1;5){
+if(a>2){
+simpVar t = 2+3
+}
+Print(output)
+}
