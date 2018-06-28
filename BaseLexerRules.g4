@@ -1,12 +1,5 @@
 lexer grammar BaseLexerRules;
 
-// Accepted variable types
-VARTYPE: 'void'
-       | 'boolean'
-       | 'int'
-       | 'double'
-       ;
-
 /* -----------------
  * OPERATORS SECTION
  * -----------------
