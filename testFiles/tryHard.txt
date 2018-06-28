@@ -1,0 +1,7 @@
+create unit lfa named lfa;
+create unit ee named ee;
+create unit mt named muito;
+create unit fx named fixe;
+
+lfa $ 2 muito;
+lfa $ 3 fixe;

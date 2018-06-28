@@ -8,6 +8,8 @@ import java.util.HashMap;
 
 public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
+    HashMap<String,HashMap<String,Integer>> outMap = new HashMap<String,HashMap<String,Integer>>();
+
     @Override public ST visitMain(BaseGrammarParser.MainContext ctx) {
         stg = new STGroupFile("python.stg");
         ST res = stg.getInstanceOf("baseClass");
@@ -61,6 +63,30 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         res.add("right",visit(ctx.operation()));
         return res;
     }
+
+    @Override public ST visitConvValue(BaseGrammarParser.ConvValueContext ctx) {
+        ST res = stg.getInstanceOf("stats");
+        ST conVal = stg.getInstanceOf("getConv");
+        visit(ctx.src);
+        conVal.add("dsrc",ctx.src.unit);
+        conVal.add("ddtn",ctx.dest.getText());
+        ST ass = stg.getInstanceOf("assign");
+        String varName = newVarName();
+        ass.add("left",varName);
+        ass.add("right",conVal);
+        res.add("stat",ass);
+        ST conMul = stg.getInstanceOf("valContaSimp");
+        conMul.add("val1",varName);
+        conMul.add("op",'*');
+        conMul.add("val2",ctx.src.nr);
+        ST vp = stg.getInstanceOf("valPrint");
+        vp.add("val",conMul);
+        ST prin = stg.getInstanceOf("print");
+        prin.add("arg","\"O valor Convertido é:\" + " + vp.render());
+        res.add("stat",prin);
+        return res;
+    }
+
 
 
     @Override public ST visitIf_else(BaseGrammarParser.If_elseContext ctx) {
@@ -294,6 +320,8 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         unit.add("uname",ctx.NAME().getText());
         res.add("unit",unit.render());
         ctx.typ = vartype.unitVar;
+        ctx.unit = ctx.NAME().getText();
+        ctx.nr = ctx.num.getText();
         return res;
     }
 

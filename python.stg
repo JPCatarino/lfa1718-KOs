@@ -56,8 +56,10 @@ boolOperators ::= [
 
 unitClass(cname,stat) ::= <<
 from unitClass import unitDec
+from unitClass import val
 class <cname>:
     UnitDic = {}
+    conv = {}
     <stats(stat)>
 >>
 
@@ -65,6 +67,18 @@ baseClass(stat) ::= <<
 from unitClass import val
 from Units import prog1
 <stats(stat)>
+>>
+
+iniD(var) ::= <<
+<var> = {}
+>>
+
+addD(dName,dVal,dUnit) ::=<<
+<dName>['<dUnit>'] = <dVal>
+>>
+
+getConv(dsrc,ddtn) ::=<<
+prog1.conv['<dsrc>']['<ddtn>']
 >>
 
 module(stat) ::= <<
@@ -194,6 +208,10 @@ while (<condition>):
 
 pass()::=<<
 pass
+>>
+
+merge(d1,d2) ::=<<
+{**<d1>,**<d2>}
 >>
 
 pow(exponent) ::=<<
