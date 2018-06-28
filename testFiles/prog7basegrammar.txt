@@ -8,9 +8,9 @@ simpVar v2 = 3
 unitVar dist1 = 3m
 unitVar dist2 = 5m
 
-->density = mass/volume
+density = mass/volume
 
-->Print(density)
+Print(density)
 
 if (v1 < v2 or dist1 > dist2){
 Print(v1)

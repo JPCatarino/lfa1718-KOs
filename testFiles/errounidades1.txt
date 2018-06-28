@@ -1,6 +1,0 @@
-create unit lfa named lfa;
-create unit AK47 named lfa;
-
-
-
-

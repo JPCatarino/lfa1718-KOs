@@ -1,8 +1,18 @@
-simpVar v1 = 2
-simpVar v2 = 3
+unitVar frequency
+unitVar t = 4 s
+unitVar k
 
-unitVar dist1 = 3m
-unitVar dist2 = 5m
+->simpVar a= 2 lfa
 
-unitVar res = 2^dist1
-simpVar res = 4*v1
+
+for(i;0;10){
+    if(i<t){
+        frequency = 1/1*t
+        Print(frequency)
+
+    } else{
+    k = 2
+    Print(k)
+    }
+
+}

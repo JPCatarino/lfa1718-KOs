@@ -4,7 +4,7 @@ unitVar T = 6 s
 unitVar f = 7 Hertz
 
 
-angularFrequency = (2*pi)*f
+angularFrequency = (2*pi)/T
 Print(angularFrequency)
 
 

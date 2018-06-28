@@ -41,6 +41,7 @@ public class UnidadesSemanticCheck extends UnidadesBaseVisitor<Boolean> {
 
         String id = ctx.NAME().getText();
 
+
         if (UnidadesParser.symbolTable.containsKey(id)) {
             ErrorHandling.printError(ctx, "A variable named \"" + id + "\" was already declared!");
             res = false;
@@ -56,7 +57,12 @@ public class UnidadesSemanticCheck extends UnidadesBaseVisitor<Boolean> {
 
         String id = ctx.NAME().getText();
 
+
         USymbol s = UnidadesParser.symbolTable.get(id);
+        if(s == null ){
+            ErrorHandling.printError(ctx, "Variable \"" + id + "\" does not exist!");
+            return false;
+        }
 
 
         if (s.type != tipo.simples) {

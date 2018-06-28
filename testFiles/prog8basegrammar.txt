@@ -1,12 +1,11 @@
 unitVar frequency
 unitVar t = 4 s
-unitVar k
+simpVar k
 
 ->simpVar a= 2 lfa
 
-
 for(i;0;10){
-    if(i<t){
+    if(i<5){
         frequency = 1/1*t
         Print(frequency)
 
