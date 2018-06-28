@@ -1,25 +1,11 @@
-unitVar a
-unitVar b
-simpVar c
-unitVar d
+unitVar angularFrequency
+simpVar pi =3.14
+unitVar T = 6 s
+unitVar f = 7 Hertz
 
-a = 2.5e 2 lfa
-b = 1 Kg
-c = 20
-d = 3 cd
 
-if(d>b){
-    for(i;1;20){
-    Print(c)
-    }
-
-    unitVar unit
-    unit = 2 lfa
-
-}
-
-Print(a)
-Print(b)
+angularFrequency = (2*pi)*f
+Print(angularFrequency)
 
 
 

@@ -1,3 +1,4 @@
+->Isto é um comentario
 simpVar a =3
 unitVar velocity
 unitVar distance = 2 m

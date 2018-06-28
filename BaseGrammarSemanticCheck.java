@@ -171,7 +171,7 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
             }
 
             if (ctx.left.ty.equals(vartype.simpVar) && ctx.right.ty.equals(vartype.unitVar)) {
-                if (operator.equals("/") || operator.equals("+") || operator.equals("-")) {
+                if (operator.equals("+") || operator.equals("-")) {
                     ErrorHandling.printError(ctx, "You cannot make that operation between a simple variable and an unit variable!");
                     res = false;
 

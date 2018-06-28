@@ -1,11 +1,15 @@
-create unit seconds named s;
-create unit meters named m;
+create unit s named s;
+create unit m named m;
 compose m:s named vel;
-create unit grama named g;
-create unit Kilogram named Kg;
-create unit liter named l;
-create unit candela named cd;
-create unit Newton named N;
+create unit g named g;
+create unit Kg named Kg;
+create unit l named l;
+create unit cd named candela;
+create unit N named Newton;
+create unit Hz named Hertz;
+create unit rad named rad;
+compose rad:s named RadPerSec;
+
 
 
 

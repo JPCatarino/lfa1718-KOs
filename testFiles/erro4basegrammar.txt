@@ -1,21 +1,8 @@
-simpVar i
-simpVar output
+simpVar v1 = 2
+simpVar v2 = 3
 
-i=3
+unitVar dist1 = 3m
+unitVar dist2 = 5m
 
-output = 2
-
-for(i;2;1){
-Print(output)
-}
-
-for(a;0;2147483645){
-Print(output)
-}
-
-for(a;1;5){
-if(a>2){
-simpVar t = 2+3
-}
-Print(output)
-}
+unitVar res = 2^dist1
+simpVar res = 4*v1

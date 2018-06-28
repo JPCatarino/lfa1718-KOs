@@ -1,13 +1,8 @@
-unitVar a
-simpVar b
-simpVar res
-simpVar kos
+simpVar v1 = 2 candela
+unitVar v2 = 3
+simpVar v3 = 2
+simpVar v4 = 6
 
+unitVar res = v3*v4
 
-res = a+b
-
-a = 2.5e^2 lfa
-b = 7.5 muito
-c = 4
-Print(c)
-kos = res + a
+unitVar res2 = v1+v2
