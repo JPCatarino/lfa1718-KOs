@@ -163,6 +163,6 @@ class val:
         if(len(neg)!=0):
             units += "/"
             for x in neg:
-                units += x.unit + "^" + str(x.pot)
+                units += x.unit + "^" + str(-x.pot)
         tmp += units
         return tmp
