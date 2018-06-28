@@ -1,21 +1,3 @@
-unitVar a
-simpVar b
-simpVar c
-
-a = 2 lfa
-b = 1 muito
-c = 20
-d = 3 muito
-
-if(d>b){
-    for(i;1;20){
-    Print(c)
-    }
-
-    unitVar unit
-    unit = 2 lfa
-
-}
-
-Print(a)
-Print(b)
+create unit lfa named lfa;
+create unit g named lfa;
+compose m:s named vel;
