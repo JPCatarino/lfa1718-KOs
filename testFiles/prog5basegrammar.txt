@@ -1,0 +1,11 @@
+simpVar a =3
+unitVar velocity
+unitVar distance = 2 m
+unitVar time = 3 s
+
+velocity = distance/time
+
+Print(velocity)
+
+
+

@@ -1,0 +1,19 @@
+unitVar centripetalAcceleration
+unitVar velocity = 3 vel
+unitVar radius = 2m
+simpVar val1=3
+unitVar centripetalAcceleration2 = 5 m/(1s*1s)
+
+centripetalAcceleration = ((velocity)*(velocity))/radius
+
+Print(centripetalAcceleration)
+
+if(centripetalAcceleration < centripetalAcceleration2 and 2>1){
+    simpVar output = 2
+    Print(output)
+
+
+}
+
+
+

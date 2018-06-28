@@ -1,0 +1,10 @@
+create unit seconds named s;
+create unit meters named m;
+compose m:s named vel;
+create unit grama named g;
+create unit Kilogram named Kg;
+create unit liter named l;
+create unit candela named cd;
+create unit Newton named N;
+
+

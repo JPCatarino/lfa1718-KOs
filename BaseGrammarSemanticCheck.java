@@ -190,6 +190,15 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
                 }
                 ctx.ty = vartype.unitVar;
             }
+            if(ctx.right.ty.equals(vartype.unitVar)){
+                if (operator.equals("^")) {
+                    ErrorHandling.printError(ctx, "You cannot use an unit variable as a pow value!");
+                    res = false;
+
+                }
+
+
+            }
         }
         return res;
     }
