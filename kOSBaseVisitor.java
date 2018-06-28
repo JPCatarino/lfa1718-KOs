@@ -340,20 +340,48 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     }
 
     @Override public ST visitBoolNotCond(BaseGrammarParser.BoolNotCondContext ctx) {
-        ST res = stg.getInstanceOf("boolNot");
-        res.add("val",visit(ctx.condition()));
+        ST res = stg.getInstanceOf("stats");
+        res.add("stat",visit(ctx.condition()));
+        ST ass = stg.getInstanceOf("assign");
+        ctx.varGen = newVarName();
+        ass.add("left",ctx.varGen);
+        ST not = stg.getInstanceOf("boolNot");
+        not.add("val",ctx.condition().varGen);
+        ass.add("right",not);
+        res.add("stat",ass);
         return res;
     }
 
     @Override public ST visitBoolCondOp(BaseGrammarParser.BoolCondOpContext ctx) {
-        ST res = stg.getInstanceOf("boolCondition");
-        res.add("left",visit(ctx.left));
-        res.add("op",ctx.BOOLEAN_OPERATOR().getText());
-        res.add("right",visit(ctx.right));
+        ST res = stg.getInstanceOf("stats");
+        ST ass = stg.getInstanceOf("assign");
+        res.add("stat",visit(ctx.left));
+        res.add("stat",visit(ctx.right));
+        ctx.varGen = newVarName();
+        ass.add("left",ctx.varGen);
+        ST boOp = stg.getInstanceOf("boolCondition");
+        boOp.add("left",ctx.left.varGen);
+        boOp.add("op",ctx.BOOLEAN_OPERATOR().getText());
+        boOp.add("right",ctx.right.varGen);
+        ass.add("right",boOp.render());
+        res.add("stat",ass);
         return res;
     }
 
-    @Override public ST visitBoolCond(BaseGrammarParser.BoolCondContext ctx) {return visitChildren(ctx); }
+    @Override public ST visitBoolCond(BaseGrammarParser.BoolCondContext ctx) {
+        ST res = stg.getInstanceOf("stats");
+        res.add("stat",visit(ctx.condition()));
+        ctx.varGen = ctx.condition().varGen;
+        return res;
+    }
+
+    @Override public ST visitSoloCond(BaseGrammarParser.SoloCondContext ctx) {
+        ST res = stg.getInstanceOf("stats");
+        res.add("stat",visit(ctx.conditionE()));
+        ctx.varGen = ctx.conditionE().varGen;
+        return res;
+    }
+
 
     @Override public ST visitCondiEValue(BaseGrammarParser.CondiEValueContext ctx) {
         ST ass = stg.getInstanceOf("assign");
