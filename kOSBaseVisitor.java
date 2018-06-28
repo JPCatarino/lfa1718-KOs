@@ -95,10 +95,14 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     @Override public ST visitIf_else(BaseGrammarParser.If_elseContext ctx) {
         ST res = stg.getInstanceOf("stats");
         ST ifCond = stg.getInstanceOf("if");
-        if(ctx.bc == null)
-            ifCond.add("condition",visit(ctx.condition()));
-        else
-            ifCond.add("condition",visit(ctx.booleanCondition()));
+        if(ctx.bc == null) {
+            res.add("stat",visit(ctx.condition()));
+            ifCond.add("condition", ctx.condition().varGen);
+        }
+        else {
+            res.add("stat",visit(ctx.booleanCondition()));
+            ifCond.add("condition", ctx.booleanCondition().varGen);
+        }
         ifCond.add("stat", visit(ctx.ifA));
         res.add("stat",ifCond);
         if(ctx.elseA != null) {
@@ -133,23 +137,35 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
 
     @Override public ST visitLoopWhile(BaseGrammarParser.LoopWhileContext ctx) {
-        ST res = stg.getInstanceOf("while");
-        if(ctx.bc == null)
-            res.add("condition",visit(ctx.condition()));
-        else
-            res.add("condition",visit(ctx.booleanCondition()));
-        res.add("stat",visit(ctx.statList()));
+        ST res = stg.getInstanceOf("stats");
+        ST whl = stg.getInstanceOf("while");
+        if(ctx.bc == null) {
+            res.add("stat", visit(ctx.condition()));
+            whl.add("condition", ctx.condition().varGen);
+        }
+        else {
+            res.add("stat", visit(ctx.booleanCondition()));
+            whl.add("condition", ctx.booleanCondition().varGen);
+        }
+        whl.add("stat",visit(ctx.statList()));
+        res.add("stat",whl.render());
         return res;
     }
 
 
     @Override public ST visitLoopDoWhile(BaseGrammarParser.LoopDoWhileContext ctx) {
-        ST res = stg.getInstanceOf("do_while");
-        if(ctx.bc == null)
-            res.add("condition",visit(ctx.condition()));
-        else
-            res.add("condition",visit(ctx.booleanCondition()));
-        res.add("stat",visit(ctx.statList()));
+        ST res = stg.getInstanceOf("stats");
+        ST dwhl = stg.getInstanceOf("do_while");
+        if(ctx.bc == null) {
+            res.add("stat", visit(ctx.condition()));
+            dwhl.add("condition", ctx.condition().varGen);
+        }
+        else {
+            res.add("stat", visit(ctx.booleanCondition()));
+            dwhl.add("condition", ctx.booleanCondition().varGen);
+        }
+        dwhl.add("stat",visit(ctx.statList()));
+        res.add("stat",dwhl.render());
         return res;
     }
 
@@ -297,17 +313,29 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     @Override public ST visitCompare(BaseGrammarParser.CompareContext ctx) {
         ST left = visit(ctx.left);
         ST right = visit(ctx.right);
+        ctx.varGen = newVarName();
+        ST res = stg.getInstanceOf("stats");
+        res.add("stat",left);
+        res.add("stat",right);
         if(ctx.left.type == vartype.unitVar && ctx.right.type == vartype.unitVar){
-            ST res = stg.getInstanceOf("unitCondition");
-            res.add("left", visit(ctx.left));
-            res.add("op", ctx.CONDITIONAL_OPERATOR().getText());
-            res.add("right", visit(ctx.right));
+            ST ass = stg.getInstanceOf("assign");
+            ass.add("left",ctx.varGen);
+            ST uCond = stg.getInstanceOf("unitCondition");
+            uCond.add("left", ctx.left.varGen);
+            uCond.add("op", ctx.CONDITIONAL_OPERATOR().getText());
+            uCond.add("right", ctx.right.varGen);
+            ass.add("right",uCond.render());
+            res.add("stat",ass);
             return res;
         }
-        ST res = stg.getInstanceOf("condition");
-        res.add("left", visit(ctx.left));
-        res.add("op", ctx.CONDITIONAL_OPERATOR().getText());
-        res.add("right", visit(ctx.right));
+        ST ass = stg.getInstanceOf("assign");
+        ass.add("left",ctx.varGen);
+        ST cond = stg.getInstanceOf("condition");
+        cond.add("left", ctx.left.varGen);
+        cond.add("op", ctx.CONDITIONAL_OPERATOR().getText());
+        cond.add("right", ctx.right.varGen);
+        ass.add("right",cond.render());
+        res.add("stat",ass);
         return res;
     }
 
@@ -328,18 +356,26 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     @Override public ST visitBoolCond(BaseGrammarParser.BoolCondContext ctx) {return visitChildren(ctx); }
 
     @Override public ST visitCondiEValue(BaseGrammarParser.CondiEValueContext ctx) {
+        ST ass = stg.getInstanceOf("assign");
+        ctx.varGen = newVarName();
+        ass.add("left",ctx.varGen);
         ST res = stg.getInstanceOf("stats");
-        res.add("stat",visit(ctx.value()));
+        res.add("right",visit(ctx.value()));
         ctx.type = ctx.value().typ;
+        res.add("stat",ass);
         return res;
     }
 
     @Override public ST visitCondiEVar(BaseGrammarParser.CondiEVarContext ctx) {
         String id = ctx.NAME().getText();
         BGSymbol s = BaseGrammarParser.symbolTable.get(id);
-        ST res = stg.getInstanceOf("variable");
-        res.add("name",s.varName());
+        ST res = stg.getInstanceOf("stats");
+        ST ass = stg.getInstanceOf("assign");
+        ctx.varGen = newVarName();
+        ass.add("left",ctx.varGen);
+        ass.add("right",s.varName());
         ctx.type = s.type();
+        res.add("stat",ass.render());
         return res;
     }
 

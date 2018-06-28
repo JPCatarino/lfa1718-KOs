@@ -89,18 +89,18 @@ deincrement returns [vartype ty]:
         ;
 
 // Conditions
-booleanCondition:
+booleanCondition returns[String varGen]:
     left=booleanCondition BOOLEAN_OPERATOR right=booleanCondition   #boolCondOp
     |NOT condition                                                  #boolNotCond
     |condition                                                      #boolCond
     ;
 
-condition:
+condition returns[String varGen]:
     left=conditionE CONDITIONAL_OPERATOR right=conditionE              #compare
     |conditionE                                                        #soloCond
     ;
 
-conditionE returns [vartype type]:
+conditionE returns [vartype type,String varGen]:
     value           #condiEValue
     |NAME           #condiEVar
     ;
