@@ -388,7 +388,7 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         ctx.varGen = newVarName();
         ass.add("left",ctx.varGen);
         ST res = stg.getInstanceOf("stats");
-        res.add("right",visit(ctx.value()));
+        ass.add("right",visit(ctx.value()));
         ctx.type = ctx.value().typ;
         res.add("stat",ass);
         return res;
