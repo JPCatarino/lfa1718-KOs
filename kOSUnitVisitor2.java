@@ -139,7 +139,7 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
         USymbol s_dir = UnidadesParser.symbolTable.get(id_dir);
         String varName_dir = newVarName();
         dic_dir.add("var",varName_dir);
-        res_dir.add("stat",dic_dir);
+        res.add("stat",dic_dir);
         ST tmpD_dir = stg.getInstanceOf("addD");
         tmpD_dir.add("dName",varName_dir);
         tmpD_dir.add("dVal",visit(ctx.dtn));
@@ -159,7 +159,7 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
         ST mergeVal_dir = stg.getInstanceOf("merge");
         mergeVal_dir.add("d1","conv[\'" + ctx.src.getText() + "\']");
         mergeVal_dir.add("d2",varName_dir);
-        merge_dir.add("dVal",mergeVal.render());
+        merge_dir.add("dVal",mergeVal_dir.render());
         res.add("stat",merge_dir);
 
         // Inverted setConversion
@@ -173,7 +173,7 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
         tmpD_inv.add("dName",varName_inv);
 
         ST val_inv = stg.getInstanceOf("val");
-        val_inv.add("uvalue", ""+1/Integer.parseInt(ctx.dtn.n));
+        val_inv.add("uvalue", "1/" + ctx.dtn.n);
         val_inv.add("unit","UnitDic[\'" + ctx.src.getText() + "\']");
 
         tmpD_inv.add("dVal",val_inv);
@@ -182,7 +182,7 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
         ST convD_inv = stg.getInstanceOf("addD");
         if(!s_inv.isVarConversion()){
             convD_inv.add("dName","conv");
-            convD_inv.add("dUnit",ctx.dtn.uniNa));
+            convD_inv.add("dUnit",ctx.dtn.uniNa);
             convD_inv.add("dVal","{}");
             s_inv.setConversion(true);
             res.add("stat",convD_inv);
@@ -193,7 +193,7 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
         ST mergeVal_inv = stg.getInstanceOf("merge");
         mergeVal_inv.add("d1","conv[\'" + ctx.dtn.uniNa + "\']");
         mergeVal_inv.add("d2",varName_inv);
-        merge_inv.add("dVal",mergeVal.render());
+        merge_inv.add("dVal",mergeVal_inv.render());
         res.add("stat",merge_inv);
         return res;
     }
@@ -203,7 +203,7 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
         res.add("uvalue",ctx.INT().getText());
         res.add("unit","UnitDic[\'" + ctx.NAME().getText() + "\']");
         ctx.uniNa = ctx.NAME().getText();
-
+        ctx.n = ctx.INT().getText();
         return res;
     }
 
