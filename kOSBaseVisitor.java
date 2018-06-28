@@ -49,18 +49,21 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
 
 
     @Override public ST visitAssignment(BaseGrammarParser.AssignmentContext ctx) {
-        ST res = stg.getInstanceOf("assign");
+        ST res = stg.getInstanceOf("stats");
+        res.add("stat",visit(ctx.operation()));
+        ST ass = stg.getInstanceOf("assign");
         ctx.varName = newVarName();
         // Left
         String id = ctx.NAME().getText();
         BGSymbol s = BaseGrammarParser.symbolTable.get(id);
         if(s.varName() == null) {
             s.setVarName(ctx.varName);
-            res.add("left", ctx.varName);
+            ass.add("left", ctx.varName);
         }
-        else res.add("left",s.varName());
+        else ass.add("left",s.varName());
         // Right
-        res.add("right",visit(ctx.operation()));
+        ass.add("right",ctx.operation().varGen);
+        res.add("stat",ass);
         return res;
     }
 
@@ -151,17 +154,26 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     }
 
     @Override public ST visitPar(BaseGrammarParser.ParContext ctx) {
+        ctx.varGen = newVarName();
         ST res = stg.getInstanceOf("stats");
-        res.add("stat","(" + visit(ctx.operation()).render()+")");
+        res.add("stat",visit(ctx.operation()));
+        ST ass = stg.getInstanceOf("assign");
+        ass.add("left",ctx.varGen);
+        ass.add("right","(" + ctx.operation().varGen +")");
         ctx.ty = ctx.operation().ty;
+        res.add("stat",ass.render());
         return res;
     }
 
 
 
     @Override public ST visitVal(BaseGrammarParser.ValContext ctx) {
-        ST res = stg.getInstanceOf("stats");
-        res.add("stat", visit(ctx.value()));
+        ST val = stg.getInstanceOf("stats");
+        val.add("stat", visit(ctx.value()));
+        ST res = stg.getInstanceOf("assign");
+        ctx.varGen = newVarName();
+        res.add("left",ctx.varGen);
+        res.add("right",val.render());
         if (ctx.value().typ == vartype.unitVar) {
             ctx.ty = vartype.unitVar;
         }
@@ -175,35 +187,55 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
     @Override public ST visitOp(BaseGrammarParser.OpContext ctx) {
         ST left = visit(ctx.left);
         ST right = visit(ctx.right);
+        ST res = stg.getInstanceOf("stats");
+        res.add("stat",left.render());
+        res.add("stat",right.render());
         if(ctx.left.ty == vartype.unitVar && ctx.right.ty == vartype.unitVar){
-            ST res = stg.getInstanceOf("valConta");
-            res.add("val1", left);
-            res.add("val2", right);
-            res.add("op",ctx.NUMERIC_OPERATOR().getText());
+            ST ass = stg.getInstanceOf("assign");
+            ctx.varGen = newVarName();
+            ass.add("left",ctx.varGen);
+            ST cont = stg.getInstanceOf("valConta");
+            cont.add("val1", ctx.left.varGen);
+            cont.add("val2", ctx.right.varGen);
+            cont.add("op",ctx.NUMERIC_OPERATOR().getText());
             ctx.ty = vartype.unitVar;
+            ass.add("right",cont);
+            res.add("stat",ass);
             return res;
         }
         //else if((ctx.left.ty == vartype.unitVar && ctx.right.ty == vartype.simpVar) || (ctx.left.ty == vartype.simpVar && ctx.right.ty == vartype.unitVar)){
         else if((ctx.left.ty == vartype.unitVar) ^ (ctx.right.ty == vartype.unitVar)){
-            ST res = stg.getInstanceOf("valContaSimp");
+            ST ass = stg.getInstanceOf("assign");
+            ctx.varGen = newVarName();
+            ass.add("left",ctx.varGen);
+            ST contSimp = stg.getInstanceOf("valContaSimp");
             if(ctx.left.ty == vartype.simpVar && ctx.right.ty == vartype.unitVar){
-                res.add("val1", right);
-                res.add("val2",left);
-                res.add("op",ctx.NUMERIC_OPERATOR().getText());
+                contSimp.add("val1", ctx.right.varGen);
+                contSimp.add("val2",ctx.left.varGen);
+                contSimp.add("op",ctx.NUMERIC_OPERATOR().getText());
                 ctx.ty = vartype.unitVar;
+                ass.add("right",contSimp);
+                res.add("stat",ass);
                 return res;
             }
-            res.add("val1", left);
-            res.add("val2",right);
-            res.add("op",ctx.NUMERIC_OPERATOR().getText());
+            contSimp.add("val1", ctx.left.varGen);
+            contSimp.add("val2",ctx.right.varGen);
+            contSimp.add("op",ctx.NUMERIC_OPERATOR().getText());
             ctx.ty = vartype.unitVar;
+            ass.add("right",contSimp);
+            res.add("stat",ass);
             return res;
         }
-        ST res = stg.getInstanceOf("contaSimples");
-        res.add("left",left);
-        res.add("op",ctx.NUMERIC_OPERATOR().getText());
-        res.add("right",right);
+        ST ass = stg.getInstanceOf("assign");
+        ctx.varGen = newVarName();
+        ass.add("left",ctx.varGen);
+        ST contSimp = stg.getInstanceOf("contaSimples");
+        contSimp.add("left",ctx.left.varGen);
+        contSimp.add("op",ctx.NUMERIC_OPERATOR().getText());
+        contSimp.add("right",ctx.right.varGen);
         ctx.ty = vartype.simpVar;
+        ass.add("right",contSimp);
+        res.add("stat",ass);
         return res;
     }
 
@@ -237,8 +269,12 @@ public class kOSBaseVisitor extends BaseGrammarBaseVisitor<ST> {
         BGSymbol s = BaseGrammarParser.symbolTable.get(id);
         ST var = stg.getInstanceOf("variable");
         var.add("name",s.varName());
+        ctx.varGen = newVarName();
+        ST ass = stg.getInstanceOf("assign");
+        ass.add("left",ctx.varGen);
+        ass.add("right",var.render());
         ctx.ty = s.type();
-        return var;
+        return ass;
     }
 
 

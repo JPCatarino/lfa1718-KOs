@@ -76,7 +76,7 @@ loop:
  * ------------------
  */
 // Operations
-operation returns [vartype ty] :
+operation returns [vartype ty,String varGen] :
     '(' n=operation ')'                                     #par
     | left=operation NUMERIC_OPERATOR right=operation       #op
     | NAME                                                  #assignVar
