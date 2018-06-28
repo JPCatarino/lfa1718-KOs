@@ -1,0 +1,3 @@
+create unit 2 named a
+create unit 2 kg named b
+print a+b
