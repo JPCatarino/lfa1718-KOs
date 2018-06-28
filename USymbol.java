@@ -16,6 +16,14 @@ public abstract class USymbol {
       return type;
    }
 
+   public boolean isVarConversion(){return varConversion;}
+
+   public void setConversion(boolean varConversion){
+
+      this.varConversion = varConversion;
+
+   }
+
    public void setVarName(String varName) {
       assert varName != null;
 
@@ -29,6 +37,6 @@ public abstract class USymbol {
    protected final String name;
    protected String varName;
    protected final tipo type;
+   protected boolean varConversion;
 
 }
-
