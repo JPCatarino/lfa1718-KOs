@@ -1,2 +1,0 @@
-create unit seconds named s;
-create unit meters named m;

@@ -1,25 +1,20 @@
-unitVar a
-simpVar b
-simpVar c
-simpVar d
-simpVar inc
-simpVar flag
-simpVar kos
+unitVar centripetalAcceleration
+unitVar velocity = 3 vel
+unitVar radius = 2m
+simpVar val1=3
+unitVar centripetalAcceleration2 = 5 m/(1s^2)
 
-a = 2.5e 2 lfa
-b = !4.3
-c = 2.9e^!3.4
-flag = 60
+centripetalAcceleration = ((velocity)*(velocity))/radius
 
-inc = 0
+Print(centripetalAcceleration)
 
-do{
-inc++
-    if(inc<=15){
-    kos = b+c
-    Print(kos)
-    }
-}while(inc<flag)
+if(centripetalAcceleration < centripetalAcceleration2 and 2>1){
+    simpVar output = 2
+    Print(output)
+
+
+}
+
 
 
 

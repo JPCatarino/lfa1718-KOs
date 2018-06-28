@@ -1,9 +1,23 @@
-unitVar gravitationPotentialEnergy
-unitVar m1 = 2g
-unitVar m2 = 2.3g
-unitVar r = 6.7e^!3 m
-unitVar G  = 6.67e^!11*(1N*1m^2)/(1Kg^2)
-unitVar troll = (2^2)*1m
+unitVar k
+unitVar a
+unitVar res2
+unitVar b
+simpVar flag = 5
+unitVar test
+simpVar o
+simpVar count
 
-gravitationPotentialEnergy = (G*m1*m2)/r
-Print(gravitationPotentialEnergy)
+a = 5 cd
+b = 7.6 g
+k= 8 mol
+
+res2 = 2*k + b/2
+
+for(i;0;100){
+    count++
+    if(count>=flag){
+        o = count + flag
+        test = 2 batatas
+    }
+}
+Print(res2)

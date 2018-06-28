@@ -1,0 +1,21 @@
+unitVar frequency
+unitVar t = 4 s
+unitVar k
+
+->simpVar a= 2 lfa
+
+
+for(i;0;10){
+    if(i<t){
+        frequency = 1/1*t
+        Print(frequency)
+
+    } else{
+    k = 2
+    Print(k)
+    }
+
+}
+
+
+

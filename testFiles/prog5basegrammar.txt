@@ -1,11 +1,25 @@
-simpVar a =3
-unitVar velocity
-unitVar distance = 2 m
-unitVar time = 3 s
+unitVar a
+unitVar b
+simpVar c
+unitVar d
 
-velocity = distance/time
+a = 2.5e 2 lfa
+b = 1 Kg
+c = 20
+d = 3 cd
 
-Print(velocity)
+if(d>b){
+    for(i;1;20){
+    Print(c)
+    }
+
+    unitVar unit
+    unit = 2 lfa
+
+}
+
+Print(a)
+Print(b)
 
 
 

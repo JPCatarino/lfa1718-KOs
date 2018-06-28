@@ -307,6 +307,7 @@ public class BaseGrammarSemanticCheck extends BaseGrammarBaseVisitor<Boolean> {
             res = false;
 
         }
+        visit(ctx.statList());
 
 
         return res;
