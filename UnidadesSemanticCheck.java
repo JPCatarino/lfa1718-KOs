@@ -72,5 +72,18 @@ public class UnidadesSemanticCheck extends UnidadesBaseVisitor<Boolean> {
 
         return res;
     }
+
+    @Override public Boolean visitValue(UnidadesParser.ValueContext ctx) {
+        String id = ctx.NAME().getText();
+
+
+        USymbol s = UnidadesParser.symbolTable.get(id);
+        if(s == null ){
+            ErrorHandling.printError(ctx, "Variable \"" + id + "\" does not exist!");
+            return false;
+        }
+        return true;
+    }
+
 }
             

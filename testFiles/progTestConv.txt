@@ -1,0 +1,3 @@
+30 s € Kg
+20 Hertz € s
+4 s € Newton

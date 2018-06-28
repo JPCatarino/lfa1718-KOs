@@ -8,9 +8,12 @@ create unit cd named candela;
 create unit N named Newton;
 create unit Hz named Hertz;
 create unit rad named rad;
+create unit lfa named lfa;
 compose rad:s named RadPerSec;
 
 
-
+s $ 3 Kg;
+s $ 4 Newton;
+s $ 20 Hertz;
 
 
