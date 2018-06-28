@@ -210,6 +210,10 @@ pass()::=<<
 pass
 >>
 
+merge(d1,d2) ::=<<
+{**<d1>,**<d2>}
+>>
+
 pow(exponent) ::=<<
 *(10**<exponent>)
 >>

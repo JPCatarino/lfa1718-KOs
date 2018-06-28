@@ -31,6 +31,7 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
         String id = ctx.NAME().getText();
         USymbol s = UnidadesParser.symbolTable.get(id);
         s.setVarName(ctx.uname.varName);
+        s.setConversion(false);
         cunit.add("unit",ctx.uname.varName);
         res.add("stat",unit);
         res.add("stat",cunit);
@@ -53,6 +54,7 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
         String id = ctx.NAME().getText();
         USymbol s = UnidadesParser.symbolTable.get(id);
         s.setVarName(newVarName());
+        s.setConversion(false);
         ST assign = stg.getInstanceOf("assign");
         assign.add("left",s.varName());
         assign.add("right",ctx.composedUnit().varName);
@@ -131,6 +133,8 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
     @Override public ST visitSetConvValue(UnidadesParser.SetConvValueContext ctx) {
         ST res = stg.getInstanceOf("stats");
         ST dic = stg.getInstanceOf("iniD");
+        String id = ctx.src.getText();
+        USymbol s = UnidadesParser.symbolTable.get(id);
         String varName = newVarName();
         dic.add("var",varName);
         res.add("stat",dic);
@@ -140,10 +144,21 @@ public class kOSUnitVisitor2 extends UnidadesBaseVisitor<ST>{
         tmpD.add("dUnit",ctx.dtn.uniNa);
         res.add("stat",tmpD);
         ST convD = stg.getInstanceOf("addD");
-        convD.add("dName","conv");
-        convD.add("dUnit",ctx.src.getText());
-        convD.add("dVal",varName);
-        res.add("stat",convD);
+        if(!s.isVarConversion()){
+            convD.add("dName","conv");
+            convD.add("dUnit",ctx.src.getText());
+            convD.add("dVal","{}");
+            s.setConversion(true);
+            res.add("stat",convD);
+        }
+        ST merge = stg.getInstanceOf("addD");
+        merge.add("dName","conv");
+        merge.add("dUnit",ctx.src.getText());
+        ST mergeVal = stg.getInstanceOf("merge");
+        mergeVal.add("d1","conv[\'" + ctx.src.getText() + "\']");
+        mergeVal.add("d2",varName);
+        merge.add("dVal",mergeVal.render());
+        res.add("stat",merge);
         return res;
     }
 
